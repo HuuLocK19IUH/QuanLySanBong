@@ -1,0 +1,11 @@
+.login-btn {
+    width: 400px;
+    height: 50px;
+    font-family: 'kanit';
+    font-size: 28px;
+    border-radius: 20px;
+    border: 0;
+    background-color: rgb(54, 101, 107);
+    color: rgb(240, 248, 164);
+    margin-top: 20px;
+}
