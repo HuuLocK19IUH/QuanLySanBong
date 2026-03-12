@@ -1,0 +1,13 @@
+.login-page{
+    background-image: url("../assets/DangNhapBg.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
