@@ -8,4 +8,10 @@
     background-color: rgb(54, 101, 107);
     color: rgb(240, 248, 164);
     margin-top: 20px;
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+.login-btn:hover {
+    transform: scale(1.1);
 }
