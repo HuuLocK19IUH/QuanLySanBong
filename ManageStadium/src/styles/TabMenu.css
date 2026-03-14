@@ -1,0 +1,65 @@
+/* Container bao bọc thanh menu, có đường viền xám mỏng bên dưới */
+.tab-menu-container {
+  width: 80%;
+  border-bottom: 2px solid #D1D5DB;
+  margin-top: 30px;
+  margin-bottom: 24px;
+  
+  /* Thêm 2 dòng này để căn giữa */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Danh sách các tab dàn ngang */
+.tab-menu-list {
+  display: flex;
+  justify-content: center; /* Căn giữa toàn bộ các tab */
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  gap: 80px; /* Khoảng cách giữa các chữ */
+  overflow-x: auto; 
+  
+  /* --- 3 DÒNG THÊM MỚI ĐỂ ẨN THANH CUỘN (FIREFOX, IE, EDGE) --- */
+  -ms-overflow-style: none; 
+  scrollbar-width: none;
+}
+
+/* --- THÊM CLASS NÀY ĐỂ ẨN THANH CUỘN TRÊN CHROME, SAFARI --- */
+.tab-menu-list::-webkit-scrollbar {
+  display: none;
+}
+
+/* Style mặc định cho từng tab (Trạng thái chưa chọn) */
+.tab-item {
+  padding-bottom: 12px; /* Đẩy chữ lên trên một chút để chừa chỗ cho gạch chân */
+  font-size: 24px; /* Chữ to hơn theo thiết kế */
+  font-weight: 800; /* In đậm nét chữ */
+  color: #6B7280; /* Màu chữ xám */
+  cursor: pointer;
+  position: relative;
+  white-space: nowrap;
+  transition: all 0.2s ease-in-out;
+  font-family: 'Kanit', sans-serif; /* Đồng bộ font chữ với Taskbar của bạn */
+}
+
+.tab-item:hover {
+  color: #3A6B64; /* Đổi sang màu xanh khi di chuột vào */
+}
+
+/* --- Trạng thái Active (Đang được chọn) --- */
+.tab-item.active {
+  color: #3A6B64; /* Màu xanh lá đậm chuẩn theo thẻ DetailCard */
+}
+
+/* Thanh gạch chân màu xanh đè lên viền xám */
+.tab-item.active::after {
+  content: '';
+  position: absolute;
+  bottom: -2px; /* Kéo xuống đè vừa khít lên border-bottom của container */
+  left: 0;
+  width: 100%;
+  height: 4px; /* Độ dày của vạch xanh */
+  background-color: #3A6B64;
+  border-radius: 4px 4px 0 0; /* Bo tròn nhẹ 2 góc trên của thanh gạch chân */
+}

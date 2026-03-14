@@ -1,0 +1,76 @@
+/* Container bọc toàn bộ tab */
+.field-info-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 32px; /* Khoảng cách giữa phần ảnh và phần chữ */
+  padding-bottom: 40px;
+}
+
+/* --- Style cho phần Gallery --- */
+.gallery-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.image-list {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto; /* Cho phép lướt ngang nếu màn hình nhỏ */
+}
+
+.gallery-img {
+  width: 250px; 
+  height: 160px;
+  object-fit: cover;
+  border: 1px solid #E5E7EB; /* Viền mỏng màu xám nhạt */
+}
+
+.arrow-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #6B7280;
+  cursor: pointer;
+  padding: 8px;
+  transition: color 0.2s;
+}
+
+.arrow-btn:hover {
+  color: #3A6B64; /* Đổi màu xanh khi di chuột */
+}
+
+/* --- Style cho phần Thông tin chữ --- */
+.info-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  font-family: 'Kanit', sans-serif;
+  font-size: 20px;
+  width: 80%;
+  
+  /* THÊM DÒNG NÀY ĐỂ CĂN GIỮA TOÀN BỘ KHU VỰC CHỮ */
+  margin: 0 auto; 
+}
+.info-box {
+  border: 2px solid #36656B; /* Viền màu xanh đậm */
+  border-radius: 8px;
+  padding: 16px 24px;
+  color: black; /* Màu chữ đen xám */
+  background-color: #ffffff;
+}
+
+/* Các box ngắn bên dưới thì thu hẹp chiều rộng lại một chút cho giống thiết kế */
+.short-box {
+  width: 50%;
+  min-width: 400px; /* Đảm bảo không bị quá nhỏ trên mobile */
+}
+
+/* Tiêu đề in đậm, màu xanh */
+.info-label {
+  color: #36656B; /* Màu xanh đậm */
+  font-weight: 700;
+  margin-right: 8px;
+}
