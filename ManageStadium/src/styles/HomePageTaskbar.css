@@ -6,11 +6,11 @@
     gap: 5px;
     background-color: #75b06f;
     height: 90px;
-    width: 1868px;
+    width: 1890px;
     border-radius: 20px;
-    
+
     position: fixed;
-    top: 470px;
+    top: 440px;
     z-index: 1000;
 }
 
@@ -47,7 +47,7 @@
 
 .navigation-bar {
     display: flex;
-    gap: 20px;
+    gap: 10px;
     margin-left: 600px;
 }
 
@@ -87,4 +87,8 @@
 
 .taskbar-login-btn:hover {
     transform: scale(1.1);
+}
+
+.filter-con{
+    margin-top: 50px;
 }

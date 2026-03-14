@@ -5,7 +5,7 @@ import CartIcon from "../assets/Bag_alt_fill.png"
 import CheckIcon from "../assets/Check_fill.png"
 import "../styles/HomePageTaskbar.css"
 import { useNavigate } from "react-router-dom"
-function HomePageTaskbar() {
+function HomePageTaskbar({ toggleFilter }) {
     const navigate = useNavigate()
 
     return (
@@ -13,7 +13,12 @@ function HomePageTaskbar() {
             <img src={SearchIcon} alt="" />
             <div className="search-box">
                 <input type="text" placeholder="Tìm sân..." />
-                <img src={FilterIcon} alt="" className="filter-icon" />
+                <img
+                    src={FilterIcon}
+                    alt=""
+                    className="filter-icon"
+                    onClick={toggleFilter}
+                />
             </div>
             <div className="navigation-bar">
                 <div className="nav-item">

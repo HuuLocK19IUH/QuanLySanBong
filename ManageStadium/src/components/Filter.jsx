@@ -1,6 +1,8 @@
 import FilterSportFieldbtn from "./FilterSportFieldbtn";
-import CauLongicon from "../assets/playing_badminton.png"
+import CauLongicon from "../assets/playing_badminton_gold.png"
 import CalendartypeBtn from "./CalendartypeBtn";
+import PriceFilter from "./PriceFilter";
+import TimeFilter from "./TimeFilter";
 import "../styles/Filter.css"
 function Filter() {
     return (
@@ -28,10 +30,13 @@ function Filter() {
                 </div>
             </div>
             <div className="filter-right">
-                <h4>Loại lịch</h4>
-                <div className="calendartype-filter">
-                    <CalendartypeBtn text={"Sân trống"} />
-                    <CalendartypeBtn text={"Ghép đội"} />
+                <div className="price-filter">
+                    <h4>Lọc theo giá</h4>
+                    <PriceFilter></PriceFilter>
+                </div>
+                    <div className="time-filter">
+                    <h4>Lọc theo thời gian</h4>
+                    <TimeFilter></TimeFilter>
                 </div>
             </div>
         </div>
