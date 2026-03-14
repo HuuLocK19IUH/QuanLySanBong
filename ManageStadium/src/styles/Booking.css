@@ -1,0 +1,56 @@
+.booking-page {
+    background: #8eaf75;
+    padding: 20px;
+    height: 100vh;
+}
+
+.booking-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.time-labels {
+    display: flex;
+    overflow-x: auto;
+    margin-top: 20px;
+}
+
+.time-labels span {
+    width: 60px;
+    font-size: 12px;
+}
+
+.time-grid {
+    display: flex;
+}
+
+.time-slot {
+    width: 60px;
+    height: 30px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+.time-slot.selected {
+    background: #2f5d62;
+}
+
+.order-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #8eaf75;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.order-btn {
+    padding: 10px 20px;
+    background: #2f5d62;
+    color: white;
+    border: none;
+    border-radius: 8px;
+}
