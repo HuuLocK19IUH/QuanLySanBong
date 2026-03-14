@@ -1,0 +1,121 @@
+/* Box chính chứa toàn bộ nội dung */
+/* Box chính chứa toàn bộ nội dung */
+/* Box chính chứa toàn bộ nội dung */
+.detail-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #36656B; 
+  
+  /* SỬA DÒNG NÀY: Tăng số 24px lên thành 40px hoặc 48px tùy ý bạn */
+  padding: 40px 32px; 
+  
+  border-radius: 16px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  box-sizing: border-box;
+  
+  position: relative;
+  z-index: 10;
+  margin: -60px auto 30px;
+}
+/* --- Layout Trái --- */
+.detail-card-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.title {
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: 0.025em;
+}
+
+.badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #F0F8A4; /* Màu nền vàng nhạt */
+  padding: 4px 12px;
+  border-radius: 9999px;
+}
+
+.badge-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+.badge-text {
+  color: #36656B; /* Màu chữ xanh đậm */
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* --- Layout Phải --- */
+.detail-card-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 16px;
+}
+
+.OrderBtn {
+  background-color: #90B77D; /* Màu nút xanh sáng */
+  color: #F0F8A4;
+  font-weight: 700;
+  font-size: 18px;
+  padding: 8px 32px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.book-btn:hover {
+  background-color: #8cc474;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.stars {
+  display: flex;
+  gap: 4px;
+}
+
+.star-icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.rating-text {
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 20px;
+  margin-left: 8px;
+}

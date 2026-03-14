@@ -1,47 +1,47 @@
-import { useState } from "react";
+import React, { useState } from 'react';
+
+import TaskBar from '../components/Taskbar';
+import ProductDetailImage from '../components/ProductDetailPage';
+import DetailCard from '../components/DetailCard';
+import TabMenu from '../components/TabMenu';
+import FieldInfoTab from '../components/FieldInfoTab';
+import FieldServiceTab from '../components/FieldServiceTab';
 import RuleTab from "../components/RuleTab";
 import ReviewTab from "../components/ReviewTab";
+import Footer from '../components/Footer';
 
-function FieldDetail(){
+const FieldDetail = () => {
 
-const [activeTab,setActiveTab] = useState("rule");
+  const [activeTab, setActiveTab] = useState('info');
 
-return(
+  return (
+    <div>
 
-<div>
+       <TaskBar />
+       <ProductDetailImage />
+       <DetailCard />
 
-<div className="tab-bar">
+       <TabMenu 
+          activeTab={activeTab} 
+          setActiveTab={setActiveTab} 
+       />
 
-<button onClick={()=>setActiveTab("info")}>
-Thông tin & hình ảnh
-</button>
+       <div className="tab-content">
 
-<button onClick={()=>setActiveTab("service")}>
-Dịch vụ
-</button>
+          {activeTab === 'info' && <FieldInfoTab />}
 
-<button onClick={()=>setActiveTab("rule")}>
-Điều khoản & quy định
-</button>
+          {activeTab === 'service' && <FieldServiceTab />}
 
-<button onClick={()=>setActiveTab("review")}>
-Đánh giá
-</button>
+          {activeTab === 'rule' && <RuleTab />}
 
-</div>
+          {activeTab === 'review' && <ReviewTab />}
 
-<div>
+       </div>
 
-{activeTab==="rule" && <RuleTab/>}
+       <Footer />
 
-{activeTab==="review" && <ReviewTab/>}
-
-</div>
-
-</div>
-
-)
-
+    </div>
+  )
 }
 
 export default FieldDetail;
