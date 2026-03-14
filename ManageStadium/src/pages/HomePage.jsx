@@ -1,10 +1,19 @@
-import Taskbar from "../components/Taskbar";
+import HomePageTaskbar from "../components/HomePageTaskbar";
+import CarouselBoard from "../components/CarouselBoard";
+import Filter from "../components/Filter";
+import "../styles/HomePage.css";
 
 function HomePage() {
     return (
-        <div>
-            <Taskbar></Taskbar>
+        <div className="homepage">
+            <div className="carousel-container">
+                {/* <CarouselBoard /> */}
+            </div>
+{/* 
+            <HomePageTaskbar /> */}
+            <Filter />
         </div>
     )
 }
+
 export default HomePage;
