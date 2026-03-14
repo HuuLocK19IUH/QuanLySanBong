@@ -1,0 +1,52 @@
+.service-tab-container {
+  width: 80%;
+  margin: 0 auto;
+  padding-bottom: 50px;
+  font-family: 'Kanit', sans-serif;
+}
+
+.service-title {
+  font-size: 24px;
+  font-weight: 800;
+  color: #000000;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+/* Style chung cho bảng */
+.custom-table {
+  width: 100%;
+  border-collapse: collapse; /* Để các đường viền dính liền nhau */
+  background-color: #36656B; /* Màu xanh đậm của DetailCard */
+  border-radius: 12px;
+  overflow: hidden; /* Để bo góc bảng được hiển thị */
+  color: #ffffff;
+  border: 1px solid #F0F8A4;
+}
+
+.custom-table th, .custom-table td {
+  border: 1px solid #F0F8A4; /* Viền vàng nhạt giữa các ô */
+  padding: 15px;
+  text-align: center;
+  font-size: 18px;
+}
+
+/* Header bảng (Màu vàng nhạt) */
+.custom-table thead th {
+  color: #F0F8A4;
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.bold-cell {
+  font-weight: 700;
+}
+
+.price-cell {
+  font-weight: 700;
+}
+
+/* Service Table đặc thù 2 cột */
+.service-table td {
+  width: 50%;
+}
