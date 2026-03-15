@@ -4,6 +4,8 @@ import HomePage from './pages/HomePage'
 import FieldDetail from './pages/FieldDetail'
 import Booking from "./pages/Booking"
 import Payment from "./pages/Payment"
+import CartPage from "./pages/CartPage"
+import HistoryPage from "./pages/HistoryPage"
 
 function App() {
   return (
@@ -19,6 +21,10 @@ function App() {
         <Route path="/booking" element={<Booking />} />
 
         <Route path="/payment" element={<Payment />} />
+
+        <Route path="/cart" element={<CartPage />} />
+        
+        <Route path="/history" element={<HistoryPage />} />
 
       </Routes>
     </BrowserRouter>
