@@ -18,6 +18,7 @@ function CarouselBoard() {
                 pagination={{ clickable: true }}
                 autoplay={{ delay: 5000 }}
                 loop={true}
+                className="carousel-div"
             >
                 <SwiperSlide>
                     <div className="slide">

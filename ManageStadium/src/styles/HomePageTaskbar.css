@@ -1,17 +1,12 @@
 .taskbar {
     display: flex;
-    flex-direction: row;
-    justify-content: center;
     align-items: center;
-    gap: 5px;
+    gap: 10px;
     background-color: #75b06f;
     height: 90px;
-    width: 1890px;
-    border-radius: 20px;
+    width: 100%;
+    max-width: 1920px; 
 
-    position: fixed;
-    top: 440px;
-    z-index: 1000;
 }
 
 .taskbar img {
@@ -29,7 +24,7 @@
 .search-box input {
     width: 500px;
     height: 70px;
-    padding-right: 40px;
+    padding-left: 40px;
     /* chừa chỗ cho icon */
     border-radius: 15px;
     font-size: 20px;
@@ -89,6 +84,6 @@
     transform: scale(1.1);
 }
 
-.filter-con{
+.filter-con {
     margin-top: 50px;
 }

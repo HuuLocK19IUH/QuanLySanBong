@@ -1,0 +1,66 @@
+* {
+    font-family: 'kanit';
+}
+
+.sportfieldcard {
+    margin-top: 100px;
+    background-color: #36656B;
+    border-radius: 10px;
+    width: 450px;
+    height: 265px;
+    transition: 0.5s;
+    box-shadow: 10px 10px 10px rgb(172, 170, 170); /* 👈 lệch phải */
+}
+
+.sportfieldcard:hover{
+    transform: scale(1.1);
+}
+
+.sportfieldcard .card-info{
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    align-items: center;
+    gap: 12px;
+}
+
+.sportfieldcard .img {
+    width: 450px;
+    height: 120px;
+}
+
+.sportfieldcard .card-name {
+    color: white;
+    font-weight: bold;
+    font-size: 30px;
+
+}
+
+.sportfieldcard .card-price {
+    color: white;
+    font-size: 25px;
+}
+
+.sportfieldcard .card-footer {
+    display: flex;
+    gap: 120px;
+    justify-self: center;
+    align-items: center;
+}
+
+.sportfieldcard .card-footer .card-state {
+    color: white;
+    font-size: 20px;
+}
+
+.sportfieldcard .card-footer .card-evaluate {
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sportfieldcard .card-footer .card-evaluate .star-img{
+    width: 24px;
+    height: 24p;
+}

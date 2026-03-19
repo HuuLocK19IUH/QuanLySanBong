@@ -3,15 +3,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 1920px;
+    width: 100%; /* 👈 bỏ 1920px */
 }
 
 .slide img {
-    width: 1920px;
-    height: 500px;
+    width: 100%; /* 👈 bỏ 1920px */
+    height: 480px;
     object-fit: cover;
 }
-
 .slide-content {
     position: absolute;
     bottom: 50px;
