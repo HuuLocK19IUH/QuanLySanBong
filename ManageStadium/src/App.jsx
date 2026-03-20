@@ -5,6 +5,8 @@ import FieldDetail from './pages/FieldDetail'
 import Booking from "./pages/Booking"
 import Payment from "./pages/Payment"
 import Register from "./pages/Register"
+import CartPage from "./pages/CartPage"
+import HistoryPage from "./pages/HistoryPage"
 function App() {
   return (
     <BrowserRouter>
@@ -23,7 +25,7 @@ function App() {
         <Route path="/payment" element={<Payment />} />
 
         <Route path="/cart" element={<CartPage />} />
-        
+
         <Route path="/history" element={<HistoryPage />} />
 
       </Routes>
@@ -31,4 +33,4 @@ function App() {
   )
 }
 
-export default App
+export default App;
