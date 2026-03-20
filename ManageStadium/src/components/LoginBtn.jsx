@@ -1,8 +1,8 @@
 import "../styles/LoginBtn.css"
-function LoginBtn() {
+function LoginBtn({ label }) {
     return (
         <button className="login-btn">
-            Đăng nhập
+            {label}
         </button>
     )
 }

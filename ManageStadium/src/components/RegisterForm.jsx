@@ -3,17 +3,15 @@ import GoogleLoginBtn from "./GoogleLoginBtn.jsx"
 import InputFieldPassword from "./InputFieldPassword.jsx"
 import LoginBtn from "./LoginBtn.jsx"
 import HomeIcon from "../assets/Home_fill.png"
-import "../styles/LoginForm.css"
+import "../styles/RegisterForm.css"
 import { useNavigate } from "react-router-dom"
 
-function LoginForm() {
-
+function RegisterForm() {
     const navigate = useNavigate()
-
     return (
-        <div className="login-form">
+        <div className="register-form">
 
-            <h1>Đăng nhập</h1>
+            <h1>Đăng ký</h1>
 
             <InputFieldLogin
                 label="SĐT"
@@ -27,17 +25,24 @@ function LoginForm() {
                 placeholder="Nhập mật khẩu"
             />
 
-            <LoginBtn label="Đăng nhập" />
+            <InputFieldPassword
+                label="Nhập lại mật khẩu"
+                type="password"
+                placeholder="Nhập lại mật khẩu"
+            />
 
-            <GoogleLoginBtn />
+            <LoginBtn label="Đăng ký" />
 
-            <a className="register-link"   onClick={() => navigate("/register")}>
-                Đăng ký
+
+            <a className="register-link"
+                onClick={()=>navigate("/login")}
+            >
+                Đăng Nhập
             </a>
 
-            <img 
-                src={HomeIcon} 
-                alt="" 
+            <img
+                src={HomeIcon}
+                alt=""
                 id="home-icon"
                 onClick={() => navigate("/")}
             />
@@ -46,4 +51,4 @@ function LoginForm() {
     )
 }
 
-export default LoginForm
+export default RegisterForm;

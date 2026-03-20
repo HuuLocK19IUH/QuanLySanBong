@@ -1,31 +1,31 @@
 import { useLocation } from "react-router-dom"
-import { useState,useEffect } from "react"
-
-export default function Payment(){
+import { useState, useEffect } from "react"
+import '../styles/Booking_Payment.css'
+export default function Payment() {
 
   const location = useLocation()
 
-  const {selectedTime,services,name,phone,note,totalOrder} =
+  const { selectedTime, services, name, phone, note, totalOrder } =
     location.state || {}
 
-  const [timeLeft,setTimeLeft] = useState(900)
+  const [timeLeft, setTimeLeft] = useState(900)
 
-  const [success,setSuccess] = useState(false)
+  const [success, setSuccess] = useState(false)
 
-  useEffect(()=>{
+  useEffect(() => {
 
-    const timer = setInterval(()=>{
-      setTimeLeft(t=>t-1)
-    },1000)
+    const timer = setInterval(() => {
+      setTimeLeft(t => t - 1)
+    }, 1000)
 
-    return ()=>clearInterval(timer)
+    return () => clearInterval(timer)
 
-  },[])
+  }, [])
 
-  const minutes = Math.floor(timeLeft/60)
-  const seconds = timeLeft%60
+  const minutes = Math.floor(timeLeft / 60)
+  const seconds = timeLeft % 60
 
-  return(
+  return (
 
     <div className="payment-page">
 
@@ -69,7 +69,7 @@ export default function Payment(){
 
         <h3>Thông tin hóa đơn</h3>
 
-        {services?.map((s,i)=>(
+        {services?.map((s, i) => (
           <div key={i}>
 
             x{s.qty} {s.name} {s.price}
@@ -84,7 +84,7 @@ export default function Payment(){
       <p className="countdown">
 
         Thời gian giữ chỗ còn lại:
-        {minutes}:{seconds.toString().padStart(2,'0')}
+        {minutes}:{seconds.toString().padStart(2, '0')}
 
       </p>
 
@@ -94,7 +94,7 @@ export default function Payment(){
 
         <button
           className="pay"
-          onClick={()=>setSuccess(true)}
+          onClick={() => setSuccess(true)}
         >
           THANH TOÁN
         </button>

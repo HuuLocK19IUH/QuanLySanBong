@@ -1,0 +1,19 @@
+.calendartype-btn {
+    background-color: #36656B;
+    border: 0px;
+    width: 140px;
+    height: 40px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'kanit';
+    font-size: 16px;
+    color: #F0F8A4;
+
+    transition: 0.5s;
+}
+
+.calendartype-btn:hover {
+    transform: scale(1.1);
+}

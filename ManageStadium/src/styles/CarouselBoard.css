@@ -1,0 +1,43 @@
+.slide {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%; /* 👈 bỏ 1920px */
+}
+
+.slide img {
+    width: 100%; /* 👈 bỏ 1920px */
+    height: 480px;
+    object-fit: cover;
+}
+.slide-content {
+    position: absolute;
+    bottom: 50px;
+    left: 60px;
+    color: white;
+
+}
+
+.slide-content h2 {
+    font-size: 40px;
+    margin-bottom: 10px;
+    font-family: 'kanit';
+}
+
+.slide-content button {
+    width: 150px;
+    height: 50px;
+    font-size: 18px;
+    border: none;
+    border-radius: 8px;
+    background-color: #36656B;
+    color: #F0F8A4;
+    font-family: 'kanit';
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.slide-content button:hover {
+    transform: scale(1.1);
+}
