@@ -22,6 +22,10 @@ function App() {
 
         <Route path="/payment" element={<Payment />} />
 
+        <Route path="/cart" element={<CartPage />} />
+        
+        <Route path="/history" element={<HistoryPage />} />
+
       </Routes>
     </BrowserRouter>
   )
