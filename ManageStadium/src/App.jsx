@@ -4,7 +4,7 @@ import HomePage from './pages/HomePage'
 import FieldDetail from './pages/FieldDetail'
 import Booking from "./pages/Booking"
 import Payment from "./pages/Payment"
-
+import Register from "./pages/Register"
 function App() {
   return (
     <BrowserRouter>
@@ -13,6 +13,8 @@ function App() {
         <Route path="/" element={<HomePage />} />
 
         <Route path="/login" element={<LoginPage />} />
+
+        <Route path="/register" element={<Register />} />
 
         <Route path="/field-detail" element={<FieldDetail />} />
 

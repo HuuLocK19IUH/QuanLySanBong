@@ -10,6 +10,8 @@ import pagenavright from "../assets/Expand_right.png";
 import mycourtxinchaoavt from "../assets/mycourtxinchaoavt.png"
 import IntroImgCard from "../components/IntroImgCard";
 import introimg from "../assets/introimg.png"
+import HomePageInfoFooter from "../components/HomePageInfoFooter";
+import Footer from "../components/Footer";
 function HomePage() {
     const [showFilter, setShowFilter] = useState(false);
     const sportFields = [
@@ -103,6 +105,12 @@ function HomePage() {
                         <IntroImgCard key={index} {...item} />
                     ))}
                 </div>
+            </div>
+            <div>
+                <HomePageInfoFooter />
+            </div>
+            <div className="hp-footer">
+                <Footer />
             </div>
         </div>
     )
