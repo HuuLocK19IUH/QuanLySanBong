@@ -1,0 +1,76 @@
+.modal-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.4);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:1000;
+}
+
+.booking-modal{
+  background:white;
+  width:420px;
+  padding:25px;
+  border-radius:12px;
+  position:relative;
+  animation:popup 0.25s ease;
+}
+
+@keyframes popup{
+  from{
+    transform:scale(0.85);
+    opacity:0;
+  }
+  to{
+    transform:scale(1);
+    opacity:1;
+  }
+}
+
+.modal-avatar{
+  position:absolute;
+  right:-15px;
+  top:-15px;
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  border:4px solid white;
+}
+
+.bill-table{
+  width:100%;
+  margin-top:10px;
+  border-collapse:collapse;
+}
+
+.bill-table th,
+.bill-table td{
+  padding:6px;
+  text-align:left;
+}
+
+.total{
+  margin-top:8px;
+  text-align:right;
+}
+
+.modal-buttons{
+  margin-top:20px;
+  display:flex;
+  justify-content:space-between;
+}
+
+.exit-btn{
+  background:#90B77D;
+  border:none;
+  padding:8px 20px;
+  border-radius:8px;
+}
+
+.review-btn{
+  background:#90B77D;
+  border:none;
+  padding:8px 20px;
+  border-radius:8px;
+}
