@@ -1,28 +1,31 @@
-function CourtCard({ status }) {
+import "../styles/cartHistoryPages.css"
+
+function CourtCard({ title, tag, img, status, onPay }) {
 
   return (
-    <div className="card">
+    <div className="mh-card">
 
       <img
-        className="court-img"
-        src="https://images.unsplash.com/photo-1599058917212-d750089bc07e"
+        className="mh-court-img"
+        src={img}
+        alt=""
       />
 
-      <div className="card-info">
+      <div className="mh-card-info">
 
-        <h3>Sân cầu lông 4 người</h3>
+        <h3>{title}</h3>
 
-        <span className="tag">
-          Cầu lông
+        <span className="mh-tag">
+          {tag}
         </span>
 
       </div>
 
-      <div className="card-right">
+      <div className="mh-card-right">
 
-        <p>Trạng thái: {status}</p>
+        <p className="mh-card-status">Trạng thái: {status}</p>
 
-        <button className="pay-btn">
+        <button className="mh-btn" onClick={onPay}>
           Thanh toán
         </button>
 
