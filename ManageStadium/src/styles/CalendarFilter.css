@@ -1,0 +1,9 @@
+.date-filter {
+    border-radius: 10px;
+    background-color: #F0F8A4;
+    width: 150px;
+    height: 45px;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: 'kanit';
+}

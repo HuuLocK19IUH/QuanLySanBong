@@ -1,0 +1,117 @@
+.modal-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.25);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:1000;
+}
+
+.booking-modal{
+  background:#dcdcdc;
+  width:640px;
+  max-width: calc(100% - 24px);
+  padding:28px;
+  border-radius:12px;
+  position:relative;
+  border:3px solid #1b78c7;
+  animation:popup 0.25s ease;
+}
+
+@keyframes popup{
+  from{
+    transform:scale(0.85);
+    opacity:0;
+  }
+  to{
+    transform:scale(1);
+    opacity:1;
+  }
+}
+
+.modal-avatar{
+  position:absolute;
+  right:18px;
+  top:-28px;
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  border:4px solid white;
+  box-shadow:0 10px 18px rgba(0,0,0,0.25);
+}
+
+.booking-modal h3{
+  margin-top: 18px;
+  font-size: 22px;
+  color:#2e2e2e;
+}
+
+.booking-modal p{
+  margin:6px 0;
+  color:#2e2e2e;
+  font-size: 14px;
+}
+
+.booking-modal h4{
+  margin-top: 14px;
+  font-size: 16px;
+  color:#2e2e2e;
+}
+
+.bill-row{
+  display:flex;
+  justify-content:space-between;
+  gap: 12px;
+  margin-top: 8px;
+  color:#2e2e2e;
+  font-size: 14px;
+}
+
+.bill-table{
+  width:100%;
+  margin-top:12px;
+  border-collapse:collapse;
+}
+
+.bill-table th,
+.bill-table td{
+  padding:6px;
+  text-align:left;
+  color:#2e2e2e;
+  font-size: 14px;
+}
+
+.total{
+  margin-top:8px;
+  text-align:right;
+  color:#2e2e2e;
+  font-size: 14px;
+}
+
+.modal-buttons{
+  margin-top:18px;
+  display:flex;
+  justify-content:flex-end;
+  gap: 14px;
+}
+
+.exit-btn{
+  background:#90B77D;
+  border:none;
+  padding:10px 22px;
+  border-radius:10px;
+  color:#f0f8a4;
+  font-weight: 800;
+  cursor:pointer;
+}
+
+.review-btn{
+  background:#90B77D;
+  border:none;
+  padding:10px 22px;
+  border-radius:10px;
+  color:#f0f8a4;
+  font-weight: 800;
+  cursor:pointer;
+}

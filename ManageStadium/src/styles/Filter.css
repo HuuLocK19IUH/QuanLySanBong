@@ -1,0 +1,79 @@
+.filter {
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 350px;
+    border: 2px solid black;
+    border-radius: 20px;
+    background-color: #F0F8A4;
+    width: 1820px;
+    height: 370px;
+}
+
+.filter .filter-left {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.filter h4 {
+    font-family: 'kanit';
+    font-size: 28px;
+}
+
+.sportfilter-title {
+    display: flex;
+    gap: 190px;
+}
+
+.sportfilter-title button {
+    background-color: #36656B;
+    border: 0px;
+    width: 140px;
+    height: 40px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    font-family: 'kanit';
+    font-size: 16px;
+    color: #F0F8A4;
+
+    transition: 0.5s;
+}
+
+
+.sportfilter-title button:hover {
+    transform: scale(1.1);
+}
+
+.sportfieldtype-filter {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 36px;
+}
+
+.calendartype-filter {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 36px;
+}
+
+.filter-right {
+    display: flex;
+    flex-direction: column;
+}
+
+.price-filter {
+    display: flex;
+    gap: 30px;
+    flex-direction: column;
+}
+
+.time-filter {
+    display: flex;
+    gap: 30px;
+    flex-direction: column;
+}

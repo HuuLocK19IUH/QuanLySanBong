@@ -1,0 +1,41 @@
+.introimg-container {
+    background-color: #90B77D;
+    border-radius: 30px;
+    width: 500px;
+    height: 550px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    perspective: 1000px;
+}
+
+.introimg-container p {
+    color: white;
+}
+
+.hinhanhsantitle {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-left: -280px;
+}
+
+.intro-title-card {
+    font-size: 64px;
+    font-weight: bold;
+    margin-top: 50px;
+    margin-left: -150px;
+}
+
+
+.introimg-container img {
+    width: 400px;
+    height: 300px;
+    margin-top: 120px;
+
+    transform: rotate(15deg);
+    transition: 0.5s;
+}
+.introimg-container img:hover {
+    transform: rotate(0deg); /* 👈 thẳng lại */
+}

@@ -1,0 +1,83 @@
+.HomePageInfoFooter-card {
+    margin-top: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #F0F8A4;
+    background-color: #36656B;
+    width: 1738px;
+    height: 615px;
+    border-radius: 20px;
+    gap: 200px;
+}
+
+.HomePageInfoFooter-card .f-right h3,
+.HomePageInfoFooter-card .f-left h3 {
+    font-size: 36px;
+}
+
+.HomePageInfoFooter-card .f-right p,
+.HomePageInfoFooter-card .f-left p {
+    font-size: 24px;
+}
+
+.f-right {
+    display: flex;
+    flex-direction: column;
+    gap: 80px;
+}
+
+.f-right p {
+    margin-top: 5px;
+}
+
+.f-right .s-icons {
+    display: flex;
+    gap: 30px;
+}
+
+.f-right .tags {
+    display: flex;
+    gap: 10px;
+}
+
+.f-right .tags button {
+    width: 200px;
+    height: 50px;
+    border-radius: 20px;
+    font-size: 32px;
+    color: #F0F8A4;
+    background-color: #90B77D;
+    border: 0px;
+}
+
+.f-left {
+    display: flex;
+    flex-direction: column;
+    gap: 100px;
+    align-items: center;
+    justify-self: center;
+    border-left: 1px solid #F0F8A4;
+}
+
+.f-left-com1,
+.f-left-com2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 120px;
+    margin-left: 100px;
+}
+
+.f-left-com1 .sdt-con {
+    margin-left: 10px;
+}
+
+.f-left-com1 {
+    gap: 300px;
+}
+
+.descrip {
+    text-align: center;
+    margin-left: 200px;
+}

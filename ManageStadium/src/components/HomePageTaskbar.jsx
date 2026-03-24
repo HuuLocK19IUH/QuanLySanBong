@@ -3,9 +3,9 @@ import FilterIcon from "../assets/Filter.png"
 import BellIcon from "../assets/Bell_fill.png"
 import CartIcon from "../assets/Bag_alt_fill.png"
 import CheckIcon from "../assets/Check_fill.png"
-import "../styles/Taskbar.css"
+import "../styles/HomePageTaskbar.css"
 import { useNavigate } from "react-router-dom"
-function Taskbar() {
+function HomePageTaskbar({ toggleFilter }) {
     const navigate = useNavigate()
 
     return (
@@ -13,18 +13,29 @@ function Taskbar() {
             <img src={SearchIcon} alt="" />
             <div className="search-box">
                 <input type="text" placeholder="Tìm sân..." />
-                <img src={FilterIcon} alt="" className="filter-icon" />
+                <img
+                    src={FilterIcon}
+                    alt=""
+                    className="filter-icon"
+                    onClick={toggleFilter}
+                />
             </div>
             <div className="navigation-bar">
                 <div className="nav-item">
                     <img src={BellIcon} alt="" />
                     <a>Thông báo</a>
                 </div>
-                <div className="nav-item" onClick={() => navigate("/cart")}>
+                <div
+                    className="nav-item"
+                    onClick={() => navigate("/cart")}
+                >
                     <img src={CartIcon} alt="" />
                     <a>Giỏ hàng</a>
                 </div>
-                <div className="nav-item" onClick={() => navigate("/history")}>
+                <div
+                    className="nav-item"
+                    onClick={() => navigate("/history")}
+                >
                     <img src={CheckIcon} alt="" />
                     <a>Sân đã đặt</a>
                 </div>
@@ -36,4 +47,4 @@ function Taskbar() {
     )
 }
 
-export default Taskbar;
+export default HomePageTaskbar;
