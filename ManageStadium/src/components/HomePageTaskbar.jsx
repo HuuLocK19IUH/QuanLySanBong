@@ -25,11 +25,17 @@ function HomePageTaskbar({ toggleFilter }) {
                     <img src={BellIcon} alt="" />
                     <a>Thông báo</a>
                 </div>
-                <div className="nav-item">
+                <div
+                    className="nav-item"
+                    onClick={() => navigate("/cart")}
+                >
                     <img src={CartIcon} alt="" />
                     <a>Giỏ hàng</a>
                 </div>
-                <div className="nav-item">
+                <div
+                    className="nav-item"
+                    onClick={() => navigate("/history")}
+                >
                     <img src={CheckIcon} alt="" />
                     <a>Sân đã đặt</a>
                 </div>

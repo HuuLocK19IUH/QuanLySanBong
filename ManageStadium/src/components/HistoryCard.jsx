@@ -1,36 +1,39 @@
-function HistoryCard({ openDetail }) {
+import "../styles/cartHistoryPages.css"
+
+function HistoryCard({ booking, openDetail }) {
 
   return (
-    <div className="card">
+    <div className="mh-card">
 
       <img
-        className="court-img"
-        src="https://images.unsplash.com/photo-1599058917212-d750089bc07e"
+        className="mh-court-img"
+        src={booking?.img}
+        alt=""
       />
 
-      <div className="card-info">
+      <div className="mh-card-info">
 
-        <h3>Sân cầu lông 4 người</h3>
+        <h3>{booking?.title}</h3>
 
-        <span className="tag">
-          Cầu lông
+        <span className="mh-tag">
+          {booking?.tag}
         </span>
 
-        <p>Ngày sử dụng: 06/03/2026</p>
+        <p className="mh-date">Ngày sử dụng: {booking?.date}</p>
 
       </div>
 
-      <div className="card-right">
+      <div className="mh-card-right">
 
-        <p>Trạng thái: hoàn thành</p>
+        <p className="mh-card-status">Trạng thái: {booking?.status}</p>
 
-        <div className="btn-group">
+        <div className="mh-btn-group">
 
-          <button onClick={openDetail}>
+          <button className="mh-btn mh-btn--small" onClick={openDetail}>
             Chi tiết
           </button>
 
-          <button>
+          <button className="mh-btn mh-btn--small">
             Đánh giá
           </button>
 
