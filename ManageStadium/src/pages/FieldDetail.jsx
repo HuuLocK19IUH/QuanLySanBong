@@ -12,36 +12,32 @@ import Footer from '../components/Footer';
 
 const FieldDetail = () => {
 
-  const [activeTab, setActiveTab] = useState('info');
+   const [activeTab, setActiveTab] = useState('info');
 
-  return (
-    <div>
+   return (
+      <div>
 
-       <TaskBar />
-       <ProductDetailImage />
-       <DetailCard />
+         <TaskBar />
+         <ProductDetailImage />
+         <DetailCard />
 
-       <TabMenu 
-          activeTab={activeTab} 
-          setActiveTab={setActiveTab} 
-       />
+         <TabMenu
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+         />
 
-       <div className="tab-content">
+         <div className="tab-content">
 
-          {activeTab === 'info' && <FieldInfoTab />}
+            {activeTab === 'info' && <FieldInfoTab />}
+            {activeTab === 'service' && <FieldServiceTab />}
+            {activeTab === 'rules' && <RuleTab />}
+            {activeTab === 'reviews' && <ReviewTab />}
+         </div>
 
-          {activeTab === 'service' && <FieldServiceTab />}
+         <Footer />
 
-          {activeTab === 'rule' && <RuleTab />}
-
-          {activeTab === 'review' && <ReviewTab />}
-
-       </div>
-
-       <Footer />
-
-    </div>
-  )
+      </div>
+   )
 }
 
 export default FieldDetail;
