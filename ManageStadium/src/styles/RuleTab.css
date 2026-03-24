@@ -1,0 +1,29 @@
+/* File: src/styles/RuleTab.css */
+.rule-tab-container {
+  width: 80%;
+  margin: 0 auto;
+  padding-bottom: 50px;
+  font-family: 'Kanit', sans-serif;
+}
+
+.rule-box {
+  border: 2px solid #36656B;
+  border-radius: 12px;
+  padding: 30px 40px;
+  background-color: #ffffff;
+}
+
+.rule-title {
+  color: #36656B;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.rule-list {
+  list-style-type: disc;
+  padding-left: 20px;
+  font-size: 18px;
+  line-height: 2;
+  color: #000000;
+}
