@@ -33,7 +33,7 @@
 /* Style mặc định cho từng tab (Trạng thái chưa chọn) */
 .tab-item {
   padding-bottom: 12px; /* Đẩy chữ lên trên một chút để chừa chỗ cho gạch chân */
-  font-size: 24px; /* Chữ to hơn theo thiết kế */
+  font-size: 36px; /* Chữ to hơn theo thiết kế */
   font-weight: 800; /* In đậm nét chữ */
   color: #6B7280; /* Màu chữ xám */
   cursor: pointer;
