@@ -5,8 +5,9 @@ import FieldDetail from './pages/FieldDetail'
 import Booking from "./pages/Booking"
 import Payment from "./pages/Payment"
 import Register from "./pages/Register"
-import CartPage from "./pages/CartPage"
-import HistoryPage from "./pages/HistoryPage"
+import CartPage from "./pages/CartPage";
+import HistoryPage from "./pages/HistoryPage";
+import BookingDetailPage from "./pages/BookingDetailPage";
 function App() {
   return (
     <BrowserRouter>
@@ -27,6 +28,7 @@ function App() {
         <Route path="/cart" element={<CartPage />} />
 
         <Route path="/history" element={<HistoryPage />} />
+        <Route path="/booking-detail" element={<BookingDetailPage />} />
 
       </Routes>
     </BrowserRouter>
