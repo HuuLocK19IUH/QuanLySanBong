@@ -6,7 +6,7 @@
 }
 
 .service-title {
-  font-size: 24px;
+  font-size: 36px;
   font-weight: 800;
   color: #000000;
   margin-bottom: 20px;
@@ -28,14 +28,14 @@
   border: 1px solid #F0F8A4; /* Viền vàng nhạt giữa các ô */
   padding: 15px;
   text-align: center;
-  font-size: 18px;
+  font-size: 36px;
 }
 
 /* Header bảng (Màu vàng nhạt) */
 .custom-table thead th {
   color: #F0F8A4;
   font-weight: 700;
-  font-size: 20px;
+  font-size: 36px;
 }
 
 .bold-cell {
@@ -49,4 +49,40 @@
 /* Service Table đặc thù 2 cột */
 .service-table td {
   width: 50%;
+}
+/* --- CSS CHO KHUNG CUỘN BẢNG DỊCH VỤ --- */
+.table-scroll-wrapper {
+  max-height: 600px;
+  overflow-y: auto;
+  border-radius: 12px;
+  border: 1px solid #F0F8A4; /* Chuyển viền từ table ra ngoài div bọc */
+}
+
+/* Cố định Header (Tiêu đề bảng) khi cuộn xuống */
+.table-scroll-wrapper thead th {
+  position: sticky;
+  top: -1px; /* Mẹo: Để -1px để không bị hở viền nhỏ ở trên cùng */
+  background-color: #36656B;
+  z-index: 10;
+  box-shadow: 0px 2px 0px #F0F8A4; /* Tạo đường viền dưới mà không bị lỗi layout */
+}
+
+/* Làm đẹp thanh cuộn */
+.table-scroll-wrapper::-webkit-scrollbar {
+  width: 8px;
+}
+.table-scroll-wrapper::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+  border-radius: 8px;
+}
+.table-scroll-wrapper::-webkit-scrollbar-thumb {
+  background: #a8a8a8; 
+  border-radius: 8px;
+}
+.table-scroll-wrapper::-webkit-scrollbar-thumb:hover {
+  background: #888; 
+}
+/* Tắt chế độ ẩn của bảng để sticky hoạt động được */
+.table-scroll-wrapper .custom-table {
+  overflow: visible !important;
 }

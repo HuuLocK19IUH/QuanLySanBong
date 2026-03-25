@@ -9,16 +9,38 @@ import FieldServiceTab from '../components/FieldServiceTab';
 import RuleTab from "../components/RuleTab";
 import ReviewTab from "../components/ReviewTab";
 import Footer from '../components/Footer';
+import Filter from '../components/Filter'; // Import thêm Filter
 
 const FieldDetail = () => {
-
    const [activeTab, setActiveTab] = useState('info');
+   // Thêm state để quản lý việc ẩn/hiện bảng filter
+   const [showFilter, setShowFilter] = useState(false);
 
    return (
       <div>
+         {/* Gom TaskBar, ProductDetailImage và Filter vào một div có position relative */}
+         <div style={{ position: 'relative' }}>
+            {/* Truyền hàm đổi state vào prop toggleFilter */}
+            <TaskBar toggleFilter={() => setShowFilter(!showFilter)} />
+            
+            <ProductDetailImage />
 
-         <TaskBar />
-         <ProductDetailImage />
+            {/* Hiển thị đè Filter lên trên Carousel/Image nếu showFilter = true */}
+            {showFilter && (
+               <div style={{
+                  position: 'absolute',
+                  top: '106px', /* Nằm ngay dưới Taskbar (vì height của Taskbar.css là 106px) */
+                  left: 0,
+                  width: '100%',
+                  display: 'flex',
+                  justifyContent: 'center', /* Căn giữa bảng filter */
+                  zIndex: 999 /* Z-index cao để đè lên mọi thứ bên dưới */
+               }}>
+                  <Filter />
+               </div>
+            )}
+         </div>
+
          <DetailCard />
 
          <TabMenu
@@ -27,7 +49,6 @@ const FieldDetail = () => {
          />
 
          <div className="tab-content">
-
             {activeTab === 'info' && <FieldInfoTab />}
             {activeTab === 'service' && <FieldServiceTab />}
             {activeTab === 'rules' && <RuleTab />}
@@ -35,7 +56,6 @@ const FieldDetail = () => {
          </div>
 
          <Footer />
-
       </div>
    )
 }
