@@ -1,17 +1,19 @@
 
+import { useNavigate } from "react-router-dom";
 import starFill from "../assets/Star_fill.png"
 import starUnFill from "../assets/Star_unfill.png"
 import "../styles/SportFieldCard.css"
-function SportFieldCard({ img, name, price, state, evaluate, starCount }) {
+function SportFieldCard({ img, name, price, state, evaluate, starCount}) {
+    const navigate = useNavigate()
     const FormatPrice = (price) => {
         return price.toLocaleString("vi-VN");
     };
 
     const FormatRating = (rating) => {
         return (Number(rating) / 1000).toFixed(1);
-    }; 
+    };
     return (
-        <div className="sportfieldcard">
+        <div className="sportfieldcard" onClick={() => navigate("/field-detail")}>
             <img src={img} alt="" />
             <div className="card-info">
                 <p className="card-name">{name}</p>

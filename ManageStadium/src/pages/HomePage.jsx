@@ -12,6 +12,7 @@ import IntroImgCard from "../components/IntroImgCard";
 import introimg from "../assets/introimg.png"
 import HomePageInfoFooter from "../components/HomePageInfoFooter";
 import Footer from "../components/Footer";
+import Usericon from "../assets/User_cicrle_light.png";
 function HomePage() {
     const [showFilter, setShowFilter] = useState(false);
     const sportFields = [
@@ -50,6 +51,15 @@ function HomePage() {
         { nameimg: "Sự kiện", img: introimg },
         { nameimg: "Toàn cảnh", img: introimg },
     ]
+
+    const [user, setUser] = useState({
+        name: "Martus",
+        avatar: Usericon
+    });
+
+    if (user) {
+        localStorage.setItem("userOnl", JSON.stringify(user));
+    }
     return (
         <div className="homepage">
             <div className="carousel-wrapper">
@@ -59,6 +69,7 @@ function HomePage() {
 
                 <HomePageTaskbar
                     className="homepage-taskbar"
+
                     toggleFilter={() => setShowFilter(!showFilter)}
                 />
             </div>

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-
-import TaskBar from '../components/Taskbar';
+import HomePageTaskbar from '../components/HomePageTaskbar';
 import ProductDetailImage from '../components/ProductDetailPage';
 import DetailCard from '../components/DetailCard';
 import TabMenu from '../components/TabMenu';
@@ -21,8 +20,9 @@ const FieldDetail = () => {
          {/* Gom TaskBar, ProductDetailImage và Filter vào một div có position relative */}
          <div style={{ position: 'relative' }}>
             {/* Truyền hàm đổi state vào prop toggleFilter */}
-            <TaskBar toggleFilter={() => setShowFilter(!showFilter)} />
-            
+
+            <HomePageTaskbar toggleFilter={() => setShowFilter(!showFilter)}  />
+
             <ProductDetailImage />
 
             {/* Hiển thị đè Filter lên trên Carousel/Image nếu showFilter = true */}

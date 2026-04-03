@@ -27,17 +27,17 @@ function LoginForm() {
                 placeholder="Nhập mật khẩu"
             />
 
-            <LoginBtn label="Đăng nhập" />
+            <LoginBtn label="Đăng nhập" onClick={() => navigate("/")} />
 
             <GoogleLoginBtn />
 
-            <a className="register-link"   onClick={() => navigate("/register")}>
+            <a className="register-link" onClick={() => navigate("/register")}>
                 Đăng ký
             </a>
 
-            <img 
-                src={HomeIcon} 
-                alt="" 
+            <img
+                src={HomeIcon}
+                alt=""
                 id="home-icon"
                 onClick={() => navigate("/")}
             />

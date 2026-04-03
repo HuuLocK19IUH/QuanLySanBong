@@ -8,6 +8,7 @@ import Register from "./pages/Register"
 import CartPage from "./pages/CartPage";
 import HistoryPage from "./pages/HistoryPage";
 import BookingDetailPage from "./pages/BookingDetailPage";
+import UserInfo from "./pages/UserInfo"
 function App() {
   return (
     <BrowserRouter>
@@ -28,8 +29,10 @@ function App() {
         <Route path="/cart" element={<CartPage />} />
 
         <Route path="/history" element={<HistoryPage />} />
+
         <Route path="/booking-detail" element={<BookingDetailPage />} />
 
+        <Route path="/user-info" element={<UserInfo />} />
       </Routes>
     </BrowserRouter>
   )
