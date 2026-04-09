@@ -1,6 +1,6 @@
 import { useMemo } from "react"
 import { useNavigate } from "react-router-dom"
-import Taskbar from "../components/Taskbar"
+import Taskbar from "../components/HomePageTaskbar"
 import HistoryCard from "../components/HistoryCard"
 import Footer from "../components/Footer"
 import pagenavleft from "../assets/Expand_left.png"

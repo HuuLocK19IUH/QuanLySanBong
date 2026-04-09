@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom"
 
 function RegisterForm() {
     const navigate = useNavigate()
+    
     return (
         <div className="register-form">
 
@@ -31,11 +32,11 @@ function RegisterForm() {
                 placeholder="Nhập lại mật khẩu"
             />
 
-            <LoginBtn label="Đăng ký" />
+            <LoginBtn label="Đăng ký" onClick={() => navigate("/login")} />
 
 
             <a className="register-link"
-                onClick={()=>navigate("/login")}
+                onClick={() => navigate("/login")}
             >
                 Đăng Nhập
             </a>

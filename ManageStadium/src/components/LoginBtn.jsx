@@ -1,7 +1,7 @@
 import "../styles/LoginBtn.css"
-function LoginBtn({ label }) {
+function LoginBtn({ label, onClick }) {
     return (
-        <button className="login-btn">
+        <button className="login-btn" onClick={onClick}>
             {label}
         </button>
     )

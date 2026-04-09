@@ -1,4 +1,4 @@
-import Taskbar from "../components/Taskbar"
+import Taskbar from "../components/HomePageTaskbar"
 import CourtCard from "../components/CourtCard"
 import Footer from "../components/Footer"
 import "../styles/cartHistoryPages.css"
@@ -28,14 +28,14 @@ function CartPage() {
               tag="Cầu lông"
               img="https://images.unsplash.com/photo-1599058917212-d750089bc07e"
               status="đang chờ thanh toán"
-              onPay={() => {}}
+              onPay={() => { }}
             />
             <CourtCard
               title="Sân cầu lông 4 người"
               tag="Cầu lông"
               img="https://images.unsplash.com/photo-1599058917212-d750089bc07e"
               status="hết hạn thanh toán"
-              onPay={() => {}}
+              onPay={() => { }}
             />
           </div>
         </div>
