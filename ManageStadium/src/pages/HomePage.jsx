@@ -2,8 +2,7 @@ import HomePageTaskbar from "../components/HomePageTaskbar";
 import CarouselBoard from "../components/CarouselBoard";
 import Filter from "../components/Filter";
 import SportFieldCard from "../components/SportFieldCard";
-import SportFieldCardImg from "../assets/sportfieldcardimg1.png"
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import "../styles/HomePage.css";
 import pagenavleft from "../assets/Expand_left.png";
 import pagenavright from "../assets/Expand_right.png";
@@ -13,30 +12,21 @@ import introimg from "../assets/introimg.png"
 import HomePageInfoFooter from "../components/HomePageInfoFooter";
 import Footer from "../components/Footer";
 import Usericon from "../assets/User_cicrle_light.png";
+import { getSportFields } from "../api/sportfieldApi/sportfieldsApi";
+
 function HomePage() {
     const [showFilter, setShowFilter] = useState(false);
-    const sportFields = [
-        { img: SportFieldCardImg, name: "Sân cầu lông indoor", price: 150000, state: "Trống", starCount: 4, evaluate: "12400" },
-        { img: SportFieldCardImg, name: "Sân cầu lông indoor", price: 150000, state: "Trống", starCount: 5, evaluate: "12400" },
-        { img: SportFieldCardImg, name: "Sân cầu lông indoor", price: 150000, state: "Trống", starCount: 5, evaluate: "12400" },
-        { img: SportFieldCardImg, name: "Sân cầu lông indoor", price: 150000, state: "Trống", starCount: 5, evaluate: "12400" },
-        { img: SportFieldCardImg, name: "Sân cầu lông indoor", price: 150000, state: "Trống", starCount: 5, evaluate: "12400" },
-        { img: SportFieldCardImg, name: "Sân cầu lông indoor", price: 150000, state: "Trống", starCount: 5, evaluate: "12400" },
-        { img: SportFieldCardImg, name: "Sân cầu lông indoor", price: 150000, state: "Trống", starCount: 5, evaluate: "12400" },
-        { img: SportFieldCardImg, name: "Sân cầu lông indoor", price: 150000, state: "Trống", starCount: 5, evaluate: "12400" },
 
-        // 👉 thêm nhiều item để test phân trang
-        { img: SportFieldCardImg, name: "Sân VIP", price: 200000, state: "Đã đặt", starCount: 5, evaluate: "22000" },
-        { img: SportFieldCardImg, name: "Sân mini", price: 100000, state: "Trống", starCount: 3, evaluate: "8000" },
-        { img: SportFieldCardImg, name: "Sân VIP", price: 200000, state: "Đã đặt", starCount: 5, evaluate: "22000" },
-        { img: SportFieldCardImg, name: "Sân mini", price: 100000, state: "Trống", starCount: 3, evaluate: "8000" },
-        { img: SportFieldCardImg, name: "Sân VIP", price: 200000, state: "Đã đặt", starCount: 5, evaluate: "22000" },
-        { img: SportFieldCardImg, name: "Sân mini", price: 100000, state: "Trống", starCount: 3, evaluate: "8000" },
-        { img: SportFieldCardImg, name: "Sân VIP", price: 200000, state: "Đã đặt", starCount: 5, evaluate: "22000" },
-        { img: SportFieldCardImg, name: "Sân mini", price: 100000, state: "Trống", starCount: 3, evaluate: "8000" },
-        { img: SportFieldCardImg, name: "Sân VIP", price: 200000, state: "Đã đặt", starCount: 5, evaluate: "22000" },
-        { img: SportFieldCardImg, name: "Sân mini", price: 100000, state: "Trống", starCount: 3, evaluate: "8000" },
-    ];
+    const [sportFields, setSportFields] = useState([]);
+    useEffect(() => {
+    
+    getSportFields()
+        .then(data => {
+            console.log("SPORTFIELDS:", data); // test
+            setSportFields(data);
+        })
+        .catch(err => console.log(err));
+    }, []);
 
     const itemsPerPage = 8;
     const [currentPage, setCurrentPage] = useState(1);
@@ -86,6 +76,8 @@ function HomePage() {
                     <SportFieldCard key={index} {...item} />
                 ))}
             </div>
+
+            
             <div className="sportfieldcard-pagenagivation">
                 <img
                     src={pagenavleft}
