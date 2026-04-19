@@ -85,9 +85,36 @@ app.get("/api/ratings", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+//Tạo user
+app.post("/api/users", async (req, res) => {
+  try {
+    const db = mongoose.connection.db;
 
+    const newUser = {
+      id_user: req.body.id_user,
+      name: req.body.name,
+      phone_number: req.body.phone_number,
+      password: req.body.password,
+      date_of_birth: req.body.date_of_birth,
+      gender: req.body.gender,
+      avatar: req.body.avatar,
+      date_created: new Date()
+    };
+
+    await db.collection("users").insertOne(newUser);
+
+    console.log("NEW USER:", newUser);
+
+    res.json({
+      message: "Tạo user thành công",
+      user: newUser
+    });
+
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 // =======================================
-
 // chạy server
 app.listen(PORT, () => {
   console.log(`🚀 Server chạy tại http://localhost:${PORT}`);

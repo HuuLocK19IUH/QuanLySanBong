@@ -1,6 +1,6 @@
 import "../styles/InputFieldLogin.css"
 
-function InputFieldLogin({ label, type, placeholder }) {
+function InputFieldLogin({ label, type, placeholder, value, onChange }) {
     return (
         <div className="input-field-login">
             <label>{label}</label>
@@ -8,6 +8,8 @@ function InputFieldLogin({ label, type, placeholder }) {
             <input
                 type={type}
                 placeholder={placeholder}
+                value={value || ""}
+                onChange={onChange}
             />
         </div>
     )

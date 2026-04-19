@@ -1,13 +1,23 @@
+body {
+    margin: 0;
+}
+
+.User-info-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
 .User-info {
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    min-height: 100vh;
     background-color: #90B77D;
     display: flex;
     flex-direction: column;
     gap: 20px;
     font-family: 'kanit';
     color: #F0F8A4;
-
 }
 
 .User-info h2 {

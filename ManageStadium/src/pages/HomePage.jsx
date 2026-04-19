@@ -2,7 +2,7 @@ import HomePageTaskbar from "../components/HomePageTaskbar";
 import CarouselBoard from "../components/CarouselBoard";
 import Filter from "../components/Filter";
 import SportFieldCard from "../components/SportFieldCard";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import "../styles/HomePage.css";
 import pagenavleft from "../assets/Expand_left.png";
 import pagenavright from "../assets/Expand_right.png";
@@ -16,16 +16,22 @@ import { getSportFields } from "../api/sportfieldApi/sportfieldsApi";
 
 function HomePage() {
     const [showFilter, setShowFilter] = useState(false);
-
+    const [user, setUser] = useState(null);
     const [sportFields, setSportFields] = useState([]);
+
     useEffect(() => {
-    
-    getSportFields()
-        .then(data => {
-            console.log("SPORTFIELDS:", data); // test
-            setSportFields(data);
-        })
-        .catch(err => console.log(err));
+        const localData = JSON.parse(localStorage.getItem("user"))
+
+        if (localData) {
+            setUser(localData);
+        }
+
+        getSportFields()
+            .then(data => {
+                console.log("SPORTFIELDS:", data); // test
+                setSportFields(data);
+            })
+            .catch(err => console.log(err));
     }, []);
 
     const itemsPerPage = 8;
@@ -42,14 +48,7 @@ function HomePage() {
         { nameimg: "Toàn cảnh", img: introimg },
     ]
 
-    const [user, setUser] = useState({
-        name: "Martus",
-        avatar: Usericon
-    });
 
-    if (user) {
-        localStorage.setItem("userOnl", JSON.stringify(user));
-    }
     return (
         <div className="homepage">
             <div className="carousel-wrapper">
@@ -59,8 +58,8 @@ function HomePage() {
 
                 <HomePageTaskbar
                     className="homepage-taskbar"
-
                     toggleFilter={() => setShowFilter(!showFilter)}
+                    user={user}
                 />
             </div>
 
@@ -77,7 +76,7 @@ function HomePage() {
                 ))}
             </div>
 
-            
+
             <div className="sportfieldcard-pagenagivation">
                 <img
                     src={pagenavleft}
