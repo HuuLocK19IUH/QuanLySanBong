@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import HomePageTaskbar from '../components/HomePageTaskbar';
 import ProductDetailImage from '../components/ProductDetailPage';
 import DetailCard from '../components/DetailCard';

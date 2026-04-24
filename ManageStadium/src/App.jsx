@@ -10,6 +10,7 @@ import HistoryPage from "./pages/HistoryPage";
 import BookingDetailPage from "./pages/BookingDetailPage";
 import UserInfo from "./pages/UserInfo"
 import { UserProvider } from "./hooks/context/UserContext";
+// import CalendarBooking from "./pages/CalendarBooking"
 
 function App() {
   return (
@@ -35,6 +36,8 @@ function App() {
           <Route path="/booking-detail" element={<BookingDetailPage />} />
 
           <Route path="/user-info" element={<UserInfo />} />
+
+          {/* <Route path="/test1" element={<CalendarBooking />} /> */}
         </Routes>
       </BrowserRouter>
     </UserProvider>
