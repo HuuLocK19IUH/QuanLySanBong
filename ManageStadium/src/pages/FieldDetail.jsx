@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import HomePageTaskbar from '../components/HomePageTaskbar';
 import ProductDetailImage from '../components/ProductDetailPage';
 import DetailCard from '../components/DetailCard';
@@ -9,11 +9,14 @@ import RuleTab from "../components/RuleTab";
 import ReviewTab from "../components/ReviewTab";
 import Footer from '../components/Footer';
 import Filter from '../components/Filter'; // Import thêm Filter
-
+import { useUser } from "../hooks/context/UserContext";
 const FieldDetail = () => {
    const [activeTab, setActiveTab] = useState('info');
    // Thêm state để quản lý việc ẩn/hiện bảng filter
    const [showFilter, setShowFilter] = useState(false);
+
+   const { user } = useUser();
+
 
    return (
       <div>
@@ -21,7 +24,11 @@ const FieldDetail = () => {
          <div style={{ position: 'relative' }}>
             {/* Truyền hàm đổi state vào prop toggleFilter */}
 
-            <HomePageTaskbar toggleFilter={() => setShowFilter(!showFilter)}  />
+            <HomePageTaskbar
+               className="homepage-taskbar"
+               toggleFilter={() => setShowFilter(!showFilter)}
+               user={user}
+            />
 
             <ProductDetailImage />
 

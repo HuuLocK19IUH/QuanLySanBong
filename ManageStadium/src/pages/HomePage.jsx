@@ -13,19 +13,13 @@ import HomePageInfoFooter from "../components/HomePageInfoFooter";
 import Footer from "../components/Footer";
 import Usericon from "../assets/User_cicrle_light.png";
 import { getSportFields } from "../api/sportfieldApi/sportfieldsApi";
-
+import { useUser } from "../hooks/context/UserContext";
 function HomePage() {
     const [showFilter, setShowFilter] = useState(false);
-    const [user, setUser] = useState(null);
+    const { user } = useUser();
     const [sportFields, setSportFields] = useState([]);
 
     useEffect(() => {
-        const localData = JSON.parse(localStorage.getItem("user"))
-
-        if (localData) {
-            setUser(localData);
-        }
-
         getSportFields()
             .then(data => {
                 console.log("SPORTFIELDS:", data); // test
@@ -36,9 +30,7 @@ function HomePage() {
 
     const itemsPerPage = 8;
     const [currentPage, setCurrentPage] = useState(1);
-
     const totalPages = Math.ceil(sportFields.length / itemsPerPage);
-
     const startIndex = (currentPage - 1) * itemsPerPage;
     const currentItems = sportFields.slice(startIndex, startIndex + itemsPerPage);
 

@@ -1,15 +1,17 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/UserMenu.css";
+import { useUser } from "../hooks/context/UserContext";
+function UserMenu() {
 
-function UserMenu({ user }) {
     const navigate = useNavigate();
     const [open, setOpen] = useState(false);
+    const { user, setUser } = useUser();
 
     const handleLogout = () => {
+        setUser(null);
         localStorage.removeItem("user");
         navigate("/login");
-        console.log("Đăng xuất");
     };
 
     return (

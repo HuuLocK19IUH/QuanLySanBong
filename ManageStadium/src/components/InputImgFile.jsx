@@ -1,9 +1,14 @@
 import "../styles/InputImgFile.css";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 
-function InputImgFile() {
+function InputImgFile({ onChange, initialAvatarUrl }) {
     const fileRef = useRef(null);
-    const [preview, setPreview] = useState(null);
+
+    const [preview, setPreview] = useState(initialAvatarUrl || null);
+
+    useEffect(() => {
+        setPreview(initialAvatarUrl || null);
+    }, [initialAvatarUrl]);
 
     const handleClick = () => {
         fileRef.current.click();
@@ -11,9 +16,11 @@ function InputImgFile() {
 
     const handleChange = (e) => {
         const file = e.target.files[0];
+
         if (file) {
             const url = URL.createObjectURL(file);
             setPreview(url);
+            onChange?.(file, url);
         }
     };
 
@@ -21,10 +28,11 @@ function InputImgFile() {
         <div className="upload-box">
             <div className="upload-area" onClick={handleClick}>
                 <div className="upload-content">
-                    {preview
-                        ? <img src={preview} className="preview-img" />
-                        : <div className="image-placeholder"></div>
-                    }
+                    {preview ? (
+                        <img src={preview} className="preview-img" />
+                    ) : (
+                        <div className="image-placeholder"></div>
+                    )}
                     <p>Chạm để tải ảnh lên</p>
                 </div>
             </div>
@@ -36,8 +44,6 @@ function InputImgFile() {
                 accept="image/*"
                 hidden
             />
-
-
         </div>
     );
 }

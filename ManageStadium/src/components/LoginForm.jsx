@@ -5,27 +5,31 @@ import LoginBtn from "./LoginBtn.jsx"
 import HomeIcon from "../assets/Home_fill.png"
 import "../styles/LoginForm.css"
 import { useNavigate } from "react-router-dom"
-import { getUserByPhone } from "../api/usersApi/userByPhone.js"
 import { useState } from "react"
-
+import { loginUser } from "../api/usersApi/loginUser.js"
+import { useUser } from "../hooks/context/UserContext.jsx"
 function LoginForm() {
 
     const navigate = useNavigate()
-
     const [phone, setPhone] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(true);
+    const { setUser } = useUser();
 
     const handleSubmit = async () => {
-        const foundUser = await getUserByPhone(phone);
-        console.log("phone:", phone);
-        console.log("user:", foundUser);
-        if (!foundUser || foundUser.password !== password) {
+        try {
+            const user = await loginUser(phone, password);
+
+            if (!user) {
+                setError(true);
+                return;
+            }
+            localStorage.setItem("user", JSON.stringify(user));
+            setUser(user)
+            navigate("/");
+        } catch {
             setError(true);
-            return;
         }
-        localStorage.setItem("user", JSON.stringify(foundUser));
-        navigate("/");
     };
 
     return (
