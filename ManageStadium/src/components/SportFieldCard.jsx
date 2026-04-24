@@ -1,4 +1,3 @@
-
 import { useNavigate } from "react-router-dom";
 import starFill from "../assets/Star_fill.png"
 import starUnFill from "../assets/Star_unfill.png"
@@ -12,8 +11,9 @@ function SportFieldCard({ img_url, title, pricing, state, avg_rating, total_rati
         return price.toLocaleString("vi-VN");
     };
 
-    const displayPrice = pricing?.[0]?.price || 0;
-
+    const displayPrice = Number(pricing?.[0]?.price?.toString()) || 0;
+    console.log(pricing?.[0]?.price);
+    console.log(typeof pricing?.[0]?.price);
     return (
         <div className="sportfieldcard" onClick={() => navigate("/field-detail")}>
             <img src={img_url} alt="hinhanh" />

@@ -2,7 +2,7 @@ import HomePageTaskbar from "../components/HomePageTaskbar";
 import CarouselBoard from "../components/CarouselBoard";
 import Filter from "../components/Filter";
 import SportFieldCard from "../components/SportFieldCard";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import "../styles/HomePage.css";
 import pagenavleft from "../assets/Expand_left.png";
 import pagenavright from "../assets/Expand_right.png";
@@ -13,26 +13,24 @@ import HomePageInfoFooter from "../components/HomePageInfoFooter";
 import Footer from "../components/Footer";
 import Usericon from "../assets/User_cicrle_light.png";
 import { getSportFields } from "../api/sportfieldApi/sportfieldsApi";
-
+import { useUser } from "../hooks/context/UserContext";
 function HomePage() {
     const [showFilter, setShowFilter] = useState(false);
-
+    const { user } = useUser();
     const [sportFields, setSportFields] = useState([]);
+
     useEffect(() => {
-    
-    getSportFields()
-        .then(data => {
-            console.log("SPORTFIELDS:", data); // test
-            setSportFields(data);
-        })
-        .catch(err => console.log(err));
+        getSportFields()
+            .then(data => {
+                console.log("SPORTFIELDS:", data); // test
+                setSportFields(data);
+            })
+            .catch(err => console.log(err));
     }, []);
 
     const itemsPerPage = 8;
     const [currentPage, setCurrentPage] = useState(1);
-
     const totalPages = Math.ceil(sportFields.length / itemsPerPage);
-
     const startIndex = (currentPage - 1) * itemsPerPage;
     const currentItems = sportFields.slice(startIndex, startIndex + itemsPerPage);
 
@@ -42,14 +40,7 @@ function HomePage() {
         { nameimg: "Toàn cảnh", img: introimg },
     ]
 
-    const [user, setUser] = useState({
-        name: "Martus",
-        avatar: Usericon
-    });
 
-    if (user) {
-        localStorage.setItem("userOnl", JSON.stringify(user));
-    }
     return (
         <div className="homepage">
             <div className="carousel-wrapper">
@@ -59,8 +50,8 @@ function HomePage() {
 
                 <HomePageTaskbar
                     className="homepage-taskbar"
-
                     toggleFilter={() => setShowFilter(!showFilter)}
+                    user={user}
                 />
             </div>
 
@@ -77,7 +68,7 @@ function HomePage() {
                 ))}
             </div>
 
-            
+
             <div className="sportfieldcard-pagenagivation">
                 <img
                     src={pagenavleft}

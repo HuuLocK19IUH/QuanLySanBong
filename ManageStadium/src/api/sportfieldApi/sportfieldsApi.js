@@ -1,7 +1,13 @@
-// src/api/sportfieldApi.js
 import axios from "axios";
 
+const API_URL = "http://localhost:5000/api/sportfields";
+
 export const getSportFields = async () => {
-  const res = await axios.get("http://localhost:3000/api/sportfields");
-  return res.data;
+  try {
+    const res = await axios.get(API_URL);
+    return res.data;
+  } catch (err) {
+    console.error("Lỗi khi gọi API sportfields:", err.response?.data || err.message);
+    throw err.response?.data || { message: "Không thể lấy danh sách sân" };
+  }
 };

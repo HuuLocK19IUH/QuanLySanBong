@@ -9,32 +9,36 @@ import CartPage from "./pages/CartPage";
 import HistoryPage from "./pages/HistoryPage";
 import BookingDetailPage from "./pages/BookingDetailPage";
 import UserInfo from "./pages/UserInfo"
+import { UserProvider } from "./hooks/context/UserContext";
+
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
+    <UserProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
 
-        <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<LoginPage />} />
 
-        <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<Register />} />
 
-        <Route path="/register" element={<Register />} />
+          <Route path="/field-detail" element={<FieldDetail />} />
 
-        <Route path="/field-detail" element={<FieldDetail />} />
+          <Route path="/booking" element={<Booking />} />
 
-        <Route path="/booking" element={<Booking />} />
+          <Route path="/payment" element={<Payment />} />
 
-        <Route path="/payment" element={<Payment />} />
+          <Route path="/cart" element={<CartPage />} />
 
-        <Route path="/cart" element={<CartPage />} />
+          <Route path="/history" element={<HistoryPage />} />
 
-        <Route path="/history" element={<HistoryPage />} />
+          <Route path="/booking-detail" element={<BookingDetailPage />} />
 
-        <Route path="/booking-detail" element={<BookingDetailPage />} />
+          <Route path="/user-info" element={<UserInfo />} />
+        </Routes>
+      </BrowserRouter>
+    </UserProvider>
 
-        <Route path="/user-info" element={<UserInfo />} />
-      </Routes>
-    </BrowserRouter>
   )
 }
 

@@ -6,18 +6,10 @@ import CheckIcon from "../assets/Check_fill.png"
 import HomeIcon from "../assets/Home_fill_navbar.png"
 import "../styles/HomePageTaskbar.css"
 import { useNavigate } from "react-router-dom"
-import { useEffect, useState } from "react"
+import UserMenu from "./UserMenu"
 
-function HomePageTaskbar({ toggleFilter }) {
-    const navigate = useNavigate()
-    const [user, setUser] = useState();
-
-    useEffect(() => {
-        const localData = localStorage.getItem("userOnl");
-        if (localData) {
-            setUser(JSON.parse(localData));
-        }
-    }, []);
+function HomePageTaskbar({ toggleFilter, user }) {
+    const navigate = useNavigate();
 
     return (
         <div className="taskbar">
@@ -56,11 +48,8 @@ function HomePageTaskbar({ toggleFilter }) {
                 </div>
             </div>
             {
-                user ? (
-                    <div className="taskbar-user" onClick={() => navigate("/user-info")}>
-                        <span>{user.name}</span>
-                        <img src={user.avatar} alt="" className="avatar" />
-                    </div>
+                user !== null ? (
+                    <UserMenu user={user} />
                 ) : (
                     <button
                         className="taskbar-login-btn"
