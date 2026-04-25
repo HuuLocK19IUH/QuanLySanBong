@@ -1,8 +1,10 @@
+import Sportfield from "../models/Sportfield.js";
 import {
     getSportFieldsService,
     getSportFieldByIdService,
     updateSportFieldService,
-    deleteSportFieldService
+    deleteSportFieldService,
+    getSportFieldBySF_IdService
 } from "../services/SportfieldService.js";
 
 
@@ -51,5 +53,20 @@ export const deleteSportField = async (req, res) => {
         res.json({ message: "Xóa thành công", data });
     } catch (err) {
         res.status(404).json({ message: err.message });
+    }
+};
+
+
+export const getSportFieldBySF_Id = async (req, res) => {
+    try {
+        const sportfield = await getSportFieldBySF_IdService(req.params.id);
+
+        if (!sportfield) {
+            return res.status(404).json({ message: "Không tìm thấy sân" });
+        }
+
+        return res.status(200).json(sportfield);
+    } catch (err) {
+        return res.status(500).json({ message: err.message });
     }
 };
