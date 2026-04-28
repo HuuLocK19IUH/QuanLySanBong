@@ -1,4 +1,4 @@
-import { getBookedTimeSlotsBySportFieldAndDate } from "../services/OrderService.js";
+import { getBookedTimeSlotsBySportFieldAndDate, createOrderService } from "../services/OrderService.js";
 
 export const getBookedSlots = async (req, res) => {
     try {
@@ -22,6 +22,26 @@ export const getBookedSlots = async (req, res) => {
     } catch (error) {
         res.status(500).json({
             message: error.message,
+        });
+    }
+};
+
+export const createOrderController = async (req, res) => {
+    try {
+        const orderData = req.body;
+        console.log("BODY:", req.body);
+        const newOrder = await createOrderService(orderData);
+
+        return res.status(201).json({
+            success: true,
+            message: "Create order successfully",
+            data: newOrder,
+        });
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: "Create order failed",
+            error: error.message,
         });
     }
 };

@@ -1,10 +1,10 @@
 import Order from "../models/Order.js";
 export const getBookedTimeSlotsBySportFieldAndDate = async (id_sportfield, date) => {
     const startOfDay = new Date(date);
-    startOfDay.setUTCHours(0, 0, 0, 0);
+    startOfDay.setHours(0, 0, 0, 0);
 
     const endOfDay = new Date(date);
-    endOfDay.setUTCHours(23, 59, 59, 999);
+    endOfDay.setHours(23, 59, 59, 999);
 
     const orders = await Order.find(
         {
@@ -24,8 +24,10 @@ export const getBookedTimeSlotsBySportFieldAndDate = async (id_sportfield, date)
 
     const formatTime = (date) => {
         const d = new Date(date);
-        const h = String(d.getUTCHours()).padStart(2, "0");
-        const m = String(d.getUTCMinutes()).padStart(2, "0");
+
+        const h = String(d.getHours()).padStart(2, "0");
+        const m = String(d.getMinutes()).padStart(2, "0");
+
         return `${h}:${m}`;
     };
 
@@ -33,4 +35,24 @@ export const getBookedTimeSlotsBySportFieldAndDate = async (id_sportfield, date)
         formatTime(o.start_hour),
         formatTime(o.end_hour),
     ]);
+};
+
+export const createOrderService = async (orderData) => {
+    // Đếm số order hiện tại
+    const count = await Order.countDocuments();
+
+    // Sinh mã order: O001, O002, ...
+    const nextNumber = count + 1;
+    const id_order = `O${String(nextNumber).padStart(3, "0")}`;
+
+    // Tạo order mới
+    const newOrder = new Order({
+        id_order,
+        ...orderData,
+    });
+    console.log(newOrder);
+    // Lưu DB
+    const savedOrder = await newOrder.save();
+
+    return savedOrder;
 };

@@ -1,16 +1,28 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useUser } from "../hooks/context/UserContext"
 import "../styles/Payment.css";
+import { createOrder } from "../api/ordersApi/createOrder.js";
 
 export default function Payment() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { selectedTime, services, name, phone, note, selectedDate } = location.state || {};
+  const { user } = useUser();
+  const {
+    selectedTime,
+    selectedDate,
+    timeCount,
+    paid,
+    totalService,
+    idSportfield,
+    phone,
+    returnservices,
+    note
+  } = location.state || {};
+
 
   const [timeLeft, setTimeLeft] = useState(900);
-  const orderId = "ORD" + Math.floor(Math.random() * 1000000);
-
-  // State kiểm soát việc hiển thị modal thông báo thành công
+  const [orderId, setOrderId] = useState("");
   const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   useEffect(() => {
@@ -26,23 +38,73 @@ export default function Payment() {
     return `${min}:${sec.toString().padStart(2, "0")}`;
   };
 
-  const courtPrice = 160000;
-  const serviceTotal = services?.reduce((sum, s) => sum + s.price * s.qty, 0) || 0;
-  const grandTotal = courtPrice + serviceTotal;
+  const serviceTotal = returnservices?.reduce((sum, s) => sum + s.price * s.qty, 0) || 0;
+  const grandTotal = paid + serviceTotal;
 
-  // Hàm xử lý khi nhấn nút "THANH TOÁN"
-  const handleConfirmPay = () => {
-    // Trong thực tế, bạn sẽ gọi API thanh toán ở đây.
-    // Nếu API thành công, bạn mới hiển thị modal.
-    setShowSuccessModal(true);
+  const formatDateTime = (dateStr, timeStr) => {
+    const [year, month, day] = dateStr.split("-");
+
+    let [hour, minute] = timeStr.trim().replace("h", ":").split(":");
+
+    const date = new Date(
+      Number(year),
+      Number(month) - 1,
+      Number(day),
+      Number(hour),
+      Number(minute)
+    );
+
+    // bù timezone VN (+7)
+    const vnOffset = 7 * 60; // phút
+    const localOffset = date.getTimezoneOffset(); // phút
+
+    return new Date(date.getTime() + (localOffset + vnOffset) * 60000)
+      .toISOString();
+  };
+  
+  const handleConfirmPay = async () => {
+    try {
+      const orderData = {
+        id_user: user.id_user,
+        id_sportfield: idSportfield,
+        phone,
+        note: note || "",
+
+        start_hour: formatDateTime(selectedDate, selectedTime.start),
+        end_hour: formatDateTime(selectedDate, selectedTime.end),
+
+        total_hourly_cost: paid,
+
+        services: (returnservices || []).map((s) => ({
+          service_id: s.service_id,
+          service_name: s.service_name,
+          quantity: Number(s.qty || 1),
+          price: Number(s.price || 0),
+          service_cost: Number(s.price || 0) * Number(s.qty || 1),
+        })),
+
+        total_order: grandTotal,
+      };
+
+      const data = await createOrder(orderData);
+
+      setOrderId(data.data?.id_order);
+      setShowSuccessModal(true);
+
+    } catch (error) {
+      console.error("Create order error:", error.response?.data?.message || error.message);
+    }
   };
 
   // Hàm đóng modal
   const handleCloseModal = () => {
     setShowSuccessModal(false);
-    // Sau khi đóng modal, thường bạn sẽ chuyển người dùng về trang chủ hoặc trang lịch sử đặt sân.
-    // navigate("/"); 
   };
+
+  function formatDate(dateStr) {
+    const [year, month, day] = dateStr.split("-");
+    return `${day}/${month}/${year}`;
+  }
 
   return (
     <div className="payment-page">
@@ -86,14 +148,14 @@ export default function Payment() {
               <div className="invoice-details">
                 {/* Dòng Tổng giờ & Tổng tiền */}
                 <div className="invoice-row">
-                  <span>Tổng giờ: <b>1.5h</b></span>
-                  <span>Tổng tiền: <b>{courtPrice.toLocaleString()}đ</b></span>
+                  <span>Tổng giờ: <b>{timeCount}</b></span>
+                  <span>Tổng tiền: <b>{paid.toLocaleString()}đ</b></span>
                 </div>
                 {/* Dòng Tổng dịch vụ */}
                 <div className="invoice-row">
-                  <span>Tổng dịch vụ: <b>{services?.length || 0}</b></span>
+                  <span>Tổng dịch vụ: <b>{returnservices?.length || 0}</b></span>
                 </div>
-                
+
                 {/* Bảng Dịch Vụ */}
                 <div className="invoice-table">
                   <div className="table-header-pay white-text">
@@ -101,7 +163,7 @@ export default function Payment() {
                     <span>Dịch vụ</span>
                     <span className="text-right">Giá</span>
                   </div>
-                  {services?.map((s, i) => (
+                  {returnservices?.map((s, i) => (
                     <div key={i} className="table-row-pay white-text">
                       <span>x{s.qty}</span>
                       <span>{s.name}</span>
@@ -132,10 +194,10 @@ export default function Payment() {
               <h3 className="pay-card-title">Thông tin đặt sân</h3>
               <div className="booking-summary">
                 <p className="inline-field"><span>Mã đơn:</span> <b>{orderId}</b></p>
-                <p className="inline-field"><span>Tên người đặt sân:</span> <b>{name || "Chưa nhập"}</b></p>
+                <p className="inline-field"><span>Tên người đặt sân:</span> <b>{user.name}</b></p>
                 <p className="inline-field"><span>Số điện thoại:</span> <b>{phone || "Chưa nhập"}</b></p>
-                <p className="inline-field"><span>Thời gian đặt sân:</span> <b>{selectedDate} | {selectedTime?.start} - {selectedTime?.end}</b></p>
-                
+                <p className="inline-field"><span>Thời gian đặt sân:</span> <b>{formatDate(selectedDate)} | {selectedTime?.start} - {selectedTime?.end}</b></p>
+
                 {/* Ghi chú có tiêu đề vàng */}
                 <h4 className="pay-card-title note-title">Ghi chú</h4>
                 <textarea className="pay-note-view" value={note || "Không có ghi chú"} readOnly />
@@ -165,12 +227,12 @@ export default function Payment() {
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             {/* Dấu "×" trên cùng bên trái để tắt */}
             <button className="close-x" onClick={handleCloseModal}>×</button>
-            
+
             {/* Biểu tượng tích xanh giống Figma */}
             <div className="checkmark-container">
               <span className="checkmark-icon">✔</span>
             </div>
-            
+
             {/* Văn bản thông báo chính xác như Figma */}
             <p className="success-text">Bạn đã thanh toán thành công</p>
           </div>

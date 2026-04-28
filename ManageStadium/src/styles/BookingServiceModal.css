@@ -1,0 +1,80 @@
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: #90B77D;
+    padding: 20px;
+    border-radius: 10px;
+    width: 400px;
+}
+
+/* TITLE */
+.modal-content h3 {
+    color: #F0F8A4;
+    margin-bottom: 10px;
+}
+
+/* SLIDE DỌC */
+.service-list {
+    max-height: 250px;
+    /* giới hạn chiều cao để scroll */
+    overflow-y: auto;
+    /* bật cuộn dọc */
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    padding-right: 5px;
+}
+
+/* ẨN SCROLLBAR (tuỳ chọn) */
+.service-list::-webkit-scrollbar {
+    width: 0px;
+}
+
+/* ITEM */
+.service-item {
+    display: flex;
+    justify-content: space-between;
+
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.service-item:hover {
+    background: #f0f8a4;
+    color: #90B77D;
+    transform: scale(1.03);
+    /* giảm từ 1.1 để không vỡ layout */
+}
+
+/* BUTTON */
+.close-btn {
+    margin-top: 10px;
+    border-radius: 10px;
+    width: 80px;
+    border: none;
+
+    background-color: #F0F8A4;
+    color: #90B77D;
+
+    transition: 0.3s;
+}
+
+.close-btn:hover {
+    background-color: rgba(144, 183, 125, 0.5);
+    color: #ffffff;
+    transform: scale(1.05);
+}

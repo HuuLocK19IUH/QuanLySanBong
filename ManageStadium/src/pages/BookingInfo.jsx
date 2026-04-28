@@ -1,60 +1,135 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import "../styles/Booking.css";
+import { useLocation, useNavigate } from "react-router-dom";
+import BookingServiceModal from "../components/BookingServiceModal";
+import { getServices } from "../api/serviceApi/getService";
+import { useUser } from "../hooks/context/UserContext";
 
 function BookingInfo() {
 
-    // 👉 STATE
-    const [selectedDate, setSelectedDate] = useState("");
-    const [selectedTime, setSelectedTime] = useState({
-        start: "",
-        end: ""
-    });
+    const navigate = useNavigate();
+    const location = useLocation();
+    const { user } = useUser();
+    const [selectedDate] = useState(
+        location.state?.selectedDate || ""
+    );
 
-    const [services, setServices] = useState([]);
+    const [selectedTime] = useState(
+        location.state?.selectedTime || { start: "", end: "" }
+    );
+
+    const [timeCount] = useState(
+        location.state?.timeCount || 0
+    );
+
+    const [paid] = useState(
+        location.state?.paid || false
+    );
+
+    const [idSportfield] = useState(
+        location.state?.id || null
+    );
+    console.log(idSportfield)
+
     const [totalService, setTotalService] = useState(0);
 
-    const [name, setName] = useState("");
     const [phone, setPhone] = useState("");
     const [note, setNote] = useState("");
 
-    const [timeCount, setTimeCount] = useState(""); // dạng "01h30"
-    const [paid, setPaid] = useState(0);
+    const [services, setServices] = useState([]);
+    const [returnservices, setReturnservices] = useState([]);
 
-    // 👉 TÍNH TỔNG TIỀN SERVICE
     useEffect(() => {
-        const total = services.reduce((sum, s) => {
-            return sum + s.price * s.qty;
-        }, 0);
+        const fetchData = async () => {
+            try {
+                const dataServices = await getServices();
+                if (dataServices) {
+                    setServices(dataServices);
+                }
+                if (user?.phone_number) {
+                    setPhone(user.phone_number);
+                } else {
+                    setPhone("");
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        };
 
-        setTotalService(total);
-    }, [services]);
+        fetchData();
+    }, [user]);
 
+    const [showServiceModal, setShowServiceModal] = useState(false);
     // 👉 HÀM BACK
     const handleBack = () => {
         window.history.back();
     };
 
-    // 👉 HÀM CONFIRM
+    function formatDate(dateStr) {
+        const [year, month, day] = dateStr.split("-");
+        return `${day}/${month}/${year}`;
+    }
+
+
+    const handleSelectService = (service) => {
+        setReturnservices((prev) => {
+            const index = prev.findIndex(item => item._id === service._id);
+
+            let updatedServices;
+
+            if (index !== -1) {
+                // đã tồn tại → cập nhật qty + price
+                updatedServices = [...prev];
+                updatedServices[index] = {
+                    ...updatedServices[index],
+                    qty: (updatedServices[index].qty || 0) + 1,
+                    price: (updatedServices[index].price || 0) + service.price,
+                };
+            } else {
+                // chưa có → thêm mới
+                updatedServices = [
+                    { ...service, qty: 1 },
+                    ...prev
+                ];
+            }
+
+            // tính lại total
+            const total = updatedServices.reduce((sum, item) => {
+                return sum + (item.price || 0);
+            }, 0);
+
+            setTotalService(total);
+
+            return updatedServices;
+        });
+
+        setShowServiceModal(false);
+    };
+
     const handleConfirm = () => {
-        if (!name || !phone) {
+        if (!phone) {
             alert("Vui lòng nhập đầy đủ thông tin");
             return;
         }
 
         const bookingData = {
-            date: selectedDate,
-            time: selectedTime,
-            duration: timeCount,
-            totalPrice: paid + totalService,
-            services,
-            name,
+            selectedDate,
+            selectedTime,
+            timeCount,
+            paid,
+            totalService,
+            idSportfield,
             phone,
-            note
+            returnservices,
+            note,
+            name,
         };
 
         console.log("Booking:", bookingData);
 
-        alert("Đặt sân thành công!");
+        navigate("/payment", {
+            state: bookingData
+        });
     };
 
     return (
@@ -79,7 +154,7 @@ function BookingInfo() {
                     </h3>
 
                     <div className="info-content-text">
-                        <p>Ngày: <b>{selectedDate}</b></p> {/* prop */}
+                        <p>Ngày: <b>{formatDate(selectedDate)}</b></p> {/* prop */}
 
                         <p>
                             Sân cầu lông 4 người:
@@ -101,7 +176,7 @@ function BookingInfo() {
                     </h3>
 
                     <p className="total-service-count">
-                        Tổng dịch vụ: {services.length} 
+                        Tổng dịch vụ: {returnservices.length}
                     </p>
 
                     <div className="services-table">
@@ -112,7 +187,7 @@ function BookingInfo() {
                             <span className="col-action"></span>
                         </div>
 
-                        {services.map((s, i) => (
+                        {returnservices.map((s, i) => (
                             <div key={i} className="table-row">
                                 <span className="col-qty">x{s.qty}</span>
                                 <span className="col-name">{s.name}</span>
@@ -123,9 +198,9 @@ function BookingInfo() {
                                 <button
                                     className="delete-btn"
                                     onClick={() => {
-                                        const newS = [...services];
-                                        newS.splice(i, 1);
-                                        setServices(newS);
+                                        const newReturnService = [...returnservices];
+                                        newReturnService.splice(i, 1);
+                                        setReturnservices(newReturnService);
                                     }}
                                 >
                                     🗑
@@ -135,10 +210,19 @@ function BookingInfo() {
                     </div>
 
                     <div className="card-footer-row">
-                        <button className="add-service-btn-styled">
+                        <button
+                            className="add-service-btn-styled"
+                            onClick={() => setShowServiceModal(true)}
+                        >
                             Thêm dịch vụ
                         </button>
-
+                        {showServiceModal && (
+                            <BookingServiceModal
+                                services={services}
+                                handleSelectService={handleSelectService}
+                                setShowServiceModal={setShowServiceModal}
+                            />
+                        )}
                         <div className="card-total-right">
                             Tổng tiền: {totalService.toLocaleString()}đ
                         </div>
@@ -147,16 +231,6 @@ function BookingInfo() {
 
                 {/* INPUT */}
                 <div className="input-group-outside">
-
-                    <div className="input-field-wrapper">
-                        <label className="outside-label">Tên người đặt sân</label>
-                        <input
-                            className="custom-input"
-                            placeholder="Nhập tên của bạn"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                        />
-                    </div>
 
                     <div className="input-field-wrapper">
                         <label className="outside-label">SĐT</label>
@@ -169,7 +243,7 @@ function BookingInfo() {
 
                             <input
                                 className="custom-input phone-field"
-                                placeholder="Nhập số điện thoại"
+                                placeholder={user?.phone}
                                 value={phone}
                                 onChange={(e) => setPhone(e.target.value)}
                             />

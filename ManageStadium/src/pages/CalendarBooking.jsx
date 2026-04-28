@@ -6,17 +6,20 @@ import "../styles/Booking.css";
 
 function CalendarBooking({ id }) {
     const navigate = useNavigate();
+
     const [selectedDate, setSelectedDate] = useState(
         new Date().toISOString().split("T")[0]
     );
+
     const timeSlots = [
-        "5:00", "5:30", "6:00", "6:30", "7:00", "7:30",
-        "8:00", "8:30", "9:00", "9:30", "10:00", "10:30",
+        "05:00", "05:30", "06:00", "06:30", "07:00", "07:30",
+        "08:00", "08:30", "09:00", "09:30", "10:00", "10:30",
         "11:00", "11:30", "12:00", "12:30", "13:00", "13:30",
         "14:00", "14:30", "15:00", "15:30", "16:00", "16:30",
         "17:00", "17:30", "18:00", "18:30", "19:00", "19:30",
         "20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00"
     ];
+
     const [clickStep, setClickStep] = useState(0);
     const [tempStart, setTempStart] = useState(null);
     const [sportfield, setSportfield] = useState(null);
@@ -71,40 +74,53 @@ function CalendarBooking({ id }) {
     };
 
     const toHour = (t) => {
+        if (!t) return 0;
         const [h, m] = t.split(":").map(Number);
-        return h + m / 60;
+        return h + (m || 0) / 60;
     };
-    
     useEffect(() => {
         const fetchData = async () => {
             try {
+                setSportfieldcalendar([]); // reset trước
+
                 const sf = await getSportFieldBySF_Id("SF002");
-                console.log("API result:", sf);
                 setSportfield(sf);
 
                 const data = await getBookedSlotsAPI(sf.sportfield_id, selectedDate);
-                console.log(data);
-                setSportfieldcalendar(data);
+                setSportfieldcalendar(prev => [...prev, ...data]);
 
-                console.log(selectedTime.start)
-                console.log(selectedTime.end)
-                const start = toHour(selectedTime.start)
-                const end = toHour(selectedTime.end)
-                setPaid(handlePaid(start, end, sportfield.pricing, selectedDate));
             } catch (error) {
                 console.error(error);
             }
         };
 
-        fetchData();
-    }, [selectedDate, selectedTime]);
+        if (selectedDate) fetchData();
+    }, [selectedDate]);
 
+    useEffect(() => {
+        if (!selectedTime?.start || !selectedTime?.end || !sportfield?.pricing) return;
+
+        const start = toHour(selectedTime.start);
+        const end = toHour(selectedTime.end);
+
+        const price = handlePaid(
+            start,
+            end,
+            sportfield.pricing,
+            selectedDate
+        );
+
+        setPaid(price);
+    }, [selectedTime, sportfield, selectedDate]);
 
     const getSlotStatus = (index) => {
-        const time = timeSlots[index];
+        const time = toHour(timeSlots[index]);
 
         return sportfieldcalendar.some(([start, end]) => {
-            return time >= start && time < end;
+            const startTime = toHour(start);
+            const endTime = toHour(end);
+
+            return time >= startTime && time <= endTime;
         })
             ? "booked"
             : "empty";
@@ -117,8 +133,8 @@ function CalendarBooking({ id }) {
     const handleNext = () => {
         if (!selectedTime.start) return;
 
-        navigate("/info-booking", {
-            state: { selectedDate, selectedTime }
+        navigate("/test2", {
+            state: { selectedDate, selectedTime, timeCount, paid, id: "SF002" }
         });
     };
 
@@ -127,7 +143,6 @@ function CalendarBooking({ id }) {
         const m = minutes % 60;
         const hh = String(h).padStart(2, "0");
         const mm = String(m).padStart(2, "0");
-
         return `${hh}h${mm}`;
     };
 
@@ -184,8 +199,15 @@ function CalendarBooking({ id }) {
                                         setClickStep(1);
                                     }
                                     else if (clickStep === 1) {
-                                        const startIndex = timeSlots.indexOf(tempStart);
-                                        const endIndex = timeSlots.indexOf(t);
+                                        const startIndex = Math.min(
+                                            timeSlots.indexOf(tempStart),
+                                            timeSlots.indexOf(t)
+                                        );
+
+                                        const endIndex = Math.max(
+                                            timeSlots.indexOf(tempStart),
+                                            timeSlots.indexOf(t)
+                                        );
 
                                         if (startIndex === endIndex) {
                                             setSelectedTime({
