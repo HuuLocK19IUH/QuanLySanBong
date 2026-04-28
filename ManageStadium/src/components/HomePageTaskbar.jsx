@@ -5,14 +5,20 @@ import CartIcon from "../assets/Bag_alt_fill.png"
 import CheckIcon from "../assets/Check_fill.png"
 import "../styles/HomePageTaskbar.css"
 import { useNavigate } from "react-router-dom"
-function HomePageTaskbar({ toggleFilter }) {
+
+function HomePageTaskbar({ toggleFilter, searchTerm, setSearchTerm }) {
     const navigate = useNavigate()
 
     return (
         <div className="taskbar">
             <img src={SearchIcon} alt="" />
             <div className="search-box">
-                <input type="text" placeholder="Tìm sân..." />
+                <input 
+                    type="text" 
+                    placeholder="Tìm sân..." 
+                    value={searchTerm} 
+                    onChange={(e) => setSearchTerm(e.target.value)} 
+                />
                 <img
                     src={FilterIcon}
                     alt=""
@@ -25,17 +31,11 @@ function HomePageTaskbar({ toggleFilter }) {
                     <img src={BellIcon} alt="" />
                     <a>Thông báo</a>
                 </div>
-                <div
-                    className="nav-item"
-                    onClick={() => navigate("/cart")}
-                >
+                <div className="nav-item" onClick={() => navigate("/cart")}>
                     <img src={CartIcon} alt="" />
                     <a>Giỏ hàng</a>
                 </div>
-                <div
-                    className="nav-item"
-                    onClick={() => navigate("/history")}
-                >
+                <div className="nav-item" onClick={() => navigate("/history")}>
                     <img src={CheckIcon} alt="" />
                     <a>Sân đã đặt</a>
                 </div>
@@ -46,5 +46,4 @@ function HomePageTaskbar({ toggleFilter }) {
         </div>
     )
 }
-
 export default HomePageTaskbar;
