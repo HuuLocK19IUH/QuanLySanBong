@@ -1,130 +1,147 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import '../styles/ReviewTab.css';
 
-function ReviewTab() {
-  const mockReviews = [
-    {
-      id: 1,
-      name: "Martus",
-      rating: 5,
-      content: "Sân khá rộng và thoáng, đủ chỗ cho 4 người chơi thoải mái. Mặt sân tốt, ánh sáng ổn. Chỉ có điều giờ cao điểm hơi đông nên hơi ồn một chút.",
-      date: "20-10-2025 10:34"
-    },
-    {
-      id: 2,
-      name: "Trần Anh Tú",
-      rating: 4,
-      content: "Trải nghiệm chơi khá tốt, sân không bị trơn và đèn chiếu sáng đầy đủ. Không gian đủ cho 4 người di chuyển thoải mái. Đôi lúc phải chờ sân vào buổi tối.",
-      date: "21-10-2025 14:20"
-    },
-    {
-      id: 3,
-      name: "Lê Hải",
-      rating: 3,
-      content: "Sân tạm ổn trong tầm giá. Đèn ở góc sân số 2 hơi chói mắt xíu, hy vọng chủ sân sớm khắc phục.",
-      date: "22-10-2025 09:15"
-    },
-    {
-      id: 4,
-      name: "Minh Quân",
-      rating: 5,
-      content: "Tuyệt vời! Sân sạch sẽ, anh chủ sân siêu nhiệt tình. Sẽ rủ hội bạn quay lại dài dài.",
-      date: "23-10-2025 18:45"
-    },
-    {
-      id: 5,
-      name: "Khách vãng lai",
-      rating: 2,
-      content: "Hôm qua mình đi mưa vào, thảm sân có vài chỗ bị đọng nước rất dễ trượt ngã. Cần lau dọn kỹ hơn.",
-      date: "24-10-2025 20:00"
-    },
-    {
-      id: 6,
-      name: "Tuấn Cường",
-      rating: 1,
-      content: "Mình đặt sân lúc 19h nhưng đến nơi lại bảo hết sân do trùng lịch ai đó? Hệ thống quản lý cần xem lại.",
-      date: "25-10-2025 11:10"
-    }
-  ];
-
+function ReviewTab({ reviews = [], avgRating = 0, totalRating = 0, onSubmitReview, user }) {
   const [activeFilter, setActiveFilter] = useState('all');
+  const [reviewText, setReviewText] = useState('');
+  const [starRating, setStarRating] = useState(5);
+  const [submitError, setSubmitError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const filteredReviews = mockReviews.filter(review => {
-    if (activeFilter === 'all') return true;
-    return review.rating === activeFilter;
-  });
+  const filteredReviews = useMemo(() => {
+    if (activeFilter === 'all') return reviews;
+    return reviews.filter((review) => review.star_rating === activeFilter);
+  }, [reviews, activeFilter]);
 
   const renderStars = (rating) => {
-    return "⭐".repeat(rating);
+    return '⭐'.repeat(rating);
+  };
+
+  const formatDate = (value) => {
+    if (!value) return '';
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return value;
+    return date.toLocaleDateString('vi-VN', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (!user) {
+      setSubmitError('Bạn cần đăng nhập để gửi đánh giá.');
+      return;
+    }
+    if (!reviewText.trim()) {
+      setSubmitError('Vui lòng nhập nội dung đánh giá.');
+      return;
+    }
+
+    setSubmitError('');
+    setIsSubmitting(true);
+    try {
+      await onSubmitReview(starRating, reviewText.trim());
+      setReviewText('');
+      setStarRating(5);
+    } catch (error) {
+      setSubmitError(error?.message || 'Không thể gửi đánh giá.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <div className="review-tab-container">
-      
-      {/* ================= THANH ĐIỂM SỐ TỔNG ================= */}
       <div className="rating-bar">
-        <h2 className="rating-score">4/5</h2>
+        <div className="rating-summary">
+          <h2 className="rating-score">{avgRating ? avgRating.toFixed(1) : '0'}/5</h2>
+          <p className="rating-count">{totalRating ? `${totalRating} đánh giá` : 'Chưa có đánh giá'}</p>
+        </div>
         <div className="rating-filters">
-          <button 
-            className={`filter-btn ${activeFilter === 'all' ? 'active' : ''}`} 
+          <button
+            className={`filter-btn ${activeFilter === 'all' ? 'active' : ''}`}
             onClick={() => setActiveFilter('all')}
           >
             Tất cả
           </button>
-          <button 
-            className={`filter-btn ${activeFilter === 5 ? 'active' : ''}`} 
-            onClick={() => setActiveFilter(5)}
-          >
-            5 sao
-          </button>
-          <button 
-            className={`filter-btn ${activeFilter === 4 ? 'active' : ''}`} 
-            onClick={() => setActiveFilter(4)}
-          >
-            4 sao
-          </button>
-          <button 
-            className={`filter-btn ${activeFilter === 3 ? 'active' : ''}`} 
-            onClick={() => setActiveFilter(3)}
-          >
-            3 sao
-          </button>
-          <button 
-            className={`filter-btn ${activeFilter === 2 ? 'active' : ''}`} 
-            onClick={() => setActiveFilter(2)}
-          >
-            2 sao
-          </button>
-          <button 
-            className={`filter-btn ${activeFilter === 1 ? 'active' : ''}`} 
-            onClick={() => setActiveFilter(1)}
-          >
-            1 sao
-          </button>
+          {[5, 4, 3, 2, 1].map((value) => (
+            <button
+              key={value}
+              className={`filter-btn ${activeFilter === value ? 'active' : ''}`}
+              onClick={() => setActiveFilter(value)}
+            >
+              {value} sao
+            </button>
+          ))}
         </div>
       </div>
 
-      {/* ================= DANH SÁCH BÌNH LUẬN ================= */}
+      <div className="review-input-card">
+        <div className="reviewer-avatar">
+          {/* SVG Icon Avatar Mặc định giống ảnh */}
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </div>
+        <div className="review-info">
+          <h4 className="reviewer-name">{user?.name || user?.user_name || 'Martus'}</h4>
+          
+          <div className="star-input-selector">
+            {[1, 2, 3, 4, 5].map((value) => (
+              <span
+                key={value}
+                className={`star-icon ${starRating >= value ? 'selected' : ''}`}
+                onClick={() => setStarRating(value)}
+              >
+                ★
+              </span>
+            ))}
+          </div>
+
+          <form onSubmit={handleSubmit} className="input-form">
+            <input
+              type="text"
+              className="review-input-field"
+              value={reviewText}
+              onChange={(event) => setReviewText(event.target.value)}
+              placeholder="Hãy để lại bình luận và đánh giá của bạn"
+              disabled={!user || isSubmitting}
+            />
+            {/* Nút gửi ẩn, người dùng có thể nhấn Enter, hoặc hiển thị text nhỏ nếu cần */}
+            <button type="submit" style={{ display: 'none' }} disabled={!user || isSubmitting}>
+              Gửi
+            </button>
+          </form>
+          {submitError && <p className="review-error-text">{submitError}</p>}
+        </div>
+      </div>
+
       <div className="review-list">
         {filteredReviews.length > 0 ? (
           filteredReviews.map((review) => (
-            <div key={review.id} className="review-card">
-              <div className="reviewer-avatar"></div>
+            <div key={review._id || review.rating_id} className="review-card">
+              <div className="reviewer-avatar" />
               <div className="review-info">
-                <h4 className="reviewer-name">{review.name}</h4>
-                <p className="review-stars">{renderStars(review.rating)}</p>
-                <p className="review-content">{review.content}</p>
-                <p className="review-date">{review.date}</p>
+                <div className="review-header">
+                  <h4 className="reviewer-name">{review.user_name || review.user_name || 'Người dùng'}</h4>
+                  <span className="review-stars">{renderStars(review.star_rating)}</span>
+                </div>
+                <p className="review-content">{review.content || 'Không có nội dung.'}</p>
+                <p className="review-date">{formatDate(review.date_created)}</p>
               </div>
             </div>
           ))
         ) : (
           <p style={{ color: '#36656B', fontSize: '20px', textAlign: 'center', marginTop: '40px' }}>
-            Chưa có đánh giá nào cho mức sao này.
+            Chưa có đánh giá cho mức sao này.
           </p>
         )}
       </div>
-
     </div>
   );
 }

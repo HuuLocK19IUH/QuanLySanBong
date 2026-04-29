@@ -25,6 +25,10 @@ function App() {
 
           <Route path="/field-detail" element={<FieldDetail />} />
 
+          <Route path="/field-detail/:id" element={<FieldDetail />} />
+
+          <Route path="/booking" element={<Booking />} />
+
           <Route path="/payment" element={<Payment />} />
 
           <Route path="/cart" element={<CartPage />} />

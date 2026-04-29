@@ -4,19 +4,36 @@ import starUnFill from "../assets/Star_unfill.png"
 import "../styles/SportFieldCard.css"
 
 
-function SportFieldCard({ img_url, title, pricing, state, avg_rating, total_rating }) {
+function SportFieldCard({ _id, img_url, title, pricing, state, avg_rating, total_rating }) {
     const navigate = useNavigate();
 
     const FormatPrice = (price) => {
-        return price.toLocaleString("vi-VN");
+        return price?.toLocaleString("vi-VN") || "0";
     };
 
-    const displayPrice = Number(pricing?.[0]?.price?.toString()) || 0;
-    console.log(pricing?.[0]?.price);
-    console.log(typeof pricing?.[0]?.price);
+    // pricing có thể là object hoặc array
+    const pricingItem = Array.isArray(pricing) ? pricing[0] : pricing;
+    const displayPrice = Number(pricingItem?.price) || 0;
+    
+    // Đảm bảo đường dẫn ảnh đầu đủ
+    const ensureValidPath = (url) => {
+        if (!url) return "/images/badminton.png";
+        if (url.startsWith('/') || url.startsWith('http')) return url;
+        return `/${url}`;
+    };
+    
+    const imageSrc = ensureValidPath(img_url);
+    
     return (
-        <div className="sportfieldcard" onClick={() => navigate("/field-detail")}>
-            <img src={img_url} alt="hinhanh" />
+        <div className="sportfieldcard" onClick={() => navigate(`/field-detail/${_id}`)}>
+
+            <img 
+              src={imageSrc} 
+              alt="hinhanh"
+              onError={(e) => {
+                e.target.src = "/images/badminton.png";
+              }}
+            />
 
             <div className="card-info">
                 <p className="card-name">{title}</p>

@@ -1,15 +1,39 @@
 import { Swiper, SwiperSlide } from "swiper/react"
 import { Navigation, Pagination, Autoplay } from "swiper/modules"
-
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom"
+import { getSportFields } from "../api/sportfieldApi/sportfieldsApi";
 import "swiper/css"
 import "swiper/css/navigation"
 import "swiper/css/pagination"
-
-import { useNavigate } from "react-router-dom"
-import img1 from "../assets/imgCarousel1.png"
 import "../styles/CarouselBoard.css"
+
 function CarouselBoard() {
     const navigate = useNavigate()
+    const [discountFieldId, setDiscountFieldId] = useState(null);
+
+    useEffect(() => {
+        getSportFields()
+            .then((fields) => {
+                const match = fields.find((field) => {
+                    const type = field?.sportfield_type?.toLowerCase() || "";
+                    return type.includes("banh") || type.includes("5");
+                });
+                setDiscountFieldId(match?._id || fields?.[0]?._id || null);
+            })
+            .catch(() => {
+                setDiscountFieldId(null);
+            });
+    }, []);
+
+    const handleDiscountClick = () => {
+        if (discountFieldId) {
+            navigate(`/field-detail/${discountFieldId}`);
+        } else {
+            navigate("/");
+        }
+    };
+
     return (
         <div>
             <Swiper
@@ -22,36 +46,30 @@ function CarouselBoard() {
             >
                 <SwiperSlide>
                     <div className="slide">
-                        <img src={img1} alt="" />
+                        <img src="/images/badminton.png" alt="" />
                         <div className="slide-content">
                             <h2>Đặt sân ngay hôm nay</h2>
-                            <button onClick={() => navigate("/courts")}>
-                                Đặt sân
-                            </button>
+                            <button onClick={() => navigate("/")}>Đặt sân</button>
                         </div>
                     </div>
                 </SwiperSlide>
 
                 <SwiperSlide>
                     <div className="slide">
-                        <img src={img1} alt="" />
+                        <img src="/images/football.png" alt="" />
                         <div className="slide-content">
-                            <h2>Ưu đãi 20%</h2>
-                            <button onClick={() => navigate("/promotion")}>
-                                Xem ngay
-                            </button>
+                            <h2>Ưu đãi sân banh 5</h2>
+                            <button onClick={handleDiscountClick}>Xem ngay</button>
                         </div>
                     </div>
                 </SwiperSlide>
 
                 <SwiperSlide>
                     <div className="slide">
-                        <img src={img1} alt="" />
+                        <img src="/images/badminton.png" alt="" />
                         <div className="slide-content">
                             <h2>Sân mới khai trương</h2>
-                            <button onClick={() => navigate("/courts")}>
-                                Khám phá
-                            </button>
+                            <button onClick={handleDiscountClick}>Khám phá</button>
                         </div>
                     </div>
                 </SwiperSlide>

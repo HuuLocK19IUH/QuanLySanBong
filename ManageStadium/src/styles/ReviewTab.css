@@ -96,3 +96,92 @@
   margin: 0;
   font-style: italic;
 }
+
+/* --- CSS THÊM MỚI CHO PHẦN FORM NHẬP LƯU --- */
+
+.review-input-card {
+  background-color: #8EAE7B; /* Màu xanh lá nhạt giống trong hình */
+  border-radius: 12px;
+  padding: 30px 40px; 
+  margin-bottom: 40px;
+  color: white;
+  display: flex;
+  gap: 25px; 
+}
+
+.star-input-selector {
+  display: flex;
+  gap: 6px;
+  margin-top: -5px;
+  margin-bottom: 15px;
+}
+
+.star-icon {
+  font-size: 24px;
+  color: rgba(255, 255, 255, 0.4); /* Màu sao khi chưa chọn */
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.2s;
+}
+
+.star-icon.selected {
+  color: #FFFFFF; /* Màu sao khi được chọn (màu trắng) */
+}
+
+.input-form {
+  width: 100%;
+}
+
+.review-input-field {
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.15); /* Nền hơi trong suốt */
+  border: 1px solid rgba(255, 255, 255, 0.6); /* Viền mỏng màu trắng */
+  border-radius: 6px;
+  padding: 12px 16px;
+  color: white;
+  font-family: 'Kanit', sans-serif;
+  font-size: 18px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.review-input-field::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.review-input-field:focus {
+  border-color: white;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.review-error-text {
+  color: #ffcccc;
+  font-size: 14px;
+  margin-top: 8px;
+}
+
+/* Tùy chỉnh thêm một chút cho avatar mặc định SVG */
+.reviewer-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 1px solid white; /* Viền trắng giống ảnh */
+  background-color: transparent;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.reviewer-avatar svg {
+  width: 35px;
+  height: 35px;
+}
+
+/* Đảm bảo sao trong bài review list hiển thị đúng định dạng (vì đổi từ emoji sang ký tự ★) */
+.review-stars {
+  color: #F0F8A4; /* Giữ nguyên màu vàng chanh cho sao của người khác */
+  margin: 0;
+  font-size: 20px;
+  letter-spacing: 2px;
+}
