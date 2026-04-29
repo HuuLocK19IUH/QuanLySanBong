@@ -1,8 +1,12 @@
 import express from "express";
-import { getServices } from "../controllers/ServiceController.js";
+import { getServicesController } from "../controllers/ServiceController.js";
 
 const router = express.Router();
 
-router.get("/", getServices);
+/**
+ * GET /api/services
+ * Lấy danh sách service
+ */
+router.get("/", getServicesController);
 
 export default router;

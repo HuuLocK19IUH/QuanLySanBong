@@ -343,18 +343,19 @@
 
 .modal-content {
     background-color: #e7f0a8;
-    padding: 80px 60px 60px 60px;
-    /* TĂNG PADDING CHO TO RA */
+    padding: 100px 80px; /* tăng thêm padding */
+
     border-radius: 40px;
-    /* BO GÓC MỀM MẠI HƠN */
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
     text-align: center;
     position: relative;
-    width: 85%;
-    max-width: 800px;
-    /* TĂNG SIZE TỐI ĐA GẤP RƯỠI */
-}
 
+    width: 90vh;          /* chiếm nhiều hơn màn hình */
+    max-width: 1000px;   /* tăng chiều rộng tối đa */
+
+    height: 40vh;        /* tăng chiều cao */
+    max-height: 90vh;    /* không vượt quá màn hình */
+}
 
 /* Dấu "×" trên cùng bên trái */
 
@@ -362,7 +363,7 @@
     position: absolute;
     top: 30px;
     /* Chỉnh lại vị trí để tương xứng */
-    left: 30px;
+    right: 30px;
     background: none;
     border: none;
     font-size: 3.5rem;

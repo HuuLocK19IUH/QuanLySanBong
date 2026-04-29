@@ -41,7 +41,9 @@ const DetailCard = ({ sportfield }) => {
       </div>
 
       <div className="detail-card-right">
-        <button className="OrderBtn" onClick={() => navigate("/booking")}> 
+        <button className="OrderBtn" onClick={() => navigate("/calendar-booking", {
+          state: { id: "SF002" }
+        })}>
           Đặt lịch
         </button>
 
@@ -59,7 +61,8 @@ const DetailCard = ({ sportfield }) => {
           <span className="rating-text">{ratingDisplay} ({totalRating})</span>
         </div>
       </div>
-    </div>
+
+    </div >
   );
 };
 

@@ -1,11 +1,16 @@
 import { getServicesService } from "../services/ServiceService.js";
+/**
+ * Controller: Lấy danh sách service
+ */
+export const getServicesController = async (req, res) => {
+    try {
+        const services = await getServicesService();
 
-export const getServices = async (req, res) => {
-  try {
-    const services = await getServicesService();
-    return res.status(200).json(services);
-  } catch (error) {
-    console.error("Error getServices:", error);
-    return res.status(500).json({ message: "Lỗi khi lấy dịch vụ" });
-  }
+        return res.status(200).json(services);
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: error.message || "Lỗi server"
+        });
+    }
 };

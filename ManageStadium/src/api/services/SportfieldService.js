@@ -97,3 +97,12 @@ export const deleteSportFieldService = async (id) => {
 
     return deleted;
 };
+
+
+export const getSportFieldBySF_IdService = async (id) => {
+    const sportfield = await SportField.findOne({
+        sportfield_id: id
+    });
+
+    return sportfield;
+};
