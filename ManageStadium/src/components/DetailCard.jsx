@@ -4,28 +4,31 @@ import '../styles/DetailCard.css';
 import avatarImg from '../assets/ProductDetailAVT.png';
 import badmintonIcon from '../assets/playing_badminton.png';
 import starIcon from '../assets/Star_fill.png';
+import { useNavigate } from 'react-router-dom';
 
 const DetailCard = () => {
+
+  const navigate = useNavigate();
   return (
     <div className="detail-card">
-      
+
       {/* --- Phần bên trái: Avatar & Tên sân --- */}
       <div className="detail-card-left">
-        <img 
-          src={avatarImg} 
-          alt="Avatar Sân" 
+        <img
+          src={avatarImg}
+          alt="Avatar Sân"
           className="avatar"
         />
-        
+
         <div className="info">
           <h2 className="title">
             Sân cầu lông 4 người
           </h2>
-          
+
           <div className="badge">
-            <img 
-              src={badmintonIcon} 
-              alt="Icon Cầu lông" 
+            <img
+              src={badmintonIcon}
+              alt="Icon Cầu lông"
               className="badge-icon"
             />
             <span className="badge-text">
@@ -37,17 +40,19 @@ const DetailCard = () => {
 
       {/* --- Phần bên phải: Nút đặt lịch & Đánh giá --- */}
       <div className="detail-card-right">
-        <button className="OrderBtn">
+        <button className="OrderBtn" onClick={() => navigate("/calendar-booking", {
+          state: { id: "SF002" }
+        })}>
           Đặt lịch
         </button>
-        
+
         <div className="rating">
           <div className="stars">
             {[...Array(5)].map((_, index) => (
-              <img 
+              <img
                 key={index}
-                src={starIcon} 
-                alt="Star" 
+                src={starIcon}
+                alt="Star"
                 className="star-icon"
               />
             ))}
@@ -57,8 +62,8 @@ const DetailCard = () => {
           </span>
         </div>
       </div>
-      
-    </div>
+
+    </div >
   );
 };
 

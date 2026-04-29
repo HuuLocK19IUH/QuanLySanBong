@@ -1,0 +1,627 @@
+:root {
+    --figma-yellow: #f0f5b8;
+    --dark-green: #3a5a58;
+    /* Màu teal đậm của calendar và time axis */
+    --bg-green: #95bc7b;
+    /* Màu xanh tươi mới theo ảnh Figma */
+    --status-empty: #ffffff;
+    --status-booked: #3a5a58;
+    --status-locked: #b5b5b5;
+}
+
+.booking-page {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: var(--bg-green);
+    /* Nền xanh lục toàn trang */
+}
+
+
+/* ===== HEADER ===== */
+
+.booking-header {
+    padding: 40px 50px;
+    background: var(--bg-green);
+}
+
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.back-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chevron-left {
+    display: inline-block;
+    border-right: 3px solid var(--figma-yellow);
+    border-bottom: 3px solid var(--figma-yellow);
+    width: 25px;
+    height: 25px;
+    transform: rotate(135deg);
+    /* Tạo hình dấu < thanh mảnh */
+    margin-left: 10px;
+}
+
+.main-title {
+    flex: 1;
+    text-align: center;
+    color: var(--figma-yellow);
+    font-size: 4rem;
+    /* To rõ rệt */
+    font-weight: 800;
+    margin: 0;
+}
+
+.calendar-input {
+    background: var(--dark-green);
+    color: var(--figma-yellow);
+    border: none;
+    padding: 15px 25px;
+    /* Tăng padding */
+    border-radius: 12px;
+    font-size: 1.8rem;
+    /* To hơn giống Figma */
+    font-weight: 800;
+    cursor: pointer;
+    outline: none;
+}
+
+.legend {
+    display: flex;
+    gap: 40px;
+    margin-top: 15px;
+    color: var(--figma-yellow);
+    font-size: 1.6rem;
+    /* To rõ ràng hơn */
+    font-weight: 700;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.box {
+    width: 35px;
+    /* Tăng kích thước ô màu chú thích */
+    height: 35px;
+    border-radius: 6px;
+}
+
+.box.empty {
+    background: var(--status-empty);
+}
+
+.box.booked {
+    background: var(--status-booked);
+}
+
+.box.locked {
+    background: var(--status-locked);
+}
+
+
+/* ===== TIME AXIS (FIX LỖI HIỂN THỊ) ===== */
+
+
+/* ===== TIME AXIS ===== */
+
+.time-axis-container {
+    background: var(--dark-green);
+    width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    /* Thêm padding để container rộng rãi hơn */
+}
+
+.time-axis {
+    display: flex;
+    width: 100%;
+    /* Đảm bảo dàn hàng ngang */
+}
+
+
+/* Tùy chỉnh thanh cuộn cho đẹp hơn (optional) */
+
+.time-axis-container::-webkit-scrollbar {
+    height: 20px;
+}
+
+.time-axis-container::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.time-axis-container::-webkit-scrollbar-thumb {
+    background: rgba(240, 245, 184, 0.3);
+    border-radius: 10px;
+    transition: background 0.3s ease;
+}
+
+.time-axis-container::-webkit-scrollbar-thumb:hover {
+    background: rgba(240, 245, 184, 0.6);
+    /* Sáng rực lên khi hover */
+    cursor: pointer;
+}
+
+.time-axis {
+    display: flex;
+    width: max-content;
+    /* Quan trọng: Để container giãn theo số lượng ô */
+    padding-bottom: 15px;
+}
+
+.time-slot {
+    flex: 0 0 auto;
+    width: 100px;
+    /* Tăng từ 70px lên 100px để thoáng hơn */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.2s ease;
+    border-radius: 8px;
+}
+
+.time-slot:hover {
+    transform: translateY(-5px);
+    /* Nhảy nhẹ lên khi trỏ chuột vào */
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.time-label {
+    color: var(--figma-yellow);
+    font-size: 28px;
+    /* Tăng từ 23px lên 28px */
+    padding: 15px 0;
+    /* Tăng khoảng cách padding */
+    font-weight: 800;
+}
+
+.status-bar {
+    width: 100%;
+    height: 80px;
+    /* Tăng từ 50px lên 80px để nhìn rõ màu sắc hơn */
+    border-right: 1px solid rgba(240, 245, 184, 0.2);
+    transition: all 0.2s ease;
+}
+
+.time-slot.active .status-bar {
+    border: 4px solid #ffeb3b;
+    box-shadow: 0 0 15px rgba(255, 235, 59, 0.5);
+}
+
+.time-slot.empty .status-bar {
+    background: var(--status-empty);
+}
+
+.time-slot.booked .status-bar {
+    background: var(--status-booked);
+}
+
+.time-slot.locked .status-bar {
+    background: var(--status-locked);
+}
+
+.time-slot.active .status-bar {
+    border: 3px solid #ffeb3b;
+}
+
+
+/* ===== CONTENT ===== */
+
+.white-content-area {
+    flex: 1;
+    background: white;
+}
+
+
+/* ===== FOOTER ===== */
+
+.order-footer {
+    background: var(--bg-green);
+    /* Đồng bộ màu xanh tươi với header */
+    padding: 30px 60px;
+    border-radius: 40px 40px 0 0;
+}
+
+.footer-info .footer-time {
+    color: var(--figma-yellow);
+    font-size: 1.8rem;
+    /* Cỡ chữ to hơn */
+}
+
+.footer-info .footer-duration {
+    color: var(--figma-yellow);
+    font-size: 1.3rem;
+    margin: 0;
+}
+
+.footer-action {
+    text-align: right;
+    color: var(--figma-yellow);
+}
+
+.footer-price {
+    font-size: 1.8rem;
+    /* To bằng bên trái */
+    font-weight: bold;
+    /* In đậm */
+    margin-bottom: 10px;
+}
+
+.order-btn {
+    background: var(--dark-green);
+    color: var(--figma-yellow);
+    padding: 12px 45px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+
+/* ===== LAYOUT BƯỚC 2 ===== */
+
+.booking-confirmation-container {
+    padding: 20px 50px 50px 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    flex: 1;
+    overflow-y: auto;
+}
+
+
+/* Card dịch vụ */
+
+.info-card {
+    background-color: rgb(104, 151, 80);
+    /* Nền xanh đậm */
+    border-radius: 20px;
+    padding: 25px 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    color: white;
+    /* Chữ trắng theo figma */
+}
+
+.card-title {
+    color: var(--figma-yellow);
+    font-size: 2rem;
+    /* Tăng nhẹ kích thước */
+    font-weight: 900;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-left: 0;
+    /* Đảm bảo không có padding trái */
+    margin-left: -5px;
+    /* Điều chỉnh nhẹ nếu icon có margin mặc định */
+}
+
+.info-content-text p {
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+    color: white;
+}
+
+.card-total-left {
+    color: var(--figma-yellow);
+    font-size: 1.8rem;
+    font-weight: 800;
+    text-align: left;
+    margin-top: 15px;
+}
+
+.card-total-right {
+    color: var(--figma-yellow);
+    font-size: 1.8rem;
+    font-weight: 800;
+    text-align: right;
+}
+
+.total-service-count {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.services-table {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.table-header {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1.5fr 40px;
+    font-weight: 800;
+    color: white;
+    font-size: 1.2rem;
+    padding-bottom: 10px;
+}
+
+.table-row {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1.5fr 40px;
+    align-items: center;
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.card-footer-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.add-service-btn-styled {
+    background: var(--dark-green);
+    color: var(--figma-yellow);
+    border: none;
+    padding: 12px 25px;
+    /* Tăng padding để nút to hơn */
+    border-radius: 15px;
+    font-weight: 900;
+    font-size: 1.6rem;
+    /* Cỡ chữ to tương đương tổng tiền */
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.add-service-btn-styled:hover {
+    background: #2a4140;
+    /* Đậm hơn khi hover */
+    transform: scale(1.05);
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
+.highlight-row {
+    border-top: 1px solid rgba(240, 245, 184, 0.3);
+    padding-top: 15px;
+    font-weight: 700;
+    color: var(--figma-yellow);
+    /* Thành tiền màu vàng */
+}
+
+.service-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+}
+
+.s-qty {
+    width: 40px;
+}
+
+.s-name {
+    flex: 1;
+    text-align: left;
+}
+
+.s-price {
+    margin-right: 15px;
+}
+
+.delete-btn {
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    /* To rõ ràng hơn */
+    cursor: pointer;
+    color: #ffcccc;
+    /* Màu hơi nhạt để không quá chói */
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.delete-btn:hover {
+    color: #ff4444;
+    /* Đỏ rực khi hover */
+    transform: scale(1.3) rotate(10deg);
+    /* Phóng to và xoay nhẹ */
+}
+
+.outside-label {
+    display: block;
+    color: var(--figma-yellow);
+    font-weight: 800;
+    /* In đậm chữ vàng */
+    font-size: 1.6rem;
+    margin-bottom: 8px;
+}
+
+.input-field-wrapper {
+    margin-bottom: 20px;
+}
+
+.add-service-btn {
+    background: transparent;
+    border: 2px dashed var(--figma-yellow);
+    color: var(--figma-yellow);
+    width: 100%;
+    padding: 15px;
+    border-radius: 12px;
+    font-size: 1.4rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 10px 0;
+}
+
+.total-order-text {
+    color: var(--figma-yellow);
+    font-size: 2.2rem;
+    font-weight: 900;
+    text-align: center;
+    margin: 10px 0;
+}
+
+.total-service {
+    text-align: right;
+    font-size: 1.6rem;
+    font-weight: 800;
+    margin-top: 15px;
+}
+
+
+/* Group Input */
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.input-group-outside {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.custom-input,
+.custom-textarea {
+    background: #e6edd9;
+    /* Màu nền input nhẹ nhàng */
+    border: none;
+    border-radius: 15px;
+    padding: 20px 25px;
+    font-size: 1.3rem;
+    color: var(--dark-green);
+    font-weight: 600;
+    width: 100%;
+    outline: none;
+}
+
+.custom-input::placeholder,
+.custom-textarea::placeholder {
+    color: rgba(58, 90, 88, 0.4);
+    font-weight: 500;
+}
+
+.custom-textarea {
+    height: 120px;
+    resize: none;
+}
+
+.phone-input-wrapper {
+    display: flex;
+    background: #e6edd9;
+    border-radius: 15px;
+    align-items: stretch;
+    /* Đảm bảo các phần tử con cao bằng nhau */
+    overflow: hidden;
+    height: 60px;
+    /* Cố định chiều cao để không bị nhảy */
+}
+
+.country-selector {
+    background: white;
+    padding: 0 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-right: 2px solid rgba(58, 90, 88, 0.2);
+    white-space: nowrap;
+    /* QUAN TRỌNG: Ngăn chặn xuống dòng */
+    flex-shrink: 0;
+    /* Không cho phép co lại */
+}
+
+.country-code {
+    color: var(--dark-green);
+    font-weight: 800;
+    font-size: 1.4rem;
+    line-height: 1;
+    /* Căn giữa theo dòng */
+}
+
+.flag-icon {
+    width: 24px;
+    border-radius: 2px;
+}
+
+.phone-field {
+    flex: 1;
+    background: transparent !important;
+    padding: 0 20px !important;
+}
+
+.confirm-btn-final {
+    background: var(--dark-green);
+    color: var(--figma-yellow);
+    padding: 15px 40px;
+    font-size: 1.6rem;
+    font-weight: 900;
+    border-radius: 15px;
+    border: none;
+    cursor: pointer;
+    text-transform: uppercase;
+    float: right;
+    /* Đưa về bên phải */
+}
+
+.footer-action::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.country-selector {
+    background: white;
+    padding: 0 15px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.confirm-btn-large {
+    background: var(--dark-green);
+    color: var(--figma-yellow);
+    padding: 20px;
+    font-size: 1.6rem;
+    font-weight: 900;
+    border-radius: 15px;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+    text-transform: uppercase;
+}
+
+
+/* Đảm bảo tiêu đề XÁC NHẬN THÔNG TIN to và giữa */
+
+.main-title {
+    font-size: 3rem;
+    /* Giảm nhẹ so với bước 1 để không bị tràn dòng */
+    text-transform: uppercase;
+}
+
+
+

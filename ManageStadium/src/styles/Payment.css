@@ -1,0 +1,418 @@
+/* --- Nền Trang & Header --- */
+
+.payment-page {
+    background-color: #ffffff;
+    /* Cả trang nền trắng */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.payment-header {
+    background-color: var(--bg-green);
+    /* Chỉ header nền xanh */
+    padding: 40px 60px;
+}
+
+.header-content {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    /* Cấu trúc 3 cột cho backbtn, title, stepdots */
+    align-items: center;
+    gap: 20px;
+}
+
+.back-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    justify-self: start;
+    grid-column: 1;
+}
+
+.chevron-left {
+    display: inline-block;
+    border-right: 3px solid var(--figma-yellow);
+    border-bottom: 3px solid var(--figma-yellow);
+    width: 25px;
+    height: 25px;
+    transform: rotate(135deg);
+    /* Tạo hình dấu < thanh mảnh */
+}
+
+.payment-title-yellow {
+    color: var(--figma-yellow);
+    font-size: 3.5rem;
+    /* Tăng size tiêu đề Thanh toán */
+    font-weight: 900;
+    justify-self: center;
+    grid-column: 2;
+    text-align: center;
+}
+
+.step-dots {
+    display: flex;
+    gap: 8px;
+    justify-self: end;
+    grid-column: 3;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.3;
+}
+
+.dot.active {
+    opacity: 1;
+}
+
+
+/* --- Layout Grid --- */
+
+.payment-main {
+    flex: 1;
+    padding: 50px 60px 140px 60px;
+    /* Thêm padding trên để cách header */
+}
+
+.payment-grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 30px;
+}
+
+.column-left,
+.column-right {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+
+/* --- Cards Chói Tiêu Điểm --- */
+
+.pay-card {
+    background: #316368;
+    border-radius: 20px;
+    padding: 25px;
+    color: white;
+}
+
+
+/* CHỈ NHỮNG THẰNG NÀY MỚI CÓ MÀU VÀNG */
+
+.pay-card-title {
+    color: var(--figma-yellow);
+    font-size: 2.5rem;
+    font-weight: 900;
+    margin-bottom: 20px;
+}
+
+.note-title {
+    margin-top: 25px;
+    /* Cách xa các field bên trên một chút */
+    margin-bottom: 10px;
+    font-size: 1.8rem;
+}
+
+.total-order-text {
+    margin: 10px 0 0 0;
+    /* Xóa margin-bottom mặc định */
+    font-size: 2rem;
+}
+
+
+/* --- Tài khoản ngân hàng --- */
+
+.bank-info-container {
+    display: flex;
+    justify-content: space-between;
+    /* Mã QR nằm bên phải các thông tin text */
+    align-items: center;
+    gap: 20px;
+    /* Thêm gap */
+}
+
+.bank-text p {
+    color: white;
+    font-size: 1.8rem;
+    margin-bottom: 12px;
+}
+
+.bank-text b {
+    font-weight: 900;
+    /* In đậm chữ sau dấu hai chấm */
+    color: white;
+}
+
+.qr-wrapper {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+
+/* --- Thông tin hóa đơn --- */
+
+.invoice-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.invoice-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.8rem;
+    color: white;
+    margin-bottom: 12px;
+}
+
+.invoice-row b {
+    font-weight: 800;
+}
+
+.invoice-row.right-align {
+    justify-content: flex-end;
+    /* Ép Tổng tiền dịch vụ & Tổng đơn qua phải */
+}
+
+.invoice-table {
+    margin: 15px 0;
+    padding: 15px 0;
+    border-top: 1px dashed rgba(255, 255, 255, 0.3);
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.3);
+}
+
+.table-header-pay,
+.table-row-pay {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1.5fr;
+    padding: 6px 0;
+    font-size: 1.8rem;
+}
+
+.white-text {
+    color: white;
+    /* Bảng dịch vụ chữ trắng, không vàng */
+}
+
+.table-header-pay {
+    font-weight: 800;
+}
+
+.text-right {
+    text-align: right;
+    /* Căn phải cột Giá */
+}
+
+
+/* --- Thông tin đặt sân --- */
+
+.inline-field {
+    display: flex;
+    gap: 8px;
+    font-size: 1.8rem;
+    color: white;
+    margin-bottom: 12px;
+    white-space: nowrap;
+    /* Trình bày không rớt dòng */
+}
+
+.inline-field span {
+    font-weight: 400;
+    /* Nhãn bình thường */
+}
+
+.inline-field b {
+    font-weight: 800;
+    /* Giá trị in đậm */
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.pay-note-view {
+    width: 100%;
+    height: 150px;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 10px;
+    padding: 15px;
+    color: white;
+    font-size: 1.8rem;
+    resize: none;
+    font-family: inherit;
+}
+
+
+/* --- Note & Timer dưới cùng --- */
+
+.timer-container-left {
+    margin-top: 10px;
+    text-align: left;
+}
+
+.timer-container-left p {
+    font-weight: 700;
+    color: black;
+    font-size: 1.8rem;
+}
+
+.timer-red {
+    color: #ff4d4d;
+    font-size: 2.5rem;
+    font-weight: 900;
+}
+
+.note-container-right {
+    margin-top: 10px;
+    text-align: right;
+    color: #000000;
+    /* Đỏ hoặc xanh đậm tùy bạn, thường cảnh báo dùng đỏ nhạt */
+    font-weight: 800;
+    font-size: 1.8rem;
+}
+
+
+/* --- Footer --- */
+
+.payment-footer-white {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 25px 60px;
+    display: flex;
+    justify-content: flex-end;
+    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.footer-btns-right {
+    display: flex;
+    gap: 25px;
+}
+
+.btn-cancel-red,
+.btn-confirm-pay-green {
+    padding: 20px 65px;
+    border-radius: 15px;
+    border: none;
+    font-weight: 900;
+    font-size: 1.6rem;
+    cursor: pointer;
+}
+
+.btn-cancel-red {
+    background: #ff4d4d;
+    color: white;
+}
+
+.btn-confirm-pay-green {
+    background: var(--dark-green);
+    color: var(--figma-yellow);
+}
+
+
+/* --- CẬP NHẬT MỚI: MODAL THÔNG BÁO THÀNH CÔNG --- */
+
+
+/* Lớp phủ mờ toàn trang */
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    /* TĂNG ĐỘ MỜ LÊN NHIỀU HƠN */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    /* Thêm hiệu ứng mượt mà khi hiện ra */
+    backdrop-filter: blur(5px);
+    /* Tùy chọn: Làm nhòe hình ảnh phía sau */
+    transition: all 0.3s ease;
+}
+
+
+/* Cửa sổ modal chính */
+
+.modal-content {
+    background-color: #e7f0a8;
+    padding: 100px 80px; /* tăng thêm padding */
+
+    border-radius: 40px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    position: relative;
+
+    width: 90vh;          /* chiếm nhiều hơn màn hình */
+    max-width: 1000px;   /* tăng chiều rộng tối đa */
+
+    height: 40vh;        /* tăng chiều cao */
+    max-height: 90vh;    /* không vượt quá màn hình */
+}
+
+/* Dấu "×" trên cùng bên trái */
+
+.close-x {
+    position: absolute;
+    top: 30px;
+    /* Chỉnh lại vị trí để tương xứng */
+    right: 30px;
+    background: none;
+    border: none;
+    font-size: 3.5rem;
+    /* TĂNG SIZE NÚT X */
+    color: #2a4140;
+    font-weight: 300;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.2s;
+}
+
+.close-x:hover {
+    color: #ff4d4d;
+}
+
+
+/* Container cho biểu tượng tích xanh */
+
+.checkmark-container {
+    width: 140px;
+    /* TĂNG KÍCH THƯỚC HÌNH TRÒN */
+    height: 140px;
+    background-color: #2a4140;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 40px auto;
+    /* Tăng khoảng cách xuống chữ */
+}
+
+
+/* Biểu tượng dấu ✔ */
+
+.checkmark-icon {
+    color: white;
+    font-size: 7rem;
+    /* TĂNG SIZE ICON ✔ */
+    line-height: 1;
+    font-weight: 900;
+}
+
+
+/* Văn bản thông báo lớn, in đậm màu xanh */
+
+.success-text {
+    color: #2a4140;
+    font-size: 3rem;
+    /* TĂNG SIZE CHỮ THÔNG BÁO TO ĐÙNG */
+    font-weight: 900;
+    margin: 0;
+}

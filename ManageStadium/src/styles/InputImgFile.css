@@ -1,0 +1,36 @@
+.upload-box {
+    width: 600px;
+}
+
+/* Khung upload */
+.upload-area {
+    border: 2px dashed #333;
+    border-radius: 10px;
+    padding: 30px;
+    text-align: center;
+    cursor: pointer;
+    background-color: #90B77D;
+    margin-left: 100px;
+    width: 1670px;
+}
+
+.upload-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.image-placeholder {
+    width: 60px;
+    height: 60px;
+    background-color: #3b6e70;
+}
+
+/* Ảnh preview */
+.preview-img {
+    margin-top: 10px;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}

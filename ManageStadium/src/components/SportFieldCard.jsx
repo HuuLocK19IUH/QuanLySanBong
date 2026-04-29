@@ -1,41 +1,52 @@
-
+import { useNavigate } from "react-router-dom";
 import starFill from "../assets/Star_fill.png"
 import starUnFill from "../assets/Star_unfill.png"
 import "../styles/SportFieldCard.css"
-function SportFieldCard({ img, name, price, state, evaluate, starCount }) {
+
+
+function SportFieldCard({ img_url, title, pricing, state, avg_rating, total_rating }) {
+    const navigate = useNavigate();
+
     const FormatPrice = (price) => {
         return price.toLocaleString("vi-VN");
     };
 
-    const FormatRating = (rating) => {
-        return (Number(rating) / 1000).toFixed(1);
-    }; 
+    const displayPrice = Number(pricing?.[0]?.price?.toString()) || 0;
+    console.log(pricing?.[0]?.price);
+    console.log(typeof pricing?.[0]?.price);
     return (
-        <div className="sportfieldcard">
-            <img src={img} alt="" />
+        <div className="sportfieldcard" onClick={() => navigate("/field-detail")}>
+            <img src={img_url} alt="hinhanh" />
+
             <div className="card-info">
-                <p className="card-name">{name}</p>
-                <p className="card-price">{FormatPrice(price)}đ/ 1 tiếng</p>
+                <p className="card-name">{title}</p>
+
+                <p className="card-price">
+                    {FormatPrice(displayPrice)}đ / 1 tiếng
+                </p>
+
                 <div className="card-footer">
-                    <p className="card-state">Trạng thái: {state}</p>
+                    <p className="card-state">
+                        Trạng thái: {state ? "Còn sân" : "Hết sân"}
+                    </p>
+
                     <div className="card-evaluate">
                         <div style={{ display: "flex" }}>
                             {[...Array(5)].map((_, index) => (
                                 <img
                                     key={index}
-                                    src={index < starCount ? starFill : starUnFill}
+                                    src={index < avg_rating ? starFill : starUnFill}
                                     alt="star"
                                     className="star-img"
                                 />
                             ))}
                         </div>
-                        <p>{FormatRating(evaluate)}K</p>
+
+                        <p>{total_rating}</p>
                     </div>
                 </div>
             </div>
         </div>
-
-    )
+    );
 }
-
 export default SportFieldCard;

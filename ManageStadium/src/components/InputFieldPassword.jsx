@@ -1,5 +1,7 @@
 import "../styles/InputFieldPassword.css"
-function InputFieldPassword({ label, type, placeholder }) {
+
+function InputFieldPassword({ label, type, placeholder, value, onChange }) {
+    
     return (
         <div className="input-field-password">
             <label>{label}</label>
@@ -7,6 +9,8 @@ function InputFieldPassword({ label, type, placeholder }) {
             <input
                 type={type}
                 placeholder={placeholder}
+                value={value || ""}
+                onChange={onChange}
             />
         </div>
     )

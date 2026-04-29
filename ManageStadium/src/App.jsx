@@ -8,30 +8,40 @@ import Register from "./pages/Register"
 import CartPage from "./pages/CartPage";
 import HistoryPage from "./pages/HistoryPage";
 import BookingDetailPage from "./pages/BookingDetailPage";
+import UserInfo from "./pages/UserInfo"
+import { UserProvider } from "./hooks/context/UserContext";
+import CalendarBooking from "./pages/CalendarBooking"
+import BookingInfo from "./pages/BookingInfo"
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
+    <UserProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
 
-        <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<LoginPage />} />
 
-        <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<Register />} />
 
-        <Route path="/register" element={<Register />} />
+          <Route path="/field-detail" element={<FieldDetail />} />
 
-        <Route path="/field-detail" element={<FieldDetail />} />
+          <Route path="/payment" element={<Payment />} />
 
-        <Route path="/booking" element={<Booking />} />
+          <Route path="/cart" element={<CartPage />} />
 
-        <Route path="/payment" element={<Payment />} />
+          <Route path="/history" element={<HistoryPage />} />
 
-        <Route path="/cart" element={<CartPage />} />
-        
-        <Route path="/history" element={<HistoryPage />} />
-        <Route path="/booking-detail" element={<BookingDetailPage />} />
+          <Route path="/booking-detail" element={<BookingDetailPage />} />
 
-      </Routes>
-    </BrowserRouter>
+          <Route path="/user-info" element={<UserInfo />} />
+
+          <Route path="/calendar-booking" element={<CalendarBooking />} />
+
+          <Route path="/info-booking" element={<BookingInfo />} />
+        </Routes>
+      </BrowserRouter>
+    </UserProvider>
+
   )
 }
 

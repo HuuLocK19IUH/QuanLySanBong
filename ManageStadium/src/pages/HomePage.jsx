@@ -2,8 +2,7 @@ import HomePageTaskbar from "../components/HomePageTaskbar";
 import CarouselBoard from "../components/CarouselBoard";
 import Filter from "../components/Filter";
 import SportFieldCard from "../components/SportFieldCard";
-import SportFieldCardImg from "../assets/sportfieldcardimg1.png"
-import { useState, useMemo } from "react";
+import { useState, useEffect, useMemo } from "react";
 import "../styles/HomePage.css";
 import pagenavleft from "../assets/Expand_left.png";
 import pagenavright from "../assets/Expand_right.png";
@@ -13,39 +12,43 @@ import introimg from "../assets/introimg.png"
 import HomePageInfoFooter from "../components/HomePageInfoFooter";
 import Footer from "../components/Footer";
 
+// Các import API và Context mới của Ngọc Long
+import Usericon from "../assets/User_cicrle_light.png";
+import { getSportFields } from "../api/sportfieldApi/sportfieldsApi";
+import { useUser } from "../hooks/context/UserContext";
+
 function HomePage() {
     const [showFilter, setShowFilter] = useState(false);
+    
+    // 1. Quản lý user và state chứa dữ liệu thật (của Ngọc Long)
+    const { user } = useUser();
+    const [sportFields, setSportFields] = useState([]);
 
+    // 2. Các State quản lý Bộ Lọc (của Thanh Long)
     const [searchTerm, setSearchTerm] = useState(""); 
     const [selectedType, setSelectedType] = useState("all"); 
     const [maxPrice, setMaxPrice] = useState(1000000); 
     const [selectedTime, setSelectedTime] = useState(""); 
 
-    const sportFields = [
-        { id: 1, img: SportFieldCardImg, name: "Sân cầu lông indoor 1", type: "Cầu Lông", price: 150000, state: "Trống", starCount: 4, evaluate: "12400", timeSlots: ["17:00", "18:00"] },
-        { id: 2, img: SportFieldCardImg, name: "Sân cầu lông indoor 2", type: "Cầu Lông", price: 150000, state: "Trống", starCount: 5, evaluate: "12400", timeSlots: ["18:00"] },
-        { id: 3, img: SportFieldCardImg, name: "Sân Tennis Pro", type: "Tennis", price: 300000, state: "Trống", starCount: 5, evaluate: "12400", timeSlots: ["17:00", "19:00"] },
-        { id: 4, img: SportFieldCardImg, name: "Sân bóng đá Mini", type: "Bóng Đá", price: 250000, state: "Trống", starCount: 5, evaluate: "12400", timeSlots: ["18:00", "20:00"] },
-        { id: 5, img: SportFieldCardImg, name: "Sân cầu lông indoor 3", type: "Cầu Lông", price: 150000, state: "Trống", starCount: 5, evaluate: "12400", timeSlots: ["06:00"] },
-        { id: 6, img: SportFieldCardImg, name: "Sân bóng bàn ghép", type: "Bóng Bàn", price: 50000, state: "Trống", starCount: 5, evaluate: "12400", timeSlots: ["17:00"] },
-        { id: 7, img: SportFieldCardImg, name: "Sân cầu lông indoor 4", type: "Cầu Lông", price: 150000, state: "Trống", starCount: 5, evaluate: "12400", timeSlots: ["19:00"] },
-        { id: 8, img: SportFieldCardImg, name: "Sân Pickleball", type: "Pickleball", price: 120000, state: "Trống", starCount: 5, evaluate: "12400", timeSlots: ["17:00", "18:00"] },
-        { id: 9, img: SportFieldCardImg, name: "Sân VIP 1", type: "Cầu Lông", price: 200000, state: "Đã đặt", starCount: 5, evaluate: "22000", timeSlots: [] },
-        { id: 10, img: SportFieldCardImg, name: "Sân mini 1", type: "Bóng Đá", price: 100000, state: "Trống", starCount: 3, evaluate: "8000", timeSlots: ["17:00"] },
-        { id: 11, img: SportFieldCardImg, name: "Sân VIP 2", type: "Tennis", price: 200000, state: "Đã đặt", starCount: 5, evaluate: "22000", timeSlots: [] },
-        { id: 12, img: SportFieldCardImg, name: "Sân mini 2", type: "Cầu Lông", price: 100000, state: "Trống", starCount: 3, evaluate: "8000", timeSlots: ["18:00"] },
-    ];
+    useEffect(() => {
+        getSportFields()
+            .then(data => {
+                console.log("SPORTFIELDS:", data); 
+                setSportFields(data);
+            })
+            .catch(err => console.log(err));
+    }, []);
 
-    // LOGIC LỌC DỮ LIỆU
     const filteredFields = useMemo(() => {
         return sportFields.filter(field => {
             if (searchTerm && !field.name.toLowerCase().includes(searchTerm.toLowerCase())) return false;
             if (selectedType !== "all" && field.type !== selectedType) return false;
-            if (selectedTime && !field.timeSlots.includes(selectedTime)) return false;
+            // Lưu ý: Thêm điều kiện field.timeSlots tồn tại để tránh lỗi nếu API chưa trả về lịch trống
+            if (selectedTime && field.timeSlots && !field.timeSlots.includes(selectedTime)) return false;
             if (field.price > maxPrice) return false;
             return true;
         });
-    }, [searchTerm, selectedType, selectedTime, maxPrice]);
+    }, [searchTerm, selectedType, selectedTime, maxPrice, sportFields]);
 
     const itemsPerPage = 8;
     const [currentPage, setCurrentPage] = useState(1);
@@ -70,6 +73,7 @@ function HomePage() {
                     toggleFilter={() => setShowFilter(!showFilter)}
                     searchTerm={searchTerm}
                     setSearchTerm={setSearchTerm}
+                    user={user} // Đã truyền biến user của Ngọc Long!
                 />
             </div>
 
