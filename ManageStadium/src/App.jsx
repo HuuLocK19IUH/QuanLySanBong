@@ -10,8 +10,8 @@ import HistoryPage from "./pages/HistoryPage";
 import BookingDetailPage from "./pages/BookingDetailPage";
 import UserInfo from "./pages/UserInfo"
 import { UserProvider } from "./hooks/context/UserContext";
-// import CalendarBooking from "./pages/CalendarBooking"
-
+import CalendarBooking from "./pages/CalendarBooking"
+import BookingInfo from "./pages/BookingInfo"
 function App() {
   return (
     <UserProvider>
@@ -25,8 +25,6 @@ function App() {
 
           <Route path="/field-detail" element={<FieldDetail />} />
 
-          <Route path="/booking" element={<Booking />} />
-
           <Route path="/payment" element={<Payment />} />
 
           <Route path="/cart" element={<CartPage />} />
@@ -37,7 +35,9 @@ function App() {
 
           <Route path="/user-info" element={<UserInfo />} />
 
-          {/* <Route path="/test1" element={<CalendarBooking />} /> */}
+          <Route path="/calendar-booking" element={<CalendarBooking />} />
+
+          <Route path="/info-booking" element={<BookingInfo />} />
         </Routes>
       </BrowserRouter>
     </UserProvider>

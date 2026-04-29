@@ -45,6 +45,14 @@ const orderSchema = new Schema(
             type: String,
             required: true,
         },
+        phone: {
+            type: String,
+            required: true,
+        },
+        note: {
+            type: String,
+            required: false,
+        },
         start_hour: {
             type: Date,
             required: true,
