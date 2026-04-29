@@ -6,24 +6,28 @@ import badmintonIcon from '../assets/playing_badminton.png';
 import starIcon from '../assets/Star_fill.png';
 import { useNavigate } from 'react-router-dom';
 
-const DetailCard = () => {
-
+const DetailCard = ({ sportfield }) => {
   const navigate = useNavigate();
+  const ratingDisplay = sportfield?.avg_rating ? `${sportfield.avg_rating}/5` : "Chưa có đánh giá";
+  const totalRating = sportfield?.total_rating ? sportfield.total_rating : 0;
+  const type = sportfield?.sportfield_type || "Sân thể thao";
+  
+  // Đảm bảo đường dẫn ảnh đầu đủ
+  const imgUrl = sportfield?.img_url
+    ? (sportfield.img_url.startsWith('/') ? sportfield.img_url : `/${sportfield.img_url}`)
+    : avatarImg;
+
   return (
     <div className="detail-card">
-
-      {/* --- Phần bên trái: Avatar & Tên sân --- */}
       <div className="detail-card-left">
         <img
-          src={avatarImg}
+          src={imgUrl}
           alt="Avatar Sân"
           className="avatar"
         />
 
         <div className="info">
-          <h2 className="title">
-            Sân cầu lông 4 người
-          </h2>
+          <h2 className="title">{sportfield?.title || 'Sân thể thao'}</h2>
 
           <div className="badge">
             <img
@@ -31,16 +35,13 @@ const DetailCard = () => {
               alt="Icon Cầu lông"
               className="badge-icon"
             />
-            <span className="badge-text">
-              Cầu lông
-            </span>
+            <span className="badge-text">{type}</span>
           </div>
         </div>
       </div>
 
-      {/* --- Phần bên phải: Nút đặt lịch & Đánh giá --- */}
       <div className="detail-card-right">
-        <button className="OrderBtn" onClick={() => navigate("/booking")}>
+        <button className="OrderBtn" onClick={() => navigate("/booking")}> 
           Đặt lịch
         </button>
 
@@ -49,18 +50,15 @@ const DetailCard = () => {
             {[...Array(5)].map((_, index) => (
               <img
                 key={index}
-                src={starIcon}
+                src={index < Math.round(sportfield?.avg_rating || 0) ? starIcon : starIcon}
                 alt="Star"
                 className="star-icon"
               />
             ))}
           </div>
-          <span className="rating-text">
-            12,4k
-          </span>
+          <span className="rating-text">{ratingDisplay} ({totalRating})</span>
         </div>
       </div>
-
     </div>
   );
 };
