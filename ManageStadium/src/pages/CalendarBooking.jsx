@@ -1,11 +1,20 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { getSportFieldBySF_Id } from "../api/sportfieldApi/getSportFieldBySF_Id";
 import { getBookedSlotsAPI } from "../api/ordersApi/getBookedTimeSlotsBySportFieldAndDate";
 import "../styles/Booking.css";
-
-function CalendarBooking({ id }) {
+import NoticeModal from "../components/NoticeModal";
+function CalendarBooking() {
     const navigate = useNavigate();
+    const location = useLocation();
+
+    const [contentNotice, setContentNotice] = useState("")
+    const [notice, setNotice] = useState(false);
+
+
+    const [idSportfield] = useState(
+        location.state?.id || null
+    );
 
     const [selectedDate, setSelectedDate] = useState(
         new Date().toISOString().split("T")[0]
@@ -78,12 +87,13 @@ function CalendarBooking({ id }) {
         const [h, m] = t.split(":").map(Number);
         return h + (m || 0) / 60;
     };
+
     useEffect(() => {
         const fetchData = async () => {
             try {
                 setSportfieldcalendar([]); // reset trước
 
-                const sf = await getSportFieldBySF_Id("SF002");
+                const sf = await getSportFieldBySF_Id(idSportfield);
                 setSportfield(sf);
 
                 const data = await getBookedSlotsAPI(sf.sportfield_id, selectedDate);
@@ -131,13 +141,20 @@ function CalendarBooking({ id }) {
     };
 
     const handleNext = () => {
-        if (!selectedTime.start) return;
+        if (!selectedTime.start || !selectedTime.end) {
+            setContentNotice("Chưa chọn giờ bắt đầu hoặc giờ kết thúc");
+            setNotice(true);
+            return;
+        }
 
-        navigate("/test2", {
-            state: { selectedDate, selectedTime, timeCount, paid, id: "SF002" }
+        navigate("/info-booking", {
+            state: { selectedDate, selectedTime, timeCount, paid, id: idSportfield }
         });
     };
 
+    const handleCloseModal = () => {
+        setNotice(false);
+    }
     const formatMinutesToTime = (minutes) => {
         const h = Math.floor(minutes / 60);
         const m = minutes % 60;
@@ -199,15 +216,8 @@ function CalendarBooking({ id }) {
                                         setClickStep(1);
                                     }
                                     else if (clickStep === 1) {
-                                        const startIndex = Math.min(
-                                            timeSlots.indexOf(tempStart),
-                                            timeSlots.indexOf(t)
-                                        );
-
-                                        const endIndex = Math.max(
-                                            timeSlots.indexOf(tempStart),
-                                            timeSlots.indexOf(t)
-                                        );
+                                        const startIndex = timeSlots.indexOf(tempStart);
+                                        const endIndex = timeSlots.indexOf(t);
 
                                         if (startIndex === endIndex) {
                                             setSelectedTime({
@@ -223,13 +233,21 @@ function CalendarBooking({ id }) {
 
                                         for (let i = startIndex; i <= endIndex; i++) {
                                             if (getSlotStatus(i) !== "empty") {
-                                                alert("Khoảng thời gian đã có lịch đặt");
+                                                setContentNotice("Khoảng thời gian đã có người đặt");
+                                                setNotice(true);
                                                 return;
                                             }
                                         }
 
-                                        if (endIndex < startIndex || (endIndex - startIndex) * 30 <= 30) {
-                                            alert("Giờ kết thúc phải sau giờ bắt đầu và tối thiểu 30 phút");
+                                        if (startIndex > endIndex) {
+                                            setContentNotice("Giờ kết thúc phải sau giờ bắt đầu");
+                                            setNotice(true);
+                                            return;
+                                        }
+
+                                        if (endIndex - startIndex <= 1) {
+                                            setContentNotice("Tổng giờ chơi phải tối thiểu 30 phút");
+                                            setNotice(true);
                                             return;
                                         }
                                         setSelectedTime({
@@ -262,12 +280,13 @@ function CalendarBooking({ id }) {
                 </div>
 
                 <div className="footer-action">
-                    <p className="footer-price">Tổng tiền: {paid}đ</p>
+                    <p className="footer-price">Tổng tiền: {paid.toLocaleString()}đ</p>
                     <button className="order-btn" onClick={handleNext}>
                         TIẾP THEO
                     </button>
                 </div>
             </div>
+            {(notice && <NoticeModal handleCloseModal={handleCloseModal} text={contentNotice} />)}
         </div >
     );
 }

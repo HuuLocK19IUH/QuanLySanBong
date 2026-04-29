@@ -25,8 +25,6 @@ function App() {
 
           <Route path="/field-detail" element={<FieldDetail />} />
 
-          <Route path="/booking" element={<Booking />} />
-
           <Route path="/payment" element={<Payment />} />
 
           <Route path="/cart" element={<CartPage />} />
@@ -37,9 +35,9 @@ function App() {
 
           <Route path="/user-info" element={<UserInfo />} />
 
-          <Route path="/test1" element={<CalendarBooking />} />
+          <Route path="/calendar-booking" element={<CalendarBooking />} />
 
-          <Route path="/test2" element={<BookingInfo />} />
+          <Route path="/info-booking" element={<BookingInfo />} />
         </Routes>
       </BrowserRouter>
     </UserProvider>

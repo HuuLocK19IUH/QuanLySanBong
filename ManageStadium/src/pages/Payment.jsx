@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import { useUser } from "../hooks/context/UserContext"
 import "../styles/Payment.css";
 import { createOrder } from "../api/ordersApi/createOrder.js";
+import NoticeModalTrue from "../components/NoticeModalTrue.jsx";
+import NoticeModalFalse from "../components/NoticeModalFalse.jsx";
 
 export default function Payment() {
   const location = useLocation();
@@ -21,14 +23,24 @@ export default function Payment() {
   } = location.state || {};
 
 
-  const [timeLeft, setTimeLeft] = useState(900);
+  const [timeLeft, setTimeLeft] = useState(15);
   const [orderId, setOrderId] = useState("");
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showUnSuccessModal, setShowUnSuccessModal] = useState(false);
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setTimeLeft((t) => (t > 0 ? t - 1 : 0));
+      setTimeLeft((t) => {
+        if (t <= 1) {
+          clearInterval(timer); // dừng khi về 0
+          setShowUnSuccessModal(true);
+          console.log("Đã về 0");
+          return 0;
+        }
+        return t - 1;
+      });
     }, 1000);
+
     return () => clearInterval(timer);
   }, []);
 
@@ -61,7 +73,7 @@ export default function Payment() {
     return new Date(date.getTime() + (localOffset + vnOffset) * 60000)
       .toISOString();
   };
-  
+
   const handleConfirmPay = async () => {
     try {
       const orderData = {
@@ -77,7 +89,7 @@ export default function Payment() {
 
         services: (returnservices || []).map((s) => ({
           service_id: s.service_id,
-          service_name: s.service_name,
+          service_name: s.name,
           quantity: Number(s.qty || 1),
           price: Number(s.price || 0),
           service_cost: Number(s.price || 0) * Number(s.qty || 1),
@@ -97,10 +109,15 @@ export default function Payment() {
   };
 
   // Hàm đóng modal
-  const handleCloseModal = () => {
+  const handleCloseTrueModal = () => {
     setShowSuccessModal(false);
+    navigate("/history")
   };
 
+  const handleCloseFalseModal = () => {
+    setShowUnSuccessModal(false);
+    navigate("/")
+  };
   function formatDate(dateStr) {
     const [year, month, day] = dateStr.split("-");
     return `${day}/${month}/${year}`;
@@ -223,22 +240,11 @@ export default function Payment() {
 
       {/* --- MODAL THÔNG BÁO THÀNH CÔNG (Click overlay để tắt) --- */}
       {showSuccessModal && (
-        <div className="modal-overlay" onClick={handleCloseModal}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            {/* Dấu "×" trên cùng bên trái để tắt */}
-            <button className="close-x" onClick={handleCloseModal}>×</button>
-
-            {/* Biểu tượng tích xanh giống Figma */}
-            <div className="checkmark-container">
-              <span className="checkmark-icon">✔</span>
-            </div>
-
-            {/* Văn bản thông báo chính xác như Figma */}
-            <p className="success-text">Bạn đã thanh toán thành công</p>
-          </div>
-        </div>
+        <NoticeModalTrue handleCloseModal={handleCloseTrueModal} text={"Bạn đã thanh toán thành công"} />
       )}
-
+      {showUnSuccessModal && (
+        <NoticeModalFalse handleCloseModal={handleCloseFalseModal} text={"Bạn đã hết thời gian thanh toán"} />
+      )}
     </div>
   );
 }

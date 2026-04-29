@@ -40,7 +40,9 @@ const DetailCard = () => {
 
       {/* --- Phần bên phải: Nút đặt lịch & Đánh giá --- */}
       <div className="detail-card-right">
-        <button className="OrderBtn" onClick={() => navigate("/booking")}>
+        <button className="OrderBtn" onClick={() => navigate("/calendar-booking", {
+          state: { id: "SF002" }
+        })}>
           Đặt lịch
         </button>
 
@@ -61,7 +63,7 @@ const DetailCard = () => {
         </div>
       </div>
 
-    </div>
+    </div >
   );
 };
 
