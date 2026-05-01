@@ -9,7 +9,7 @@ function NoticeModalTrue({ handleCloseModal, text }) {
 
                 {/* Biểu tượng tích xanh giống Figma */}
                 <div className="checkmark-container">
-                    <span className="checkmark-icon">X</span>
+                    <span className="checkmark-icon">✓</span>
                 </div>
 
                 {/* Văn bản thông báo chính xác như Figma */}

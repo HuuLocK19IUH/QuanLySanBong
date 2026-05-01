@@ -6,7 +6,14 @@ export const UserProvider = ({ children }) => {
 
     const [user, setUser] = useState(() => {
         const storedUser = localStorage.getItem("user");
-        return storedUser ? JSON.parse(storedUser) : null;
+        if (!storedUser) return null;
+        try {
+            return JSON.parse(storedUser);
+        } catch (err) {
+            console.warn("Invalid user data in localStorage, clearing it.", err);
+            localStorage.removeItem("user");
+            return null;
+        }
     });
 
     return (

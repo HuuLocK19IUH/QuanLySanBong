@@ -1,96 +1,38 @@
-import { useLocation, useNavigate } from "react-router-dom"
-import Taskbar from "../components/Taskbar"
-import BookingDetailModal from "../components/BookingDetailModal"
-import Footer from "../components/Footer"
-import HistoryCard from "../components/HistoryCard"
-import "../styles/cartHistoryPages.css"
+import { useLocation, useNavigate } from "react-router-dom";
+import Taskbar from "../components/Taskbar";
+import BookingDetailModal from "../components/BookingDetailModal";
+import Footer from "../components/Footer";
+import "../styles/cartHistoryPages.css";
 
 function BookingDetailPage() {
-  const navigate = useNavigate()
-  const location = useLocation()
-  const booking = location.state?.booking
+  const navigate = useNavigate();
+  const location = useLocation();
+  const booking = location.state?.booking;
 
-  const bookings = [
-    {
-      id: 1,
-      code: "#232",
-      title: "Sân cầu lông 4 người",
-      tag: "Cầu lông",
-      date: "06/03/2026",
-      status: "hoàn thành",
-      img: "https://images.unsplash.com/photo-1599058917212-d750089bc07e",
-      userName: "Quách Ngọc Long",
-      phone: "0933544446",
-      timeText: "17h - 18h30 - 06/03/2026",
-      bill: {
-        totalHoursText: "17h - 18h30 (1h30)",
-        totalServicesQty: 1,
-        items: [
-          { qty: 1, name: "Cầu lông", price: 200000 },
-          { qty: 3, name: "Suối Dasani nhỏ", price: 10000 }
-        ],
-        totalService: 230000,
-        totalOrder: 290000
-      }
-    },
-    {
-      id: 2,
-      code: "#233",
-      title: "Sân cầu lông 4 người",
-      tag: "Cầu lông",
-      date: "06/03/2026",
-      status: "hoàn thành",
-      img: "https://images.unsplash.com/photo-1599058917212-d750089bc07e",
-      userName: "Quách Ngọc Long",
-      phone: "0933544446",
-      timeText: "18h - 19h30 - 06/03/2026",
-      bill: {
-        totalHoursText: "18h - 19h30 (1h30)",
-        totalServicesQty: 1,
-        items: [{ qty: 1, name: "Cầu lông", price: 200000 }],
-        totalService: 200000,
-        totalOrder: 260000
-      }
-    },
-    {
-      id: 3,
-      code: "#234",
-      title: "Sân cầu lông 4 người",
-      tag: "Cầu lông",
-      date: "06/03/2026",
-      status: "hoàn thành",
-      img: "https://images.unsplash.com/photo-1599058917212-d750089bc07e",
-      userName: "Quách Ngọc Long",
-      phone: "0933544446",
-      timeText: "19h - 20h30 - 06/03/2026",
-      bill: {
-        totalHoursText: "19h - 20h30 (1h30)",
-        totalServicesQty: 1,
-        items: [{ qty: 1, name: "Cầu lông", price: 200000 }],
-        totalService: 200000,
-        totalOrder: 260000
-      }
-    },
-    {
-      id: 4,
-      code: "#235",
-      title: "Sân cầu lông 4 người",
-      tag: "Cầu lông",
-      date: "06/03/2026",
-      status: "hoàn thành",
-      img: "https://images.unsplash.com/photo-1599058917212-d750089bc07e",
-      userName: "Quách Ngọc Long",
-      phone: "0933544446",
-      timeText: "20h - 21h30 - 06/03/2026",
-      bill: {
-        totalHoursText: "20h - 21h30 (1h30)",
-        totalServicesQty: 1,
-        items: [{ qty: 1, name: "Cầu lông", price: 200000 }],
-        totalService: 200000,
-        totalOrder: 260000
-      }
+  if (!booking) {
+    return (
+      <div className="mh-page">
+        <Taskbar />
+        <div className="mh-main">
+          <div className="mh-panel" style={{ textAlign: "center", padding: 24 }}>
+            <h2 className="mh-page-title">Không có đơn đặt để hiển thị</h2>
+            <p>Vui lòng quay lại trang lịch sử đặt sân để chọn đơn hàng.</p>
+            <button className="mh-btn mh-btn--small" onClick={() => navigate("/history")}>Quay lại lịch sử</button>
+          </div>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
+  const handleReview = () => {
+    const sportfieldId = booking?.sportfield_id || booking?.id_sportfield;
+    if (sportfieldId) {
+      navigate(`/field-detail/${sportfieldId}`, {
+        state: { focusReview: true },
+      });
     }
-  ]
+  };
 
   return (
     <div className="mh-page">
@@ -98,40 +40,19 @@ function BookingDetailPage() {
 
       <div className="mh-main">
         <div className="mh-panel">
-          <h2 className="mh-page-title">Chi tiết lịch sử đặt sân</h2>
-
-          <div className="mh-secondary-search">
-            <div className="mh-search-icon" />
-            <input type="text" placeholder="Tìm kiếm theo loại sân" />
-          </div>
-
-          <div className="mh-list">
-            {bookings.map((b) => (
-              <HistoryCard
-                key={b.id}
-                booking={b}
-                openDetail={() =>
-                  navigate("/booking-detail", {
-                    state: { booking: b }
-                  })
-                }
-              />
-            ))}
-          </div>
+          <h2 className="mh-page-title">Chi tiết đơn đặt</h2>
+          <p style={{ marginBottom: 16 }}>
+            Nhấn "Đánh giá" để chuyển sang trang đánh giá của sân thể thao.
+          </p>
         </div>
       </div>
 
       <Footer />
 
-      {booking && (
-        <BookingDetailModal
-          booking={booking}
-          onClose={() => navigate("/history")}
-        />
-      )}
+      <BookingDetailModal booking={booking} onClose={() => navigate("/history")} onReview={handleReview} />
     </div>
-  )
+  );
 }
 
-export default BookingDetailPage
+export default BookingDetailPage;
 

@@ -47,6 +47,7 @@ const FieldServiceTab = ({ pricing, services }) => {
           <thead>
             <tr>
               <th>Dịch vụ</th>
+              <th>Số lượng</th>
               <th>Giá tiền</th>
             </tr>
           </thead>
@@ -54,13 +55,14 @@ const FieldServiceTab = ({ pricing, services }) => {
             {services?.length > 0 ? (
               services.map((service) => (
                 <tr key={service._id || service.service_id}>
-                  <td>{service.name}</td>
+                  <td>{service.name || service.service_name || 'Dịch vụ'}</td>
+                  <td>{service.quantity || service.qty || 1}</td>
                   <td className="price-cell">{service.price?.toLocaleString('vi-VN')}đ</td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="2" style={{ textAlign: 'center', color: '#36656B' }}>
+                <td colSpan="3" style={{ textAlign: 'center', color: '#36656B' }}>
                   Chưa có dịch vụ nào được cập nhật.
                 </td>
               </tr>

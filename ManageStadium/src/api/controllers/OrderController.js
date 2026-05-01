@@ -1,6 +1,6 @@
-import { getBookedTimeSlotsBySportFieldAndDate, createOrderService } from "../services/OrderService.js";
+import { getBookedTimeSlotsBySportFieldAndDate, createOrderService, getOrdersByUserId } from "../services/OrderService.js";
 
-export const getBookedSlots = async (req, res) => {
+export const getBookedSlots = async(req, res) => {
     try {
         const { id_sportfield, date } = req.query;
 
@@ -26,7 +26,33 @@ export const getBookedSlots = async (req, res) => {
     }
 };
 
-export const createOrderController = async (req, res) => {
+export const getOrdersByUser = async(req, res) => {
+    try {
+        const { user_id, search } = req.query;
+
+        if (!user_id) {
+            return res.status(400).json({
+                success: false,
+                message: "Thiếu user_id",
+            });
+        }
+
+        const orders = await getOrdersByUserId(user_id, search || "");
+
+        return res.status(200).json({
+            success: true,
+            message: "Lấy lịch sử đặt sân thành công",
+            data: orders,
+        });
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: error.message || "Lỗi khi lấy lịch sử đặt sân",
+        });
+    }
+};
+
+export const createOrderController = async(req, res) => {
     try {
         const orderData = req.body;
         console.log("BODY:", req.body);

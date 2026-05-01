@@ -51,7 +51,7 @@ function SportFieldCard({ _id, img_url, title, pricing, state, avg_rating, total
                         <div style={{ display: "flex" }}>
                             {[...Array(5)].map((_, index) => (
                                 <img
-                                    key={index}
+                                    key={`star-${_id}-${index}`}
                                     src={index < avg_rating ? starFill : starUnFill}
                                     alt="star"
                                     className="star-img"

@@ -18,6 +18,7 @@ export default function Payment() {
     totalService,
     idSportfield,
     phone,
+    name, // Thêm biến này ở đây
     returnservices,
     note
   } = location.state || {};
@@ -27,6 +28,17 @@ export default function Payment() {
   const [orderId, setOrderId] = useState("");
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showUnSuccessModal, setShowUnSuccessModal] = useState(false);
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/login');
+      return;
+    }
+
+    if (!selectedDate || !selectedTime || !idSportfield) {
+      navigate('/booking');
+    }
+  }, [user, selectedDate, selectedTime, idSportfield, navigate]);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -119,9 +131,12 @@ export default function Payment() {
     navigate("/")
   };
   function formatDate(dateStr) {
+    if (!dateStr) return "";
     const [year, month, day] = dateStr.split("-");
     return `${day}/${month}/${year}`;
   }
+
+  if (!user || !selectedDate || !selectedTime) return null;
 
   return (
     <div className="payment-page">
@@ -166,7 +181,7 @@ export default function Payment() {
                 {/* Dòng Tổng giờ & Tổng tiền */}
                 <div className="invoice-row">
                   <span>Tổng giờ: <b>{timeCount}</b></span>
-                  <span>Tổng tiền: <b>{paid.toLocaleString()}đ</b></span>
+                  <span>Tổng tiền: <b>{(paid || 0).toLocaleString()}đ</b></span>                
                 </div>
                 {/* Dòng Tổng dịch vụ */}
                 <div className="invoice-row">
@@ -211,7 +226,7 @@ export default function Payment() {
               <h3 className="pay-card-title">Thông tin đặt sân</h3>
               <div className="booking-summary">
                 <p className="inline-field"><span>Mã đơn:</span> <b>{orderId}</b></p>
-                <p className="inline-field"><span>Tên người đặt sân:</span> <b>{user.name}</b></p>
+                <p className="inline-field"><span>Tên người đặt sân:</span> <b>{user?.name || "Chưa đăng nhập"}</b></p>
                 <p className="inline-field"><span>Số điện thoại:</span> <b>{phone || "Chưa nhập"}</b></p>
                 <p className="inline-field"><span>Thời gian đặt sân:</span> <b>{formatDate(selectedDate)} | {selectedTime?.start} - {selectedTime?.end}</b></p>
 
