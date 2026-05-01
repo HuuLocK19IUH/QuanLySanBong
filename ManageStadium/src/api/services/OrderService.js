@@ -1,26 +1,26 @@
+import mongoose from "mongoose";
 import Order from "../models/Order.js";
-export const getBookedTimeSlotsBySportFieldAndDate = async (id_sportfield, date) => {
+import SportField from "../models/Sportfield.js";
+
+export const getBookedTimeSlotsBySportFieldAndDate = async(id_sportfield, date) => {
     const startOfDay = new Date(date);
     startOfDay.setHours(0, 0, 0, 0);
 
     const endOfDay = new Date(date);
     endOfDay.setHours(23, 59, 59, 999);
 
-    const orders = await Order.find(
-        {
-            state: { $in: ["pending", "completed"] },
-            id_sportfield,
-            start_hour: {
-                $gte: startOfDay,
-                $lt: endOfDay,
-            },
+    const orders = await Order.find({
+        state: { $in: ["pending", "completed"] },
+        id_sportfield,
+        start_hour: {
+            $gte: startOfDay,
+            $lt: endOfDay,
         },
-        {
-            start_hour: 1,
-            end_hour: 1,
-            _id: 0,
-        }
-    );
+    }, {
+        start_hour: 1,
+        end_hour: 1,
+        _id: 0,
+    });
 
     const formatTime = (date) => {
         const d = new Date(date);
@@ -37,7 +37,55 @@ export const getBookedTimeSlotsBySportFieldAndDate = async (id_sportfield, date)
     ]);
 };
 
-export const createOrderService = async (orderData) => {
+export const getOrdersByUserId = async(userId, search = "") => {
+    if (!userId) {
+        return [];
+    }
+
+    const orders = await Order.find({ id_user: userId }).sort({ start_hour: -1 }).lean();
+    if (!orders.length) {
+        return [];
+    }
+
+    const orderIds = orders.map((order) => order.id_sportfield).filter(Boolean);
+    const objectIds = orderIds
+        .filter((id) => mongoose.Types.ObjectId.isValid(id))
+        .map((id) => new mongoose.Types.ObjectId(id));
+
+    const sportfieldQuery = {
+        $or: [{ sportfield_id: { $in: orderIds } }],
+    };
+    if (objectIds.length > 0) {
+        sportfieldQuery.$or.push({ _id: { $in: objectIds } });
+    }
+
+    const sportfields = await SportField.find(sportfieldQuery).lean();
+    const sportfieldMap = new Map();
+
+    sportfields.forEach((field) => {
+        sportfieldMap.set(field.sportfield_id, field);
+        sportfieldMap.set(String(field._id), field);
+    });
+
+    const mappedOrders = orders.map((order) => ({
+        ...order,
+        sportfield: sportfieldMap.get(order.id_sportfield) || null,
+    }));
+
+    if (!search.trim()) {
+        return mappedOrders;
+    }
+
+    const lowerSearch = search.toLowerCase();
+    return mappedOrders.filter((order) => {
+        const sportfield = order.sportfield;
+        const name = sportfield && sportfield.title ? sportfield.title.toLowerCase() : "";
+        const type = sportfield && sportfield.sportfield_type ? sportfield.sportfield_type.toLowerCase() : "";
+        return name.includes(lowerSearch) || type.includes(lowerSearch);
+    });
+};
+
+export const createOrderService = async(orderData) => {
     // Đếm số order hiện tại
     const count = await Order.countDocuments();
 

@@ -93,7 +93,7 @@ function HomePage() {
             <div className="sportfieldgrid">
                 {currentItems.length > 0 ? (
                     currentItems.map((item) => (
-                        <SportFieldCard key={item.id} {...item} />
+                        <SportFieldCard key={item._id} {...item} />
                     ))
                 ) : (
                     <h2 style={{ gridColumn: "span 4", textAlign: "center", marginTop: "40px", color: "#36656B" }}>
@@ -123,8 +123,8 @@ function HomePage() {
                     <p>My court xin chào</p>
                 </div>
                 <div className="introimg-con">
-                    {inTroImgCards.map((item, index) => (
-                        <IntroImgCard key={index} {...item} />
+                    {inTroImgCards.map((item) => (
+                        <IntroImgCard key={item.nameimg} {...item} />
                     ))}
                 </div>
             </div>

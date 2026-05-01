@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import HomePageTaskbar from '../components/HomePageTaskbar';
 import ProductDetailImage from '../components/ProductDetailPage';
 import DetailCard from '../components/DetailCard';
@@ -24,7 +24,14 @@ const FieldDetail = () => {
 
   const { user } = useUser();
   const { id } = useParams();
+  const location = useLocation();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (location.state?.focusReview) {
+      setActiveTab('reviews');
+    }
+  }, [location.state]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,16 +39,16 @@ const FieldDetail = () => {
       setLoading(true);
       setError(null);
       try {
-        const [fieldData, serviceData, ratingData] = await Promise.all([
+        const [fieldData, ratingData] = await Promise.all([
           getSportFieldById(id),
-          getServices(),
           getRatingsByField(id),
         ]);
+
         setSportfield(fieldData);
-        setServices(serviceData);
-        setRatings(ratingData);
+        setServices(fieldData?.services || []);
+        setRatings(ratingData || []);
       } catch (err) {
-        setError(err.message || 'Lỗi khi tải dữ liệu chi tiết');
+        setError(err?.message || 'Lỗi khi tải dữ liệu chi tiết');
       } finally {
         setLoading(false);
       }
@@ -64,25 +71,35 @@ const FieldDetail = () => {
     }
 
     try {
-      const newRating = await createRating({
+      const ratingPayload = {
         user_id: getUserId(),
         sportfield_id: id,
         user_name: getUserName(),
         content: comment,
         star_rating: ratingValue,
-      });
-      setRatings((prev) => [newRating, ...prev]);
+      };
+
+      const newRating = await createRating(ratingPayload);
+      const ratingObject = newRating.data || newRating;
+
+      setRatings((prev) => [ratingObject, ...prev]);
+
       setSportfield((prev) => {
         if (!prev) return prev;
-        const total = (prev.total_rating || 0) + 1;
-        const avg = total
-          ? ((prev.avg_rating || 0) * (prev.total_rating || 0) + ratingValue) / total
-          : ratingValue;
-        return { ...prev, total_rating: total, avg_rating: Number(avg.toFixed(1)) };
+        const currentTotal = (prev.rating || 0) * (prev.reviews?.length || 0);
+        const newCount = (prev.reviews?.length || 0) + 1;
+        const newTotal = currentTotal + ratingValue;
+        return {
+          ...prev,
+          rating: Math.round((newTotal / newCount) * 10) / 10,
+          reviews: [...(prev.reviews || []), ratingObject]
+        };
       });
-      setActiveTab('reviews');
+
+      alert('Đánh giá đã được gửi thành công!');
     } catch (err) {
-      setError(err.message || 'Lỗi khi gửi đánh giá');
+      console.error('Error creating rating:', err);
+      alert('Có lỗi xảy ra khi gửi đánh giá');
     }
   };
 

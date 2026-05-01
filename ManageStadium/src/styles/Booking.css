@@ -21,7 +21,7 @@
 /* ===== HEADER ===== */
 
 .booking-header {
-    padding: 40px 50px;
+    padding: 50px 80px;
     background: var(--bg-green);
 }
 
@@ -67,10 +67,10 @@
     background: var(--dark-green);
     color: var(--figma-yellow);
     border: none;
-    padding: 15px 25px;
+    padding: 20px 35px;
     /* Tăng padding */
-    border-radius: 12px;
-    font-size: 1.8rem;
+    border-radius: 15px;
+    font-size: 32px;
     /* To hơn giống Figma */
     font-weight: 800;
     cursor: pointer;
@@ -277,10 +277,10 @@
 /* ===== LAYOUT BƯỚC 2 ===== */
 
 .booking-confirmation-container {
-    padding: 20px 50px 50px 50px;
+    padding: 30px 80px 60px 80px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 25px;
     flex: 1;
     overflow-y: auto;
 }
@@ -291,8 +291,8 @@
 .info-card {
     background-color: rgb(104, 151, 80);
     /* Nền xanh đậm */
-    border-radius: 20px;
-    padding: 25px 30px;
+    border-radius: 25px;
+    padding: 35px 40px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     color: white;
     /* Chữ trắng theo figma */
@@ -350,17 +350,19 @@
     grid-template-columns: 1fr 2fr 1.5fr 40px;
     font-weight: 800;
     color: white;
-    font-size: 1.2rem;
-    padding-bottom: 10px;
+    font-size: 1.4rem;
+    padding-bottom: 15px;
+    gap: 15px;
 }
 
 .table-row {
     display: grid;
     grid-template-columns: 1fr 2fr 1.5fr 40px;
     align-items: center;
-    font-size: 1.4rem;
-    margin-bottom: 10px;
+    font-size: 1.6rem;
+    margin-bottom: 15px;
     font-weight: 600;
+    gap: 15px;
 }
 
 .card-footer-row {
@@ -458,7 +460,7 @@
 }
 
 .input-field-wrapper {
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
 
 .add-service-btn {
@@ -466,12 +468,12 @@
     border: 2px dashed var(--figma-yellow);
     color: var(--figma-yellow);
     width: 100%;
-    padding: 15px;
-    border-radius: 12px;
-    font-size: 1.4rem;
+    padding: 20px;
+    border-radius: 15px;
+    font-size: 1.6rem;
     font-weight: bold;
     cursor: pointer;
-    margin: 10px 0;
+    margin: 15px 0;
 }
 
 .total-order-text {
@@ -510,8 +512,8 @@
     /* Màu nền input nhẹ nhàng */
     border: none;
     border-radius: 15px;
-    padding: 20px 25px;
-    font-size: 1.3rem;
+    padding: 25px 30px;
+    font-size: 1.5rem;
     color: var(--dark-green);
     font-weight: 600;
     width: 100%;
@@ -525,7 +527,7 @@
 }
 
 .custom-textarea {
-    height: 120px;
+    height: 150px;
     resize: none;
 }
 
@@ -536,7 +538,7 @@
     align-items: stretch;
     /* Đảm bảo các phần tử con cao bằng nhau */
     overflow: hidden;
-    height: 60px;
+    height: 70px;
     /* Cố định chiều cao để không bị nhảy */
 }
 
@@ -622,6 +624,3 @@
     /* Giảm nhẹ so với bước 1 để không bị tràn dòng */
     text-transform: uppercase;
 }
-
-
-

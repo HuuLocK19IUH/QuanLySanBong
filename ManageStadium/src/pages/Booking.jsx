@@ -43,9 +43,22 @@ export default function Booking() {
       return
     }
     
-    // Nếu OK thì chuyển trang
+    // TÍNH TOÁN DỮ LIỆU ĐỂ GỬI ĐI
+    const courtFee = 160000; // Tiền sân cố định (khớp với hiển thị footer)
+
+    // CHUYỂN TRANG VỚI ĐÚNG TÊN BIẾN MÀ PAYMENT.JSX CẦN
     navigate("/payment", {
-      state: { selectedTime, services, name, phone, note, totalOrder }
+      state: { 
+        selectedTime,       // { start, end }
+        selectedDate,       // "2026-03-06"
+        timeCount: "1h30",  // Payment cần hiển thị tổng giờ
+        paid: courtFee,     // Payment dùng biến 'paid' để tính tiền sân
+        totalService,       // Tổng tiền dịch vụ
+        idSportfield: 1,    // ID sân (tạm thời để là 1)
+        phone, 
+        returnservices: services, // Payment cần 'returnservices', không phải 'services'
+        note: note || "Không có ghi chú"
+      }
     })
   }
 
@@ -158,7 +171,7 @@ export default function Booking() {
                 <p>Sân cầu lông 4 người: <b>{selectedTime.start} – {selectedTime.end}</b></p>
                 <p>Tổng giờ: <b>1h30</b></p>
                 <div className="card-total-left">
-                  Tổng tiền: 160.000đ
+                  Tổng tiền: { (160000).toLocaleString() }đ 
                 </div>
               </div>
             </div>
@@ -244,7 +257,7 @@ export default function Booking() {
           <div className="order-footer">
             <div className="footer-action">
               <button className="confirm-btn-final" onClick={handleConfirm}>
-                XÁC NHẬN & THANH TOÁN
+                XÁC NHẬN & THANH TOÁN ({(totalService + 160000).toLocaleString()}đ)
               </button>
             </div>
           </div>
