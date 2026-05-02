@@ -1,4 +1,4 @@
-import { getBookedTimeSlotsBySportFieldAndDate, createOrderService } from "../services/OrderService.js";
+import { getBookedTimeSlotsBySportFieldAndDate, createOrderService, getOrdersByUserService } from "../services/OrderService.js";
 
 export const getBookedSlots = async (req, res) => {
     try {
@@ -43,5 +43,18 @@ export const createOrderController = async (req, res) => {
             message: "Create order failed",
             error: error.message,
         });
+    }
+};
+
+export const getOrdersByUser = async (req, res) => {
+    try {
+        const { id_user } = req.params;
+        if (!id_user) {
+            return res.status(400).json({ message: "Thiếu id_user" });
+        }
+        const orders = await getOrdersByUserService(id_user);
+        res.status(200).json({ success: true, data: orders });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
     }
 };

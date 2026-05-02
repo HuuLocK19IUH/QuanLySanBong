@@ -1,4 +1,5 @@
 import Order from "../models/Order.js";
+import Notification from "../models/Notification.js";
 export const getBookedTimeSlotsBySportFieldAndDate = async (id_sportfield, date) => {
     const startOfDay = new Date(date);
     startOfDay.setHours(0, 0, 0, 0);
@@ -54,5 +55,22 @@ export const createOrderService = async (orderData) => {
     // Lưu DB
     const savedOrder = await newOrder.save();
 
+    try {
+        const newNotification = new Notification({
+            user_id: savedOrder.id_user,
+            order_id: savedOrder.id_order,
+            type: "order_completed",
+            title: "Đặt sân thành công",
+            message: `Đơn hàng ${savedOrder.id_order} của bạn đã được đặt thành công. Vui lòng thanh toán!`
+        });
+        await newNotification.save();
+    } catch (error) {
+        console.error("Error creating notification:", error);
+    }
+
     return savedOrder;
+};
+
+export const getOrdersByUserService = async (id_user) => {
+    return await Order.find({ id_user }).sort({ created_at: -1 });
 };

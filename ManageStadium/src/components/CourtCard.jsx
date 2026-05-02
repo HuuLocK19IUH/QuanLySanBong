@@ -1,6 +1,6 @@
 import "../styles/cartHistoryPages.css"
 
-function CourtCard({ title, tag, img, status, onPay }) {
+function CourtCard({ title, tag, img, status, onPay, btnText = "Thanh toán" }) {
 
   return (
     <div className="mh-card">
@@ -26,7 +26,7 @@ function CourtCard({ title, tag, img, status, onPay }) {
         <p className="mh-card-status">Trạng thái: {status}</p>
 
         <button className="mh-btn" onClick={onPay}>
-          Thanh toán
+          {btnText}
         </button>
 
       </div>
