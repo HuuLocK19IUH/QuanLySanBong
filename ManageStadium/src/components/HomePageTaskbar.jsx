@@ -15,11 +15,11 @@ function HomePageTaskbar({ toggleFilter, searchTerm, setSearchTerm, user }) {
         <div className="taskbar">
             <img src={SearchIcon} alt="" />
             <div className="search-box">
-                <input 
-                    type="text" 
-                    placeholder="Tìm sân..." 
-                    value={searchTerm} 
-                    onChange={(e) => setSearchTerm(e.target.value)} 
+                <input
+                    type="text"
+                    placeholder="Tìm sân..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
                 />
                 <img
                     src={FilterIcon}
@@ -29,7 +29,7 @@ function HomePageTaskbar({ toggleFilter, searchTerm, setSearchTerm, user }) {
                 />
             </div>
             <div className="navigation-bar">
-                <div className="nav-item" onClick={() => navigate("/")}>
+                <div className="nav-item" onClick={() => navigate("/homepage")}>
                     <img src={HomeIcon} alt="" />
                     <a>Trang chủ</a>
                 </div>

@@ -19,21 +19,21 @@ import { useUser } from "../hooks/context/UserContext";
 
 function HomePage() {
     const [showFilter, setShowFilter] = useState(false);
-    
+
     // 1. Quản lý user và state chứa dữ liệu thật (của Ngọc Long)
     const { user } = useUser();
     const [sportFields, setSportFields] = useState([]);
 
     // 2. Các State quản lý Bộ Lọc (của Thanh Long)
-    const [searchTerm, setSearchTerm] = useState(""); 
-    const [selectedType, setSelectedType] = useState("all"); 
-    const [maxPrice, setMaxPrice] = useState(1000000); 
-    const [selectedTime, setSelectedTime] = useState(""); 
+    const [searchTerm, setSearchTerm] = useState("");
+    const [selectedType, setSelectedType] = useState("all");
+    const [maxPrice, setMaxPrice] = useState(1000000);
+    const [selectedTime, setSelectedTime] = useState("");
 
     useEffect(() => {
         getSportFields()
             .then(data => {
-                console.log("SPORTFIELDS:", data); 
+                console.log("SPORTFIELDS:", data);
                 setSportFields(data);
             })
             .catch(err => console.log(err));
@@ -52,7 +52,7 @@ function HomePage() {
 
     const itemsPerPage = 8;
     const [currentPage, setCurrentPage] = useState(1);
-    const totalPages = Math.ceil(filteredFields.length / itemsPerPage) || 1; 
+    const totalPages = Math.ceil(filteredFields.length / itemsPerPage) || 1;
     const startIndex = (currentPage - 1) * itemsPerPage;
     const currentItems = filteredFields.slice(startIndex, startIndex + itemsPerPage);
 
@@ -65,9 +65,9 @@ function HomePage() {
     return (
         <div className="homepage">
             <div className="carousel-wrapper">
-                <div className="carousel-container">
+                {/* <div className="carousel-container">
                     <CarouselBoard />
-                </div>
+                </div> */}
                 <HomePageTaskbar
                     className="homepage-taskbar"
                     toggleFilter={() => setShowFilter(!showFilter)}
@@ -79,7 +79,7 @@ function HomePage() {
 
             {showFilter && (
                 <div className="filter-con">
-                    <Filter 
+                    <Filter
                         selectedType={selectedType}
                         setSelectedType={setSelectedType}
                         maxPrice={maxPrice}
@@ -101,7 +101,7 @@ function HomePage() {
                     </h2>
                 )}
             </div>
-            
+
             <div className="sportfieldcard-pagenagivation">
                 <img
                     src={pagenavleft}
@@ -116,7 +116,7 @@ function HomePage() {
                     style={{ cursor: "pointer", opacity: currentPage === totalPages ? 0.5 : 1 }}
                 />
             </div>
-
+{/* 
             <div className="aboutus-container">
                 <div className="helo-con">
                     <img src={mycourtxinchaoavt} alt="" />
@@ -127,8 +127,8 @@ function HomePage() {
                         <IntroImgCard key={item.nameimg} {...item} />
                     ))}
                 </div>
-            </div>
-            <div><HomePageInfoFooter /></div>
+            </div> */}
+            {/* <div><HomePageInfoFooter /></div> */}
             <div className="hp-footer"><Footer /></div>
         </div>
     )
