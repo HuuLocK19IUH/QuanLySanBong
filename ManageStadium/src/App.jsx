@@ -12,6 +12,7 @@ import { UserProvider } from "./hooks/context/UserContext";
 import CalendarBooking from "./pages/CalendarBooking"
 import BookingInfo from "./pages/BookingInfo"
 import NewLandingpage from "./pages/NewLandingpage";
+import ApplyOrderPage from "./pages/ApplyOrderPage";
 
 function App() {
   return (
@@ -43,6 +44,8 @@ function App() {
           <Route path="/info-booking" element={<BookingInfo />} />
 
           <Route path="/" element={<NewLandingpage />} />
+
+          <Route path="/admin/apply-order" element={<ApplyOrderPage />} />
         </Routes>
       </BrowserRouter>
     </UserProvider>

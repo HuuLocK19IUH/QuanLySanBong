@@ -39,13 +39,14 @@ const FieldDetail = () => {
       setLoading(true);
       setError(null);
       try {
-        const [fieldData, ratingData] = await Promise.all([
+        const [fieldData, ratingData, serviceData] = await Promise.all([
           getSportFieldById(id),
           getRatingsByField(id),
+          getServices()
         ]);
 
         setSportfield(fieldData);
-        setServices(fieldData?.services || []);
+        setServices(serviceData || []);
         setRatings(ratingData || []);
       } catch (err) {
         setError(err?.message || 'Lỗi khi tải dữ liệu chi tiết');

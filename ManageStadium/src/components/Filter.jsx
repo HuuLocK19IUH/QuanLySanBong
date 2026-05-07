@@ -3,17 +3,32 @@ import CauLongicon from "../assets/playing_badminton_gold.png"
 import CalendartypeBtn from "./CalendartypeBtn";
 import PriceFilter from "./PriceFilter";
 import TimeFilter from "./TimeFilter";
+import { useEffect, useState } from "react";
+import { getKeywords } from "../api/sportfieldApi/sportfieldsApi";
 import "../styles/Filter.css"
 
 function Filter({ selectedType, setSelectedType, maxPrice, setMaxPrice, selectedTime, setSelectedTime }) {
 
-    const sportTypes = [
-        { id: "Cầu Lông", name: "Cầu Lông", icon: CauLongicon },
-        { id: "Tennis", name: "Tennis", icon: CauLongicon },
-        { id: "Bóng Đá", name: "Bóng Đá", icon: CauLongicon },
-        { id: "Bóng Bàn", name: "Bóng Bàn", icon: CauLongicon },
-        { id: "Pickleball", name: "Pickleball", icon: CauLongicon }
-    ];
+    const [sportTypes, setSportTypes] = useState([]);
+
+    useEffect(() => {
+        const fetchKeywords = async () => {
+            try {
+                const keywords = await getKeywords();
+                if (keywords && keywords.length > 0) {
+                    const types = keywords.map(kw => ({
+                        id: kw,
+                        name: kw,
+                    }));
+                    setSportTypes(types);
+                }
+            } catch (error) {
+                console.error("Lỗi khi tải danh sách loại sân:", error);
+            }
+        };
+
+        fetchKeywords();
+    }, []);
 
     return (
         <div className="filter">
@@ -34,28 +49,17 @@ function Filter({ selectedType, setSelectedType, maxPrice, setMaxPrice, selected
                             onClick={() => setSelectedType(type.id)}
                             className={selectedType === type.id ? "active-sport-btn" : ""} 
                         >
-                            <FilterSportFieldbtn text={type.name} icon={type.icon} />
+                            <FilterSportFieldbtn text={type.name} />
                         </div>
                     ))}
                 </div>
 
-                <h4>Loại lịch</h4>
-                <div className="calendartype-filter">
-                    <div className="active-calendar-btn">
-                        <CalendartypeBtn text={"Sân trống"} />
-                    </div>
-                    <CalendartypeBtn text={"Ghép đội"} />
-                </div>
             </div>
 
             <div className="filter-right">
                 <div className="price-filter">
                     <h4>Lọc theo giá</h4>
                     <PriceFilter maxPrice={maxPrice} setMaxPrice={setMaxPrice} />
-                </div>
-                <div className="time-filter">
-                    <h4>Lọc theo thời gian</h4>
-                    <TimeFilter selectedTime={selectedTime} setSelectedTime={setSelectedTime} />
                 </div>
             </div>
         </div>

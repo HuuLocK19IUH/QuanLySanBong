@@ -1,6 +1,6 @@
 import "../styles/cartHistoryPages.css"
 
-function CourtCard({ title, tag, img, status, onPay }) {
+function CourtCard({ title, tag, img, status, onPay, isExpired }) {
 
   return (
     <div className="mh-card">
@@ -25,8 +25,17 @@ function CourtCard({ title, tag, img, status, onPay }) {
 
         <p className="mh-card-status">Trạng thái: {status}</p>
 
-        <button className="mh-btn" onClick={onPay}>
-          Thanh toán
+        <button 
+          className="mh-btn" 
+          onClick={onPay}
+          disabled={isExpired}
+          style={{ 
+            backgroundColor: isExpired ? "#ccc" : undefined, 
+            cursor: isExpired ? "not-allowed" : "pointer",
+            border: isExpired ? "none" : undefined
+          }}
+        >
+          {isExpired ? "Đã hết hạn" : "Thanh toán"}
         </button>
 
       </div>

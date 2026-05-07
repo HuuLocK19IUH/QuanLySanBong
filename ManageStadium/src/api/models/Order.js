@@ -77,7 +77,8 @@ const orderSchema = new Schema(
                 "pending",
                 "completed",
                 "expired",
-                "paid"
+                "paid",
+                "cancelled"
             ],
             default: "pending",
         },

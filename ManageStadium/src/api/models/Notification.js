@@ -15,7 +15,7 @@ const notificationSchema = new Schema(
 
         type: {
             type: String,
-            enum: ["order_completed", "order_cancelled","order_expired"],
+            enum: ["order_completed", "order_pending", "order_expired", "order_cancelled"],
             required: true,
         },
 

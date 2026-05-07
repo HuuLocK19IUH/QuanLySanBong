@@ -26,7 +26,12 @@ function LoginForm() {
             }
             localStorage.setItem("user", JSON.stringify(user));
             setUser(user)
-            navigate("/");
+        
+            if (user.role === "admin") {
+                navigate("/admin/apply-order");
+            } else {
+                navigate("/homepage");
+            }
         } catch {
             setError(true);
         }

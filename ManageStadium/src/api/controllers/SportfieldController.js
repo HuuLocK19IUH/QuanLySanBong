@@ -4,7 +4,8 @@ import {
     getSportFieldByIdService,
     updateSportFieldService,
     deleteSportFieldService,
-    getSportFieldBySF_IdService
+    getSportFieldBySF_IdService,
+    getUniqueKeywordsService
 } from "../services/SportfieldService.js";
 
 
@@ -14,6 +15,18 @@ import {
 export const getSportFields = async (req, res) => {
     try {
         const data = await getSportFieldsService();
+        res.json(data);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};
+
+/**
+ * Lấy danh sách keywords
+ */
+export const getUniqueKeywords = async (req, res) => {
+    try {
+        const data = await getUniqueKeywordsService();
         res.json(data);
     } catch (err) {
         res.status(500).json({ message: err.message });

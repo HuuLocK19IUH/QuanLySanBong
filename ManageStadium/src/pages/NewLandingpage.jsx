@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import '../styles/NewLandingpage.css';
 import { useNavigate } from 'react-router-dom';
 
+import HomePageInfoFooter from '../components/HomePageInfoFooter';
+import Footer from '../components/Footer';
 const NewLandingpage = () => {
     const navigate = useNavigate();
 
@@ -30,9 +32,6 @@ const NewLandingpage = () => {
                 <div className="hero-content">
                     <h1>MY COURT – TRUNG TÂM THỂ THAO CHUYÊN NGHIỆP</h1>
                     <p className="hero-subtitle">Chốt lịch liền tay, đá banh mê say!</p>
-                    <div className="promo-badge">
-                        <span>🔥</span> GIẢM NGAY 15% khi đặt sân trực tuyến hôm nay!
-                    </div>
                     <button className="book-now-btn" onClick={() => navigate('/homepage')}>ĐẶT LỊCH NGAY</button>
                 </div>
             </section>
@@ -49,7 +48,7 @@ const NewLandingpage = () => {
                 <div className="about-text-container">
                     <h4 className="section-subtitle">VỀ CHÚNG TÔI - MY COURT</h4>
                     <div className="hello-badge">My Court Xin Chào</div>
-                    <h3 className="about-title">Cơ sở vật chất hiện đại</h3>
+                    <h3 className="about-title"> Tiện ích của chúng tôi</h3>
 
                     <div className="about-features">
                         <div className="about-feature-item">
@@ -63,13 +62,19 @@ const NewLandingpage = () => {
                             <div className="feature-icon">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
                             </div>
-                            <span>Không vụ ca sự kiện</span>
+                            <span>Hỗ trợ đặt lịch trực tuyến</span>
                         </div>
                         <div className="about-feature-item">
                             <div className="feature-icon">
-                                <span style={{ fontWeight: 'bold', fontStyle: 'italic', fontSize: '1.2rem' }}>Am</span>
+                                <svg width="28" height="28" viewBox="0 0 28 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="1" y="1" width="26" height="18" rx="2" stroke="#333f38ff" stroke-width="2" stroke-linecap="round" />
+                                    <path d="M14 1V19" stroke="#333f38ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M1 7H4C4.55228 7 5 7.44772 5 8V12C5 12.5523 4.55228 13 4 13H1V7Z" fill="#333f38ff" />
+                                    <path d="M27 7H24C23.4477 7 23 7.44772 23 8V12C23 12.5523 23.4477 13 24 13H27V7Z" fill="#333f38ff" />
+                                    <circle cx="14" cy="10" r="3" fill="#333f38ff" />
+                                </svg>
                             </div>
-                            <span>Ẩm amenities & manition</span>
+                            <span>Tích hợp nhiều loại sân</span>
                         </div>
                     </div>
                 </div>
@@ -77,7 +82,7 @@ const NewLandingpage = () => {
 
             {/* SERVICES & PRICING */}
             <section className="services-section reveal-right">
-                <h2 className="section-title">DỊCH VỤ VÀ BẢNG GIÁ ƯU ĐÃI</h2>
+                <h2 className="section-title">DỊCH VỤ VÀ SÂN BÃI TẠI MY COURT</h2>
                 <div className="services-grid">
                     {/* Card 1 */}
                     <div className="service-card">
@@ -128,16 +133,16 @@ const NewLandingpage = () => {
                         </div>
                         <div className="why-text">
                             <h4>Không gian đa năng cho chứa sự kiện</h4>
-                            <p>Không vụ ca sự kiện, nhân chất lượng, club / kiện, cho vui và sự kiện.</p>
+                            <p>Phục vụ cho những sự kiện đấu giải lớn nhỏ</p>
                         </div>
                     </div>
                     <div className="why-item">
                         <div className="why-icon">
-                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#2c5e4f" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2v20"></path><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#2c5e4f" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path><line x1="6" y1="1" x2="6" y2="4"></line><line x1="10" y1="1" x2="10" y2="4"></line><line x1="14" y1="1" x2="14" y2="4"></line></svg>
                         </div>
                         <div className="why-text">
-                            <h4>Amenities & manition</h4>
-                            <p>Nhặt niêm ao rim amemliên, các thiền không hoan cản thi đấu</p>
+                            <h4>Tiện ích & Dịch vụ</h4>
+                            <p>Bãi đỗ xe rộng rãi, căn tin phục vụ giải khát và wifi tốc độ cao miễn phí.</p>
                         </div>
                     </div>
                     <div className="why-item">
@@ -145,8 +150,8 @@ const NewLandingpage = () => {
                             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#2c5e4f" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
                         </div>
                         <div className="why-text">
-                            <h4>Địa điểm</h4>
-                            <p>Chỉ: 212/4/45 QL1A, Bình Hưng Hòa B, Bình Tân, Thành phố phố CT.HCM</p>
+                            <h4>Vị trí thuận lợi</h4>
+                            <p>Tọa lạc tại số 212/4/45 QL1A, phường Bình Hưng Hòa B, quận Bình Tân, TP.HCM.</p>
                         </div>
                     </div>
                 </div>
@@ -190,35 +195,8 @@ const NewLandingpage = () => {
                     </div>
                 </div>
             </section>
-
-            {/* FOOTER */}
-            {/* <footer className="landing-footer">
-                <div className="footer-content">
-                    <div className="footer-col">
-                        <h4>ĐỊA CHỈ</h4>
-                        <p>212/4/45 QL1A, Bình Hưng Hòa B,</p>
-                        <p>Bình Tân, TP.HCM</p>
-                        <div className="social-icons">
-                            <span className="social-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></span>
-                            <span className="social-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></span>
-                            <span className="social-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path></svg></span>
-                        </div>
-                    </div>
-                    <div className="footer-col">
-                        <h4>LIÊN HỆ</h4>
-                        <p><span className="contact-icon">📞</span> 0123 335 4416</p>
-                        <p><span className="contact-icon">✉️</span> mycourt@gmail.com</p>
-                    </div>
-                    <div className="footer-col">
-                        <h4>WEBSITE</h4>
-                        <p>www.mycourt.vn</p>
-                    </div>
-                </div>
-                <div className="footer-bottom">
-                    <button className="back-home-btn" onClick={() => window.scrollTo(0, 0)}>QUAY LẠI TRANG CHỦ</button>
-                </div>
-            </footer> */}
-            <footer />
+            <div className="hp-footer"><HomePageInfoFooter /></div>
+            <div><Footer /></div>
         </div>
     );
 };

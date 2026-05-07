@@ -1,14 +1,16 @@
 .filter {
-    padding: 10px;
+    padding: 20px;
     display: flex;
     flex-direction: row;
     justify-content: center;
-    gap: 350px;
+    gap: 50px;
     border: 2px solid black;
     border-radius: 20px;
     background-color: #F0F8A4;
-    width: 1820px;
-    height: 370px;
+    width: 100%;
+    max-width: 1400px;
+    height: auto;
+    box-sizing: border-box;
 }
 
 .filter .filter-left {
@@ -24,7 +26,8 @@
 
 .sportfilter-title {
     display: flex;
-    gap: 190px;
+    gap: 50px;
+    align-items: center;
 }
 
 .sportfilter-title button {
@@ -76,4 +79,21 @@
     display: flex;
     gap: 30px;
     flex-direction: column;
+}
+
+/* Active states for filter buttons */
+.sportfilter-title button.active-btn {
+    background-color: #90B77D;
+    color: #ffffff;
+    box-shadow: 0 4px 15px rgba(26, 66, 49, 0.6);
+    transform: scale(1.05);
+    border: 1px solid #90B77D;
+}
+
+.active-sport-btn .sport-filter-btn {
+    background-color: #90B77D;
+    color: #ffffff;
+    box-shadow: 0 4px 15px rgba(26, 66, 49, 0.6);
+    transform: scale(1.05);
+    border: 1px solid #90B77D;
 }

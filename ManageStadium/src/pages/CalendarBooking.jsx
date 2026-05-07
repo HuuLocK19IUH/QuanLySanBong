@@ -179,7 +179,15 @@ function CalendarBooking() {
                         <input
                             type="date"
                             value={selectedDate}
-                            onChange={(e) => setSelectedDate(e.target.value)}
+                            min={new Date().toISOString().split("T")[0]}
+                            onChange={(e) => {
+                                setSelectedDate(e.target.value);
+                                setSelectedIndex(null);
+                                setSelectedTime({ start: null, end: null });
+                                setClickStep(0);
+                                setTimeCount("");
+                                setTempStart(null);
+                            }}
                             className="calendar-input"
                         />
                     </div>
@@ -206,6 +214,24 @@ function CalendarBooking() {
                                     if (status !== "empty") return;
 
                                     if (clickStep === 0) {
+                                        // Ràng buộc thời gian: không đặt giờ trong quá khứ nếu là hôm nay
+                                        const todayStr = new Date().toISOString().split("T")[0];
+                                        if (selectedDate === todayStr) {
+                                            const now = new Date();
+                                            const currentHour = now.getHours() + now.getMinutes() / 60;
+                                            const startHour = toHour(t);
+
+                                            if (startHour <= currentHour) {
+                                                setContentNotice("Giờ bắt đầu phải sau thời điểm hiện tại");
+                                                setNotice(true);
+                                                return;
+                                            }
+                                        } else if (selectedDate < todayStr) {
+                                            setContentNotice("Không thể đặt sân cho ngày trong quá khứ");
+                                            setNotice(true);
+                                            return;
+                                        }
+
                                         setSelectedIndex(i);
                                         setTempStart(t);
                                         setSelectedTime({

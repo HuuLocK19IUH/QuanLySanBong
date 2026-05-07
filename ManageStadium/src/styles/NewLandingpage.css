@@ -510,3 +510,12 @@
         transform: scale(1) translateY(-2px);
     }
 }
+
+/* --- HP FOOTER --- */
+.hp-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 0 auto;
+}

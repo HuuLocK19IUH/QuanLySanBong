@@ -5,68 +5,98 @@
     height: 90px;
     width: 100%;
     padding: 0 20px;
+    box-sizing: border-box;
+    /* Quan trọng: Ngăn padding cộng dồn vào width gây cuộn ngang */
     overflow: visible;
+    gap: 15px;
+    /* Giúp phân bố khoảng cách đều đặn thay vì dùng margin rải rác */
 }
 
 /* logo */
-.taskbar img {
+.taskbar>img {
     width: 50px;
     height: 50px;
+    flex-shrink: 0;
+    /* Không cho ảnh bị bóp méo khi thu nhỏ */
+}
+
+/* logo text */
+.logo-text {
+    font-weight: bold;
+    color: white;
+    font-size: 32px;
+    cursor: pointer;
+    font-family: 'kanit';
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    flex-shrink: 0;
+    white-space: nowrap;
+    /* Tránh chữ bị rớt xuống dòng gây lỗi hiển thị */
 }
 
 .search-box {
     flex: 1;
     max-width: 350px;
-    margin-left: 10px;
+    min-width: 150px;
+    /* Giữ khung tìm kiếm không bị biến mất */
+    position: relative;
+    display: flex;
+    align-items: center;
 }
 
 .search-box input {
     width: 100%;
-    height: 60px;
+    height: 50px;
+    /* Giảm chút chiều cao để cân đối với taskbar 90px */
+    border-radius: 15px;
+    padding-left: 15px;
+    padding-right: 40px;
+    font-size: 16px;
+    border: none;
+    box-sizing: border-box;
+    background-color: #F0F8A4;
 }
 
 /* icon filter */
 .filter-icon {
     position: absolute;
-    right: 10px;
+    top: 50%;
+    transform: translateY(-45%);
     cursor: pointer;
+    width: 25px;
+    height: 25px;
 }
 
-/* NAV BAR */
-.navigation-bar {
-    display: flex;
-    margin-left: auto;
-    margin-right: 20px;
-}
 
 /* từng item */
 .navigation-bar .nav-item {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     border-left: 2px solid #F0F8A4;
     height: 50px;
+    cursor: pointer;
 }
 
 /* icon nav */
 .navigation-bar .nav-item img {
     width: 25px;
     height: 25px;
+    flex-shrink: 0;
 }
 
 /* text nav */
 .navigation-bar .nav-item a {
     color: #F0F8A4;
     font-family: 'kanit';
-    cursor: pointer;
     text-decoration: none;
-    width: 100px;
-    font-size: 20px
+    font-size: 18px;
+    white-space: nowrap;
+    /* Quan trọng: Ngăn chữ rớt dòng */
 }
 
 /* login button */
 .taskbar-login-btn {
-    width: 150px;
+    padding: 0 20px;
     height: 45px;
     border-radius: 20px;
     box-shadow: 3px 7px 8px rgb(0 0 0 / 25%);
@@ -74,8 +104,11 @@
     font-family: 'kanit';
     font-size: 18px;
     background-color: #F0F8A4;
-    margin-left: 30px;
     transition: 0.3s;
+    flex-shrink: 0;
+    white-space: nowrap;
+    /* Ngăn chữ rớt dòng */
+    cursor: pointer;
 }
 
 .taskbar-login-btn:hover {
@@ -84,20 +117,23 @@
 
 /* user */
 .taskbar-user {
-    margin-left: 20px;
     display: flex;
     align-items: center;
     gap: 10px;
     cursor: pointer;
+    flex-shrink: 0;
 }
 
 .taskbar-user span {
     color: #F0F8A4;
     font-size: 18px;
     text-decoration: underline;
+    white-space: nowrap;
 }
 
 .taskbar-user .avatar {
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     object-fit: cover;
 }

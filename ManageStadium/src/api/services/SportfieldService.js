@@ -15,6 +15,20 @@ export const getSportFieldsService = async () => {
 };
 
 /**
+ * Lấy danh sách keywords
+ */
+export const getUniqueKeywordsService = async () => {
+    try {
+        const keywords = await SportField.distinct("keywords");
+        const types = await SportField.distinct("sportfield_type");
+        const allKeywords = [...new Set([...keywords, ...types])].filter(k => k);
+        return allKeywords;
+    } catch {
+        throw new Error("Lỗi khi lấy danh sách keywords");
+    }
+};
+
+/**
  * Lấy sportfield theo id
  */
 export const getSportFieldByIdService = async (id) => {

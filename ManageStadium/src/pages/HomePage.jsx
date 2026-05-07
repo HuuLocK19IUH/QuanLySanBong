@@ -41,14 +41,27 @@ function HomePage() {
 
     const filteredFields = useMemo(() => {
         return sportFields.filter(field => {
-            if (searchTerm && !field.name.toLowerCase().includes(searchTerm.toLowerCase())) return false;
-            if (selectedType !== "all" && field.type !== selectedType) return false;
-            // Lưu ý: Thêm điều kiện field.timeSlots tồn tại để tránh lỗi nếu API chưa trả về lịch trống
-            if (selectedTime && field.timeSlots && !field.timeSlots.includes(selectedTime)) return false;
-            if (field.price > maxPrice) return false;
+            // Tìm kiếm theo tên (title)
+            const fieldTitle = field.title || field.name || "";
+            if (searchTerm && !fieldTitle.toLowerCase().includes(searchTerm.toLowerCase())) return false;
+
+            // Lọc theo loại sân sử dụng trường keywords hoặc sportfield_type
+            if (selectedType !== "all") {
+                const keywords = field.keywords || [];
+                const keywordMatch = keywords.some(kw => kw.toLowerCase() === selectedType.toLowerCase());
+                const typeMatch = field.sportfield_type === selectedType || field.type === selectedType;
+
+                if (!typeMatch && !keywordMatch) return false;
+            }
+
+            // Lọc theo giá (lấy từ mảng pricing)
+            const pricingItem = Array.isArray(field.pricing) ? field.pricing[0] : field.pricing;
+            const price = Number(pricingItem?.price) || field.price || 0;
+            if (price > maxPrice) return false;
+
             return true;
         });
-    }, [searchTerm, selectedType, selectedTime, maxPrice, sportFields]);
+    }, [searchTerm, selectedType, maxPrice, sportFields]);
 
     const itemsPerPage = 8;
     const [currentPage, setCurrentPage] = useState(1);
@@ -116,7 +129,7 @@ function HomePage() {
                     style={{ cursor: "pointer", opacity: currentPage === totalPages ? 0.5 : 1 }}
                 />
             </div>
-{/* 
+            {/* 
             <div className="aboutus-container">
                 <div className="helo-con">
                     <img src={mycourtxinchaoavt} alt="" />
@@ -128,8 +141,8 @@ function HomePage() {
                     ))}
                 </div>
             </div> */}
-            {/* <div><HomePageInfoFooter /></div> */}
-            <div className="hp-footer"><Footer /></div>
+            {/* <div><HomePageInfoFooter /></div>
+            <div className="hp-footer"><Footer /></div> */}
         </div>
     )
 }
