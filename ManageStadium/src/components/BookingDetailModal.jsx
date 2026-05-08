@@ -17,6 +17,7 @@ function BookingDetailModal({ onClose, booking, onReview }) {
       { qty: 3, name: "Suối Dasani nhỏ", price: 10000 }
     ]
   const totalService = bill?.totalService || 230000
+  const totalHourlyCost = bill?.totalHourlyCost || 60000
   const totalOrder = bill?.totalOrder || 290000
 
   return (
@@ -70,6 +71,10 @@ function BookingDetailModal({ onClose, booking, onReview }) {
 
         <div className="total">
           Tổng tiền dịch vụ: {Number(totalService).toLocaleString()}đ
+        </div>
+
+        <div className="total">
+          Tổng tiền giờ chơi: {Number(totalHourlyCost).toLocaleString()}đ
         </div>
 
         <div className="total">

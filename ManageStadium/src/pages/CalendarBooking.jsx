@@ -4,6 +4,7 @@ import { getSportFieldBySF_Id } from "../api/sportfieldApi/getSportFieldBySF_Id"
 import { getBookedSlotsAPI } from "../api/ordersApi/getBookedTimeSlotsBySportFieldAndDate";
 import "../styles/Booking.css";
 import NoticeModal from "../components/NoticeModal";
+// import ""
 function CalendarBooking() {
     const navigate = useNavigate();
     const location = useLocation();
@@ -148,7 +149,7 @@ function CalendarBooking() {
         }
 
         navigate("/info-booking", {
-            state: { selectedDate, selectedTime, timeCount, paid, id: idSportfield }
+            state: { selectedDate, selectedTime, timeCount, paid, id: idSportfield, name: sportfield?.title }
         });
     };
 
@@ -272,7 +273,7 @@ function CalendarBooking() {
                                         }
 
                                         if (endIndex - startIndex <= 1) {
-                                            setContentNotice("Tổng giờ chơi phải tối thiểu 30 phút");
+                                            setContentNotice("Tổng giờ chơi tối thiểu phải là 1 tiếng");
                                             setNotice(true);
                                             return;
                                         }

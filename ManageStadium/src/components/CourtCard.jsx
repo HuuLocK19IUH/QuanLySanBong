@@ -32,8 +32,11 @@ function CourtCard({ title, tag, img, status, onPay, isExpired }) {
           style={{ 
             backgroundColor: isExpired ? "#ccc" : undefined, 
             cursor: isExpired ? "not-allowed" : "pointer",
-            border: isExpired ? "none" : undefined
+            border: isExpired ? "none" : undefined,
+            transition: "all 0.3s ease"
           }}
+          onMouseOver={(e) => e.currentTarget.style.transform = "scale(1.1)"}
+          onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
         >
           {isExpired ? "Đã hết hạn" : "Thanh toán"}
         </button>

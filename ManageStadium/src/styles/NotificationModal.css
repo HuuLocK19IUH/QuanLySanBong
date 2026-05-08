@@ -55,7 +55,8 @@
     padding: 10px;
 }
 
-.notif-loading, .notif-empty {
+.notif-loading,
+.notif-empty {
     text-align: center;
     color: #666;
     margin-top: 50px;
@@ -75,7 +76,7 @@
     background-color: #fff;
     margin-bottom: 10px;
     border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
     cursor: pointer;
     transition: 0.2s;
     position: relative;
@@ -86,12 +87,19 @@
 }
 
 .notif-item.unread {
-    background-color: #f0f8ff; /* Highlight unread items slightly blue */
+    background-color: #f0f8ff;
+    /* Highlight unread items slightly blue */
 }
 
 .notif-icon {
     font-size: 24px;
     margin-right: 15px;
+}
+
+.notif-icon img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
 }
 
 .notif-details {

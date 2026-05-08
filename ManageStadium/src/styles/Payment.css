@@ -343,18 +343,23 @@
 
 .modal-content {
     background-color: #e7f0a8;
-    padding: 100px 80px; /* tăng thêm padding */
+    padding: 100px 80px;
+    /* tăng thêm padding */
 
     border-radius: 40px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
     text-align: center;
     position: relative;
 
-    width: 90vh;          /* chiếm nhiều hơn màn hình */
-    max-width: 1000px;   /* tăng chiều rộng tối đa */
+    width: 90vh;
+    /* chiếm nhiều hơn màn hình */
+    max-width: 1000px;
+    /* tăng chiều rộng tối đa */
 
-    height: 40vh;        /* tăng chiều cao */
-    max-height: 90vh;    /* không vượt quá màn hình */
+    height: 40vh;
+    /* tăng chiều cao */
+    max-height: 90vh;
+    /* không vượt quá màn hình */
 }
 
 /* Dấu "×" trên cùng bên trái */
@@ -411,7 +416,7 @@
 
 .success-text {
     color: #2a4140;
-    font-size: 3rem;
+    font-size: 2rem;
     /* TĂNG SIZE CHỮ THÔNG BÁO TO ĐÙNG */
     font-weight: 900;
     margin: 0;

@@ -15,7 +15,7 @@ function AdminTaskbar({ searchTerm, setSearchTerm }) {
             <div className="logo-text" onClick={() => navigate("/admin/apply-order")}>
                 AdminPanel
             </div>
-            <img src={SearchIcon} alt="" />
+            {/* <img src={SearchIcon} alt="" />
             <div className="search-box">
                 <input
                     type="text"
@@ -23,11 +23,15 @@ function AdminTaskbar({ searchTerm, setSearchTerm }) {
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
-            </div>
+            </div> */}
             <div className="navigation-bar">
-                <div className="nav-item" onClick={() => navigate("/admin/apply-order")}>
+                <div className={`nav-item ${window.location.pathname === '/admin/apply-order' ? 'active' : ''}`} onClick={() => navigate("/admin/apply-order")}>
                     <img src={CheckIcon} alt="" />
                     <a>Duyệt đơn hàng</a>
+                </div>
+                <div className={`nav-item ${window.location.pathname === '/admin/add-sportfield' ? 'active' : ''}`} onClick={() => navigate("/admin/add-sportfield")}>
+                    <img src={CheckIcon} alt="" />
+                    <a>Thêm sân mới</a>
                 </div>
             </div>
             {

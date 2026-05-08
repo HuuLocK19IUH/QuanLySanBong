@@ -97,10 +97,8 @@ const FieldDetail = () => {
         };
       });
 
-      alert('Đánh giá đã được gửi thành công!');
     } catch (err) {
       console.error('Error creating rating:', err);
-      alert('Có lỗi xảy ra khi gửi đánh giá');
     }
   };
 

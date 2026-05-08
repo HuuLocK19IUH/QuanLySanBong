@@ -5,12 +5,14 @@ import {
     updateSportField,
     deleteSportField,
     getSportFieldBySF_Id,
-    getUniqueKeywords
+    getUniqueKeywords,
+    createSportField
 } from "../controllers/SportfieldController.js";
 
 const router = express.Router();
 
 router.get("/", getSportFields);
+router.post("/", createSportField);
 router.get("/keywords", getUniqueKeywords);
 
 router.get("/:id", getSportFieldById);

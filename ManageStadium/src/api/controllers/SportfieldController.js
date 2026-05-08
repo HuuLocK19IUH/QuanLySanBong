@@ -5,7 +5,8 @@ import {
     updateSportFieldService,
     deleteSportFieldService,
     getSportFieldBySF_IdService,
-    getUniqueKeywordsService
+    getUniqueKeywordsService,
+    createSportFieldService
 } from "../services/SportfieldService.js";
 
 
@@ -66,6 +67,18 @@ export const deleteSportField = async (req, res) => {
         res.json({ message: "Xóa thành công", data });
     } catch (err) {
         res.status(404).json({ message: err.message });
+    }
+};
+
+/**
+ * Tạo sportfield mới
+ */
+export const createSportField = async (req, res) => {
+    try {
+        const data = await createSportFieldService(req.body);
+        res.status(201).json({ message: "Tạo thành công", data });
+    } catch (err) {
+        res.status(400).json({ message: err.message });
     }
 };
 

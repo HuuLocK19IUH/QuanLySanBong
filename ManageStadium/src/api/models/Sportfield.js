@@ -43,11 +43,6 @@ const SportFieldSchema = new Schema({
         endTime: Number,
         price: Number,
         days: [String]
-    }],
-    services: [{
-        _id: mongoose.Schema.Types.ObjectId,
-        name: String,
-        price: Number
     }]
 }, {
     timestamps: true

@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "../styles/NotificationModal.css";
 import { getNotificationsByUserId, markNotificationAsRead } from "../api/NotificationApi/notificationApi";
+import checkIcon from "../assets/Check_fill_noti.png";
+import cacelIcon from "../assets/Subtract.png";
+import timeIcon from "../assets/Alarmclock_fill.png"
 
 function NotificationModal({ handleCloseModal, user }) {
     const [notifications, setNotifications] = useState([]);
@@ -58,10 +61,10 @@ function NotificationModal({ handleCloseModal, user }) {
                                     onClick={() => handleMarkAsRead(notif._id, notif.is_read)}
                                 >
                                     <div className="notif-icon">
-                                        {notif.type === "order_completed" ? <img src="" alt="" /> :
-                                            notif.type === "order_cancelled" ? <img src="" alt="" /> :
-                                                notif.type === "order_pending" ? <img src="" alt="" /> :
-                                                    notif.type === "order_expired" ? <img src="" alt="" /> : null}
+                                        {notif.type === "order_completed" ? <img src={checkIcon} alt="" /> :
+                                            notif.type === "order_cancelled" ? <img src={cacelIcon} alt="" /> :
+                                                notif.type === "order_pending" ? <img src={timeIcon} alt="" /> :
+                                                    notif.type === "order_expired" ? <img src={cacelIcon} alt="" /> : null}
                                     </div>
                                     <div className="notif-details">
                                         <h4>{notif.title}</h4>

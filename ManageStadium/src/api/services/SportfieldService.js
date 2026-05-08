@@ -113,6 +113,21 @@ export const deleteSportFieldService = async (id) => {
 };
 
 
+export const createSportFieldService = async (data) => {
+    try {
+        // Lấy số lượng sân hiện có để tạo mã
+        const count = await SportField.countDocuments();
+        // Tạo mã dạng SF001, SF010, SF100...
+        data.sportfield_id = "SF" + String(count + 1).padStart(3, '0');
+
+        const newSportField = new SportField(data);
+        const saved = await newSportField.save();
+        return saved;
+    } catch (err) {
+        throw new Error("Lỗi khi tạo sân: " + err.message);
+    }
+};
+
 export const getSportFieldBySF_IdService = async (id) => {
     const sportfield = await SportField.findOne({
         sportfield_id: id

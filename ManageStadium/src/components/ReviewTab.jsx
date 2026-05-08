@@ -81,16 +81,19 @@ function ReviewTab({ reviews = [], avgRating = 0, totalRating = 0, onSubmitRevie
       </div>
 
       <div className="review-input-card">
-        <div className="reviewer-avatar">
-          {/* SVG Icon Avatar Mặc định giống ảnh */}
-          <svg viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-            <circle cx="12" cy="7" r="4"></circle>
-          </svg>
+        <div className="reviewer-avatar" style={{ padding: user?.avatar ? 0 : undefined, overflow: 'hidden' }}>
+          {user?.avatar ? (
+            <img src={user.avatar} alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%' }} />
+          ) : (
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          )}
         </div>
         <div className="review-info">
           <h4 className="reviewer-name">{user?.name || user?.user_name || 'Martus'}</h4>
-          
+
           <div className="star-input-selector">
             {[1, 2, 3, 4, 5].map((value) => (
               <span
@@ -103,18 +106,33 @@ function ReviewTab({ reviews = [], avgRating = 0, totalRating = 0, onSubmitRevie
             ))}
           </div>
 
-          <form onSubmit={handleSubmit} className="input-form">
+          <form onSubmit={handleSubmit} className="input-form" style={{ display: 'flex', gap: '10px' }}>
             <input
               type="text"
               className="review-input-field"
+              style={{ flex: 1 }}
               value={reviewText}
               onChange={(event) => setReviewText(event.target.value)}
               placeholder="Hãy để lại bình luận và đánh giá của bạn"
               disabled={!user || isSubmitting}
             />
-            {/* Nút gửi ẩn, người dùng có thể nhấn Enter, hoặc hiển thị text nhỏ nếu cần */}
-            <button type="submit" style={{ display: 'none' }} disabled={!user || isSubmitting}>
-              Gửi
+            <button
+              type="submit"
+              className="submit-review-btn"
+              style={{
+                padding: '0 20px',
+                backgroundColor: '#75b06f',
+                color: 'white',
+                border: 'none',
+                borderRadius: '8px',
+                cursor: (!user || isSubmitting) ? 'not-allowed' : 'pointer',
+                opacity: (!user || isSubmitting) ? 0.6 : 1,
+                fontWeight: 'bold',
+                fontFamily: 'kanit',
+              }}
+              disabled={!user || isSubmitting}
+            >
+              {isSubmitting ? 'Đang gửi...' : 'Gửi đánh giá'}
             </button>
           </form>
           {submitError && <p className="review-error-text">{submitError}</p>}

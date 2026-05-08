@@ -13,6 +13,7 @@ import CalendarBooking from "./pages/CalendarBooking"
 import BookingInfo from "./pages/BookingInfo"
 import NewLandingpage from "./pages/NewLandingpage";
 import ApplyOrderPage from "./pages/ApplyOrderPage";
+import AddSportFieldPage from "./pages/AddSportFieldPage";
 
 function App() {
   return (
@@ -46,6 +47,8 @@ function App() {
           <Route path="/" element={<NewLandingpage />} />
 
           <Route path="/admin/apply-order" element={<ApplyOrderPage />} />
+          
+          <Route path="/admin/add-sportfield" element={<AddSportFieldPage />} />
         </Routes>
       </BrowserRouter>
     </UserProvider>

@@ -6,7 +6,7 @@ import { getOrdersByUser } from "../api/ordersApi/getOrdersByUser";
 import { useUser } from "../hooks/context/UserContext";
 import { useNavigate } from "react-router-dom";
 import "../styles/cartHistoryPages.css";
-
+import reload from "../assets/Refresh_2.png";
 function CartPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [orders, setOrders] = useState([]);
@@ -27,7 +27,7 @@ function CartPage() {
         // Lấy ID người dùng từ context
         const userId = user.id_user || user.user_id || user._id || user.id;
         const data = await getOrdersByUser(userId);
-        
+
         // Lọc ra các đơn đang chờ duyệt (pending) hoặc hết hạn (expired)
         const cartOrders = data.filter(order => order.state === "pending" || order.state === "expired");
         setOrders(cartOrders);
@@ -59,15 +59,18 @@ function CartPage() {
         <div className="mh-panel">
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
             <h2 className="mh-page-title" style={{ margin: 0 }}>Giỏ hàng</h2>
-            <button 
-                onClick={() => setRefreshTrigger(prev => prev + 1)}
-                style={{
-                    backgroundColor: "#75b06f", color: "white", border: "none", 
-                    padding: "8px 16px", borderRadius: "20px", cursor: "pointer",
-                    fontFamily: "kanit"
-                }}
+            <button
+              onClick={() => setRefreshTrigger(prev => prev + 1)}
+              style={{
+                backgroundColor: "#75b06f", color: "white", border: "none",
+                padding: "8px 16px", borderRadius: "20px", cursor: "pointer",
+                fontFamily: "kanit", display: "flex", alignItems: "center", gap: "8px", transition: "all 0.3s ease"
+              }}
+              onMouseOver={(e) => e.currentTarget.style.transform = "scale(1.1)"}
+              onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
             >
-                Làm mới
+              <img src={reload} alt="" />
+              Làm mới
             </button>
           </div>
 
@@ -87,9 +90,9 @@ function CartPage() {
             ) : filteredItems.length > 0 ? (
               filteredItems.map((order) => {
                 const sportfield = order.sportfield || {};
-                const imageUrl = sportfield.img_url 
-                    ? (sportfield.img_url.startsWith('/') ? sportfield.img_url : `/${sportfield.img_url}`)
-                    : '/images/badminton.png';
+                const imageUrl = sportfield.img_url
+                  ? (sportfield.img_url.startsWith('/') ? sportfield.img_url : `/${sportfield.img_url}`)
+                  : '/images/badminton.png';
                 const isExpired = order.state === "expired";
 
                 return (
@@ -101,40 +104,40 @@ function CartPage() {
                     status={isExpired ? "Đã hết hạn" : "Đang chờ duyệt"}
                     isExpired={isExpired}
                     onPay={() => {
-                        if (isExpired) return;
+                      if (isExpired) return;
 
-                        // Tính thời gian còn lại (15 phút = 900 giây)
-                        const createdAt = new Date(order.date_created).getTime();
-                        const now = new Date().getTime();
-                        const diffSecs = Math.max(0, Math.floor((createdAt + 15 * 60 * 1000 - now) / 1000));
+                      // Tính thời gian còn lại (15 phút = 900 giây)
+                      const createdAt = new Date(order.date_created).getTime();
+                      const now = new Date().getTime();
+                      const diffSecs = Math.max(0, Math.floor((createdAt + 15 * 60 * 1000 - now) / 1000));
 
-                        const start = new Date(order.start_hour);
-                        const end = new Date(order.end_hour);
-                        const formatHM = (d) => `${d.getHours()}h${String(d.getMinutes()).padStart(2, '0')}`;
+                      const start = new Date(order.start_hour);
+                      const end = new Date(order.end_hour);
+                      const formatHM = (d) => `${d.getHours()}h${String(d.getMinutes()).padStart(2, '0')}`;
 
-                        navigate("/payment", {
-                          state: {
-                            existingOrderId: order.id_order,
-                            initialTimeLeft: diffSecs,
-                            selectedTime: {
-                              start: formatHM(start),
-                              end: formatHM(end)
-                            },
-                            selectedDate: start.toISOString().split("T")[0],
-                            timeCount: "Chưa xác định", 
-                            paid: order.total_hourly_cost,
-                            totalService: order.total_order - order.total_hourly_cost,
-                            idSportfield: order.id_sportfield,
-                            phone: order.phone,
-                            note: order.note,
-                            returnservices: (order.services || []).map(s => ({
-                                service_id: s.service_id,
-                                name: s.service_name,
-                                qty: s.quantity,
-                                price: s.price
-                            }))
-                          }
-                        });
+                      navigate("/payment", {
+                        state: {
+                          existingOrderId: order.id_order,
+                          initialTimeLeft: diffSecs,
+                          selectedTime: {
+                            start: formatHM(start),
+                            end: formatHM(end)
+                          },
+                          selectedDate: start.toISOString().split("T")[0],
+                          timeCount: "Chưa xác định",
+                          paid: order.total_hourly_cost,
+                          totalService: order.total_order - order.total_hourly_cost,
+                          idSportfield: order.id_sportfield,
+                          phone: order.phone,
+                          note: order.note,
+                          returnservices: (order.services || []).map(s => ({
+                            service_id: s.service_id,
+                            name: s.service_name,
+                            qty: s.quantity,
+                            price: s.price
+                          }))
+                        }
+                      });
                     }}
                   />
                 );

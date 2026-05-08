@@ -69,12 +69,6 @@ function HomePage() {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const currentItems = filteredFields.slice(startIndex, startIndex + itemsPerPage);
 
-    const inTroImgCards = [
-        { nameimg: "CLB", img: introimg },
-        { nameimg: "Sự kiện", img: introimg },
-        { nameimg: "Toàn cảnh", img: introimg },
-    ]
-
     return (
         <div className="homepage">
             <div className="carousel-wrapper">

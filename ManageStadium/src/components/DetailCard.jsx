@@ -35,11 +35,11 @@ const DetailCard = ({ sportfield }) => {
           <h2 className="title">{sportfield?.title || 'Sân thể thao'}</h2>
 
           <div className="badge">
-            <img
+            {/* <img
               src={badmintonIcon}
               alt="Icon Cầu lông"
               className="badge-icon"
-            />
+            /> */}
             <span className="badge-text">{type}</span>
           </div>
         </div>

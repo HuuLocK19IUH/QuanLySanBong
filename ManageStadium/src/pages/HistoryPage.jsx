@@ -62,6 +62,7 @@ function HistoryPage() {
               totalServicesQty: mappedServices.length,
               items: mappedServices,
               totalService: mappedServices.reduce((sum, s) => sum + (s.price * s.qty), 0) || 0,
+              totalHourlyCost: order.total_hourly_cost || 0,
               totalOrder: order.total_order || 0
             },
             sportfield_id: order.id_sportfield || sportfield._id || sportfield.sportfield_id,
