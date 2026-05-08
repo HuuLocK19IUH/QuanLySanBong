@@ -15,6 +15,16 @@ export const getSportFields = async () => {
   }
 };
 
+export const getKeywords = async () => {
+  try {
+    const res = await axios.get(`${SPORTFIELDS_URL}/keywords`);
+    return res.data;
+  } catch (err) {
+    console.error("Lỗi khi gọi API keywords:", err.response?.data || err.message);
+    throw err.response?.data || { message: "Không thể lấy danh sách keywords" };
+  }
+};
+
 export const getSportFieldById = async (id) => {
   try {
     const res = await axios.get(`${SPORTFIELDS_URL}/${id}`);

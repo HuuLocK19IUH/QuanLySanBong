@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
 import Order from "../models/Order.js";
 import SportField from "../models/Sportfield.js";
+import Notification from "../models/Notification.js";
+import User from "../models/User.js";
 
 export const getBookedTimeSlotsBySportFieldAndDate = async(id_sportfield, date) => {
     const startOfDay = new Date(date);
@@ -38,6 +40,32 @@ export const getBookedTimeSlotsBySportFieldAndDate = async(id_sportfield, date) 
 };
 
 export const getOrdersByUserId = async(userId, search = "") => {
+    // 1. Tự động kiểm tra và cập nhật các đơn hàng quá 15 phút thành expired
+    try {
+        const fifteenMinsAgo = new Date(Date.now() - 15 * 60 * 1000);
+        const expiredOrders = await Order.find({
+            state: "pending",
+            date_created: { $lte: fifteenMinsAgo }
+        });
+
+        for (let order of expiredOrders) {
+            order.state = "expired";
+            await order.save();
+
+            const newNotification = new Notification({
+                user_id: order.id_user,
+                order_id: order.id_order,
+                type: "order_expired",
+                title: "Đơn đặt sân đã hết hạn",
+                message: `Đơn đặt sân ${order.id_order} của bạn đã hết thời gian chờ thanh toán (15 phút) và đã bị hủy.`,
+            });
+            await newNotification.save();
+        }
+    } catch (err) {
+        console.error("Lỗi tự động cập nhật đơn hết hạn:", err);
+    }
+
+    // 2. Tiếp tục lấy danh sách đơn hàng như bình thường
     if (!userId) {
         return [];
     }
@@ -102,5 +130,71 @@ export const createOrderService = async(orderData) => {
     // Lưu DB
     const savedOrder = await newOrder.save();
 
+    // Tạo thông báo mới với trạng thái order_pending
+    const newNotification = new Notification({
+        user_id: savedOrder.id_user,
+        order_id: savedOrder.id_order,
+        type: "order_pending",
+        title: "Đơn đặt sân đang chờ xử lý",
+        message: `Đơn đặt sân ${savedOrder.id_order} của bạn đã được ghi nhận. Vui lòng chờ quản trị viên xác nhận thanh toán.`,
+    });
+    await newNotification.save();
+
     return savedOrder;
+};
+
+export const getAllOrders = async () => {
+    // Tự động kiểm tra và cập nhật các đơn hàng quá 15 phút thành expired
+    try {
+        const fifteenMinsAgo = new Date(Date.now() - 15 * 60 * 1000);
+        const expiredOrders = await Order.find({
+            state: "pending",
+            date_created: { $lte: fifteenMinsAgo }
+        });
+
+        for (let order of expiredOrders) {
+            order.state = "expired";
+            await order.save();
+
+            const newNotification = new Notification({
+                user_id: order.id_user,
+                order_id: order.id_order,
+                type: "order_expired",
+                title: "Đơn đặt sân đã hết hạn",
+                message: `Đơn đặt sân ${order.id_order} của bạn đã hết thời gian chờ thanh toán (15 phút) và đã bị hủy.`,
+            });
+            await newNotification.save();
+        }
+    } catch (err) {
+        console.error("Lỗi tự động cập nhật đơn hết hạn:", err);
+    }
+
+    const orders = await Order.find().sort({ date_created: -1 }).lean();
+
+    const sportfields = await SportField.find().lean();
+    const sportfieldMap = new Map();
+    sportfields.forEach((field) => {
+        sportfieldMap.set(field.sportfield_id, field);
+        sportfieldMap.set(String(field._id), field);
+    });
+
+    const users = await User.find().lean();
+    const userMap = new Map();
+    users.forEach(u => userMap.set(u.id_user, u));
+
+    const mappedOrders = orders.map((order) => ({
+        ...order,
+        sportfield: sportfieldMap.get(order.id_sportfield) || null,
+        user: userMap.get(order.id_user) || null
+    }));
+
+    return mappedOrders;
+};
+
+export const updateOrderStatus = async (id_order, newState) => {
+    const order = await Order.findOne({ id_order: id_order });
+    if (!order) throw new Error("Không tìm thấy đơn hàng");
+    order.state = newState;
+    await order.save();
+    return order;
 };

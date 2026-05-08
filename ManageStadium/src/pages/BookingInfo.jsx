@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import BookingServiceModal from "../components/BookingServiceModal";
 import { getServices } from "../api/serviceApi/getService";
 import { useUser } from "../hooks/context/UserContext";
+import NoticeModal from "../components/NoticeModal";
 
 function BookingInfo() {
 
@@ -29,7 +30,9 @@ function BookingInfo() {
     const [idSportfield] = useState(
         location.state?.id || null
     );
-    console.log(idSportfield)
+    const [name] = useState(
+        location.state?.name || "Sân thể thao"
+    );
 
     const [totalService, setTotalService] = useState(0);
 
@@ -38,6 +41,13 @@ function BookingInfo() {
 
     const [services, setServices] = useState([]);
     const [returnservices, setReturnservices] = useState([]);
+
+    const [contentNotice, setContentNotice] = useState("");
+    const [notice, setNotice] = useState(false);
+
+    const handleCloseModal = () => {
+        setNotice(false);
+    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -108,7 +118,15 @@ function BookingInfo() {
 
     const handleConfirm = () => {
         if (!phone) {
-            alert("Vui lòng nhập đầy đủ thông tin");
+            setContentNotice("Vui lòng nhập số điện thoại");
+            setNotice(true);
+            return;
+        }
+
+        const phoneRegex = /^(09|03|02|08)\d{8}$/;
+        if (!phoneRegex.test(phone)) {
+            setContentNotice("Số điện thoại không hợp lệ! Vui lòng kiểm tra lại");
+            setNotice(true);
             return;
         }
 
@@ -157,8 +175,9 @@ function BookingInfo() {
                         <p>Ngày: <b>{formatDate(selectedDate)}</b></p> {/* prop */}
 
                         <p>
-                            Sân cầu lông 4 người:
-                            <b> {selectedTime.start} – {selectedTime.end}</b> {/* prop */}
+                            Sân:  <b>{name}</b>
+                            <br />
+                            <b>{selectedTime.start} – {selectedTime.end}</b> {/* prop */}
                         </p>
 
                         <p>Tổng giờ: <b>{timeCount}</b></p> {/* prop */}
@@ -272,6 +291,7 @@ function BookingInfo() {
                     XÁC NHẬN & THANH TOÁN
                 </button>
             </div>
+            {notice && <NoticeModal handleCloseModal={handleCloseModal} text={contentNotice} />}
         </div>
     );
 }

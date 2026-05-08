@@ -19,21 +19,21 @@ import { useUser } from "../hooks/context/UserContext";
 
 function HomePage() {
     const [showFilter, setShowFilter] = useState(false);
-    
+
     // 1. Quản lý user và state chứa dữ liệu thật (của Ngọc Long)
     const { user } = useUser();
     const [sportFields, setSportFields] = useState([]);
 
     // 2. Các State quản lý Bộ Lọc (của Thanh Long)
-    const [searchTerm, setSearchTerm] = useState(""); 
-    const [selectedType, setSelectedType] = useState("all"); 
-    const [maxPrice, setMaxPrice] = useState(1000000); 
-    const [selectedTime, setSelectedTime] = useState(""); 
+    const [searchTerm, setSearchTerm] = useState("");
+    const [selectedType, setSelectedType] = useState("all");
+    const [maxPrice, setMaxPrice] = useState(1000000);
+    const [selectedTime, setSelectedTime] = useState("");
 
     useEffect(() => {
         getSportFields()
             .then(data => {
-                console.log("SPORTFIELDS:", data); 
+                console.log("SPORTFIELDS:", data);
                 setSportFields(data);
             })
             .catch(err => console.log(err));
@@ -41,33 +41,40 @@ function HomePage() {
 
     const filteredFields = useMemo(() => {
         return sportFields.filter(field => {
-            if (searchTerm && !field.name.toLowerCase().includes(searchTerm.toLowerCase())) return false;
-            if (selectedType !== "all" && field.type !== selectedType) return false;
-            // Lưu ý: Thêm điều kiện field.timeSlots tồn tại để tránh lỗi nếu API chưa trả về lịch trống
-            if (selectedTime && field.timeSlots && !field.timeSlots.includes(selectedTime)) return false;
-            if (field.price > maxPrice) return false;
+            // Tìm kiếm theo tên (title)
+            const fieldTitle = field.title || field.name || "";
+            if (searchTerm && !fieldTitle.toLowerCase().includes(searchTerm.toLowerCase())) return false;
+
+            // Lọc theo loại sân sử dụng trường keywords hoặc sportfield_type
+            if (selectedType !== "all") {
+                const keywords = field.keywords || [];
+                const keywordMatch = keywords.some(kw => kw.toLowerCase() === selectedType.toLowerCase());
+                const typeMatch = field.sportfield_type === selectedType || field.type === selectedType;
+
+                if (!typeMatch && !keywordMatch) return false;
+            }
+
+            // Lọc theo giá (lấy từ mảng pricing)
+            const pricingItem = Array.isArray(field.pricing) ? field.pricing[0] : field.pricing;
+            const price = Number(pricingItem?.price) || field.price || 0;
+            if (price > maxPrice) return false;
+
             return true;
         });
-    }, [searchTerm, selectedType, selectedTime, maxPrice, sportFields]);
+    }, [searchTerm, selectedType, maxPrice, sportFields]);
 
     const itemsPerPage = 8;
     const [currentPage, setCurrentPage] = useState(1);
-    const totalPages = Math.ceil(filteredFields.length / itemsPerPage) || 1; 
+    const totalPages = Math.ceil(filteredFields.length / itemsPerPage) || 1;
     const startIndex = (currentPage - 1) * itemsPerPage;
     const currentItems = filteredFields.slice(startIndex, startIndex + itemsPerPage);
-
-    const inTroImgCards = [
-        { nameimg: "CLB", img: introimg },
-        { nameimg: "Sự kiện", img: introimg },
-        { nameimg: "Toàn cảnh", img: introimg },
-    ]
 
     return (
         <div className="homepage">
             <div className="carousel-wrapper">
-                <div className="carousel-container">
+                {/* <div className="carousel-container">
                     <CarouselBoard />
-                </div>
+                </div> */}
                 <HomePageTaskbar
                     className="homepage-taskbar"
                     toggleFilter={() => setShowFilter(!showFilter)}
@@ -79,7 +86,7 @@ function HomePage() {
 
             {showFilter && (
                 <div className="filter-con">
-                    <Filter 
+                    <Filter
                         selectedType={selectedType}
                         setSelectedType={setSelectedType}
                         maxPrice={maxPrice}
@@ -101,7 +108,7 @@ function HomePage() {
                     </h2>
                 )}
             </div>
-            
+
             <div className="sportfieldcard-pagenagivation">
                 <img
                     src={pagenavleft}
@@ -116,7 +123,7 @@ function HomePage() {
                     style={{ cursor: "pointer", opacity: currentPage === totalPages ? 0.5 : 1 }}
                 />
             </div>
-
+            {/* 
             <div className="aboutus-container">
                 <div className="helo-con">
                     <img src={mycourtxinchaoavt} alt="" />
@@ -127,9 +134,9 @@ function HomePage() {
                         <IntroImgCard key={item.nameimg} {...item} />
                     ))}
                 </div>
-            </div>
-            <div><HomePageInfoFooter /></div>
-            <div className="hp-footer"><Footer /></div>
+            </div> */}
+            {/* <div><HomePageInfoFooter /></div>
+            <div className="hp-footer"><Footer /></div> */}
         </div>
     )
 }

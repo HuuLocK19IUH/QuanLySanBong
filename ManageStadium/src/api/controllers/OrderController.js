@@ -1,4 +1,5 @@
-import { getBookedTimeSlotsBySportFieldAndDate, createOrderService, getOrdersByUserId } from "../services/OrderService.js";
+import { getBookedTimeSlotsBySportFieldAndDate, createOrderService, getOrdersByUserId, getAllOrders, updateOrderStatus } from "../services/OrderService.js";
+import Notification from "../models/Notification.js";
 
 export const getBookedSlots = async(req, res) => {
     try {
@@ -69,5 +70,37 @@ export const createOrderController = async(req, res) => {
             message: "Create order failed",
             error: error.message,
         });
+    }
+};
+
+export const getAllOrdersController = async (req, res) => {
+    try {
+        const orders = await getAllOrders();
+        return res.status(200).json({ success: true, data: orders });
+    } catch (error) {
+        return res.status(500).json({ success: false, message: error.message });
+    }
+};
+
+export const updateOrderStatusController = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { state } = req.body;
+        const updatedOrder = await updateOrderStatus(id, state);
+
+        if (state === "paid" || state === "cancelled") {
+            const newNotification = new Notification({
+                user_id: updatedOrder.id_user,
+                order_id: updatedOrder.id_order,
+                type: state === "paid" ? "order_completed" : "order_cancelled",
+                title: state === "paid" ? "Đơn hàng đã được xác nhận thanh toán" : "Đơn hàng không được duyệt thanh toán",
+                message: state === "paid" ? `Đơn đặt sân ${updatedOrder.id_order} của bạn đã được admin xác nhận thanh toán.` : `Đơn đặt sân ${updatedOrder.id_order} của bạn đã bị từ chối/hủy.`,
+            });
+            await newNotification.save();
+        }
+
+        return res.status(200).json({ success: true, data: updatedOrder });
+    } catch (error) {
+        return res.status(500).json({ success: false, message: error.message });
     }
 };

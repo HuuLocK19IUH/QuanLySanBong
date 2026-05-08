@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../styles/DetailCard.css';
+import { useUser } from '../hooks/context/UserContext';
+import NoticeModal from './NoticeModal';
 
 import avatarImg from '../assets/ProductDetailAVT.png';
 import badmintonIcon from '../assets/playing_badminton.png';
@@ -8,6 +10,9 @@ import { useNavigate } from 'react-router-dom';
 
 const DetailCard = ({ sportfield }) => {
   const navigate = useNavigate();
+  const { user } = useUser();
+  const [showLoginNotice, setShowLoginNotice] = useState(false);
+
   const ratingDisplay = sportfield?.avg_rating ? `${sportfield.avg_rating}/5` : "Chưa có đánh giá";
   const totalRating = sportfield?.total_rating ? sportfield.total_rating : 0;
   const type = sportfield?.sportfield_type || "Sân thể thao";
@@ -30,20 +35,26 @@ const DetailCard = ({ sportfield }) => {
           <h2 className="title">{sportfield?.title || 'Sân thể thao'}</h2>
 
           <div className="badge">
-            <img
+            {/* <img
               src={badmintonIcon}
               alt="Icon Cầu lông"
               className="badge-icon"
-            />
+            /> */}
             <span className="badge-text">{type}</span>
           </div>
         </div>
       </div>
 
       <div className="detail-card-right">
-        <button className="OrderBtn" onClick={() => navigate("/calendar-booking", {
-          state: { id: "SF002" }
-        })}>
+        <button className="OrderBtn" onClick={() => {
+          if (!user) {
+            setShowLoginNotice(true);
+          } else {
+            navigate("/calendar-booking", {
+              state: { id: "SF002" }
+            });
+          }
+        }}>
           Đặt lịch
         </button>
 
@@ -62,6 +73,15 @@ const DetailCard = ({ sportfield }) => {
         </div>
       </div>
 
+      {showLoginNotice && (
+        <NoticeModal 
+          handleCloseModal={() => {
+            setShowLoginNotice(false);
+            navigate("/login");
+          }} 
+          text="Bạn cần phải đăng nhập để đặt lịch" 
+        />
+      )}
     </div >
   );
 };

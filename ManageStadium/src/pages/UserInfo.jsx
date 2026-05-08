@@ -5,9 +5,12 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { updateUser } from "../api/usersApi/updateUser";
 import { uploadAvatar } from "../api/usersApi/uploadAvatar";
+import NoticeModal from "../components/NoticeModal";
 
 function UserInfo() {
     const navigate = useNavigate();
+    const [showNoticeModal, setShowNoticeModal] = useState(false);
+    const [noticeText, setNoticeText] = useState("");
 
     const [form, setForm] = useState({
         id_user: "",
@@ -50,10 +53,13 @@ function UserInfo() {
 
             localStorage.setItem("user", JSON.stringify(res));
 
-            alert("Cập nhật thành công");
+            setNoticeText("Cập nhật thành công");
+            navigate("/homepage");
+            setShowNoticeModal(true);
         } catch (err) {
             console.error(err);
-            alert(err.message || "Cập nhật thất bại");
+            setNoticeText(err.message || "Cập nhật thất bại");
+            setShowNoticeModal(true);
         }
     };
 
@@ -76,7 +82,7 @@ function UserInfo() {
         <div className="User-info-div">
             <div className="User-info">
                 <div className="user-info-title-panel">
-                    <img src={iconBack} alt="" onClick={() => navigate("/")} />
+                    <img src={iconBack} alt="" onClick={() => navigate("/homepage")} />
                     <h1 className="user-info-title">Chỉnh sửa thông tin cá nhân</h1>
                 </div>
 
@@ -140,6 +146,12 @@ function UserInfo() {
                     </button>
                 </div>
             </div>
+            {showNoticeModal && (
+                <NoticeModal
+                    handleCloseModal={() => setShowNoticeModal(false)}
+                    text={noticeText}
+                />
+            )}
         </div>
     );
 }

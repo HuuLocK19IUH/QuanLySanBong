@@ -4,7 +4,9 @@ import {
     getSportFieldByIdService,
     updateSportFieldService,
     deleteSportFieldService,
-    getSportFieldBySF_IdService
+    getSportFieldBySF_IdService,
+    getUniqueKeywordsService,
+    createSportFieldService
 } from "../services/SportfieldService.js";
 
 
@@ -14,6 +16,18 @@ import {
 export const getSportFields = async (req, res) => {
     try {
         const data = await getSportFieldsService();
+        res.json(data);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};
+
+/**
+ * Lấy danh sách keywords
+ */
+export const getUniqueKeywords = async (req, res) => {
+    try {
+        const data = await getUniqueKeywordsService();
         res.json(data);
     } catch (err) {
         res.status(500).json({ message: err.message });
@@ -53,6 +67,18 @@ export const deleteSportField = async (req, res) => {
         res.json({ message: "Xóa thành công", data });
     } catch (err) {
         res.status(404).json({ message: err.message });
+    }
+};
+
+/**
+ * Tạo sportfield mới
+ */
+export const createSportField = async (req, res) => {
+    try {
+        const data = await createSportFieldService(req.body);
+        res.status(201).json({ message: "Tạo thành công", data });
+    } catch (err) {
+        res.status(400).json({ message: err.message });
     }
 };
 

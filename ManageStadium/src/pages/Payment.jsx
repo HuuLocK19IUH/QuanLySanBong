@@ -20,12 +20,13 @@ export default function Payment() {
     phone,
     name, // Thêm biến này ở đây
     returnservices,
-    note
+    note,
+    existingOrderId,
+    initialTimeLeft
   } = location.state || {};
 
-
-  const [timeLeft, setTimeLeft] = useState(15);
-  const [orderId, setOrderId] = useState("");
+  const [timeLeft, setTimeLeft] = useState(initialTimeLeft !== undefined ? initialTimeLeft : 15 * 60);
+  const [orderId, setOrderId] = useState(existingOrderId || "");
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showUnSuccessModal, setShowUnSuccessModal] = useState(false);
 
@@ -88,6 +89,12 @@ export default function Payment() {
 
   const handleConfirmPay = async () => {
     try {
+      if (existingOrderId) {
+        // Nếu đơn đã tồn tại (đang xem lại từ giỏ hàng), không tạo mới nữa
+        setShowSuccessModal(true);
+        return;
+      }
+
       const orderData = {
         id_user: user.id_user,
         id_sportfield: idSportfield,

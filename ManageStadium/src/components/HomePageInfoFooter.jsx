@@ -47,7 +47,7 @@ function HomePageInfoFooter() {
                         <p>www.mycourt.com</p>
                     </div>
                 </div>
-                <h3 className="descrip">MyCourt cung cấp đặt sân thể <br /> thao nhanh chóng, tiện lợi.</h3>
+
             </div>
         </div>
     )

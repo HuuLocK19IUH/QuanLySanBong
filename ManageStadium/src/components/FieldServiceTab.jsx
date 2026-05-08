@@ -2,6 +2,9 @@ import React from 'react';
 import '../styles/FieldServiceTab.css';
 
 const FieldServiceTab = ({ pricing, services }) => {
+  const dayMapping = {
+    Mon: 'T2', Tue: 'T3', Wed: 'T4', Thu: 'T5', Fri: 'T6', Sat: 'T7', Sun: 'CN'
+  };
   // pricing là array, lấy giá từ item đầu tiên hoặc tất cả
   const pricingList = Array.isArray(pricing) ? pricing : (pricing ? [pricing] : []);
 
@@ -27,7 +30,7 @@ const FieldServiceTab = ({ pricing, services }) => {
                   <td className="price-cell">
                     {item.price?.toLocaleString('vi-VN')}đ
                   </td>
-                  <td>{(item.days || []).join(', ') || 'Cả tuần'}</td>
+                  <td>{(item.days || []).map(day => dayMapping[day] || day).join(', ') || 'Cả tuần'}</td>
                 </tr>
               ))
             ) : (

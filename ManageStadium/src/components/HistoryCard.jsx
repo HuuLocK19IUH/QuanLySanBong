@@ -1,6 +1,17 @@
 import "../styles/cartHistoryPages.css";
 
 function HistoryCard({ booking, openDetail, openReview }) {
+  const getStatusText = (status) => {
+    switch (status) {
+      case "pending": return "Đang chờ duyệt";
+      case "completed": return "Hoàn thành";
+      case "expired": return "Đã hết hạn";
+      case "paid": return "Đã thanh toán";
+      case "cancelled": return "Không được duyệt";
+      default: return status || "Không rõ";
+    }
+  };
+
   return (
     <div className="mh-card">
       <img className="mh-court-img" src={booking?.img} alt="" />
@@ -12,7 +23,7 @@ function HistoryCard({ booking, openDetail, openReview }) {
       </div>
 
       <div className="mh-card-right">
-        <p className="mh-card-status">Trạng thái: {booking?.status}</p>
+        <p className="mh-card-status">Trạng thái: {getStatusText(booking?.status)}</p>
         <div className="mh-btn-group">
           <button className="mh-btn mh-btn--small" onClick={openDetail}>
             Chi tiết
