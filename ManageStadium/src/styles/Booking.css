@@ -5,7 +5,7 @@
     --bg-green: #95bc7b;
     /* Màu xanh tươi mới theo ảnh Figma */
     --status-empty: #ffffff;
-    --status-booked: #3a5a58;
+    --status-booked: #2196f3; /* Đổi màu xanh dương để dễ nhìn hơn so với màu nền */
     --status-locked: #b5b5b5;
 }
 

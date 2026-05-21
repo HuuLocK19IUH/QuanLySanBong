@@ -15,44 +15,32 @@ import NewLandingpage from "./pages/NewLandingpage";
 import ApplyOrderPage from "./pages/ApplyOrderPage";
 import AddSportFieldPage from "./pages/AddSportFieldPage";
 
+import AdminSportfieldsPage from "./pages/AdminSportfieldsPage";
+
 function App() {
   return (
     <UserProvider>
       <BrowserRouter>
         <Routes>
           <Route path="/homepage" element={<HomePage />} />
-
           <Route path="/login" element={<LoginPage />} />
-
           <Route path="/register" element={<Register />} />
-
           <Route path="/field-detail" element={<FieldDetail />} />
-
           <Route path="/field-detail/:id" element={<FieldDetail />} />
-
           <Route path="/payment" element={<Payment />} />
-
           <Route path="/cart" element={<CartPage />} />
-
           <Route path="/history" element={<HistoryPage />} />
-
           <Route path="/booking-detail" element={<BookingDetailPage />} />
-
           <Route path="/user-info" element={<UserInfo />} />
-
           <Route path="/calendar-booking" element={<CalendarBooking />} />
-
           <Route path="/info-booking" element={<BookingInfo />} />
-
           <Route path="/" element={<NewLandingpage />} />
-
           <Route path="/admin/apply-order" element={<ApplyOrderPage />} />
-          
           <Route path="/admin/add-sportfield" element={<AddSportFieldPage />} />
+          <Route path="/admin/sportfields" element={<AdminSportfieldsPage />} />
         </Routes>
       </BrowserRouter>
     </UserProvider>
-
   )
 }
 

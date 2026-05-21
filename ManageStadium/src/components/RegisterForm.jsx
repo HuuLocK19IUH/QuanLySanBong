@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom"
 import { useState } from "react"
 import Handle from "rc-slider/lib/Handles/Handle.js"
 import { createUser } from "../api/usersApi/createNewUser.js"
+import NoticeModalTrue from "./NoticeModalTrue.jsx"
 
 function RegisterForm() {
     const navigate = useNavigate()
@@ -15,6 +16,7 @@ function RegisterForm() {
     const [phone, setPhone] = useState("");
     const [password1, setPassword1] = useState("");
     const [password2, setPassword2] = useState("");
+    const [showSuccessModal, setShowSuccessModal] = useState(false);
 
     const handleSubmit = async () => {
         try {
@@ -23,14 +25,14 @@ function RegisterForm() {
                 return;
             }
 
-            const phoneRegex = /^[0-9]{10}$/;
+            const phoneRegex = /^(02|03|08|09)\d{8}$/;
             if (!phoneRegex.test(phone)) {
-                setError("Số điện thoại không hợp lệ");
+                setError("Số điện thoại phải bắt đầu bằng 02, 03, 08, 09 và có 10 chữ số");
                 return;
             }
 
             if (password1.length < 6) {
-                setError("Mật khẩu phải >= 6 ký tự");
+                setError("Mật khẩu phải có từ 6 ký tự trở lên");
                 return;
             }
 
@@ -49,12 +51,16 @@ function RegisterForm() {
                 return;
             }
 
-            alert("Đăng ký thành công!");
-            navigate("/login");
+            setShowSuccessModal(true);
 
         } catch {
             setError("Có lỗi xảy ra");
         }
+    };
+
+    const handleCloseTrueModal = () => {
+        setShowSuccessModal(false);
+        navigate("/login");
     };
 
     return (
@@ -103,6 +109,10 @@ function RegisterForm() {
                 id="home-icon"
                 onClick={() => navigate("/")}
             />
+
+            {showSuccessModal && (
+                <NoticeModalTrue handleCloseModal={handleCloseTrueModal} text={"Đăng ký thành công!"} />
+            )}
 
         </div>
     )

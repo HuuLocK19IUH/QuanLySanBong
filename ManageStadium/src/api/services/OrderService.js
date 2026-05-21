@@ -12,7 +12,7 @@ export const getBookedTimeSlotsBySportFieldAndDate = async(id_sportfield, date) 
     endOfDay.setHours(23, 59, 59, 999);
 
     const orders = await Order.find({
-        state: { $in: ["pending", "completed"] },
+        state: { $in: ["pending", "paid", "completed"] },
         id_sportfield,
         start_hour: {
             $gte: startOfDay,
@@ -116,6 +116,18 @@ export const getOrdersByUserId = async(userId, search = "") => {
 export const createOrderService = async(orderData) => {
     // Đếm số order hiện tại
     const count = await Order.countDocuments();
+
+    // Kiểm tra xem thời gian này đã có người đặt chưa
+    const overlappingOrders = await Order.find({
+        state: { $in: ["pending", "paid", "completed"] },
+        id_sportfield: orderData.id_sportfield,
+        start_hour: { $lt: orderData.end_hour },
+        end_hour: { $gt: orderData.start_hour }
+    });
+
+    if (overlappingOrders.length > 0) {
+        throw new Error("Sân đã được đặt trong khoảng thời gian này!");
+    }
 
     // Sinh mã order: O001, O002, ...
     const nextNumber = count + 1;

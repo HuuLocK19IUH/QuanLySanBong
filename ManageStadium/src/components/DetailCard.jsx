@@ -51,7 +51,7 @@ const DetailCard = ({ sportfield }) => {
             setShowLoginNotice(true);
           } else {
             navigate("/calendar-booking", {
-              state: { id: "SF002" }
+              state: { id: sportfield?.sportfield_id || sportfield?._id }
             });
           }
         }}>

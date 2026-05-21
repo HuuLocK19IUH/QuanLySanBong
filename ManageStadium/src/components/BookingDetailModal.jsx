@@ -1,6 +1,6 @@
 import "../styles/bookingDetail.css"
 
-function BookingDetailModal({ onClose, booking, onReview }) {
+function BookingDetailModal({ onClose, booking, onReview, hideReview }) {
   const avatar = booking?.avatar || "https://i.pravatar.cc/60"
   const code = booking?.code || "#232"
   const userName = booking?.userName || "Quách Ngọc Long"
@@ -90,12 +90,14 @@ function BookingDetailModal({ onClose, booking, onReview }) {
             Thoát
           </button>
 
-          <button
-            className="review-btn"
-            onClick={() => onReview?.(booking)}
-          >
-            Đánh giá
-          </button>
+          {!hideReview && (
+            <button
+              className="review-btn"
+              onClick={() => onReview?.(booking)}
+            >
+              Đánh giá
+            </button>
+          )}
 
         </div>
 

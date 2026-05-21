@@ -21,8 +21,7 @@ function UserMenu() {
             onMouseLeave={() => setOpen(false)}
         >
             <span>{user.name}</span>
-            <img src={user.avatar} alt="" className="avatar" />
-
+            <img src={user.avatar || "/images/User_cicrle_light.png"} alt="" className="avatar" />
             {open && (
                 <div className="dropdown">
                     <div onClick={() => navigate("/user-info")}>

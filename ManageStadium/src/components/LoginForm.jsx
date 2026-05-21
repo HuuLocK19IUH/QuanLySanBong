@@ -13,17 +13,28 @@ function LoginForm() {
     const navigate = useNavigate()
     const [phone, setPhone] = useState("");
     const [password, setPassword] = useState("");
-    const [error, setError] = useState(true);
+    const [error, setError] = useState("");
     const { setUser } = useUser();
 
     const handleSubmit = async () => {
+        const phoneRegex = /^(02|03|08|09)\d{8}$/;
+        if (!phoneRegex.test(phone)) {
+            setError("Số điện thoại không hợp lệ");
+            return;
+        }
+        if (password.length < 6) {
+            setError("Mật khẩu phải có từ 6 ký tự trở lên");
+            return;
+        }
+
         try {
             const user = await loginUser(phone, password);
 
             if (!user) {
-                setError(true);
+                setError("Sai số điện thoại hoặc mật khẩu");
                 return;
             }
+            setError("");
             localStorage.setItem("user", JSON.stringify(user));
             setUser(user)
         
@@ -33,7 +44,7 @@ function LoginForm() {
                 navigate("/homepage");
             }
         } catch {
-            setError(true);
+            setError("Có lỗi xảy ra khi đăng nhập");
         }
     };
 
@@ -58,7 +69,7 @@ function LoginForm() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
             />
-            {!error && <span>Sai số điện thoại hoặc mật khẩu</span>}
+            {error && <span className="error" style={{ color: "red", fontSize: "14px", marginTop: "-10px", marginBottom: "10px", display: "block" }}>{error}</span>}
 
             <LoginBtn label="Đăng nhập" onClick={handleSubmit} />
 

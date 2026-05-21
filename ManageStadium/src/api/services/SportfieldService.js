@@ -5,9 +5,9 @@ import SportField from "../models/Sportfield.js";
 /**
  * Lấy danh sách sportfield
  */
-export const getSportFieldsService = async () => {
+export const getSportFieldsService = async (filter = {}) => {
     try {
-        const sportfields = await SportField.find();
+        const sportfields = await SportField.find(filter);
         return sportfields;
     } catch {
         throw new Error("Lỗi khi lấy danh sách sân");
@@ -93,15 +93,17 @@ export const deleteSportFieldService = async (id) => {
 
     if (isObjectId) {
         try {
-            deleted = await SportField.findByIdAndDelete(id);
+            deleted = await SportField.findByIdAndUpdate(id, { isActive: false }, { new: true });
         } catch (error) {
             // ignore cast error from invalid ObjectId
         }
     }
 
     if (!deleted) {
-        deleted = await SportField.findOneAndDelete(
-            isObjectId ? { $or: [{ sportfield_id: id }, { _id: id }] } : { sportfield_id: id }
+        deleted = await SportField.findOneAndUpdate(
+            isObjectId ? { $or: [{ sportfield_id: id }, { _id: id }] } : { sportfield_id: id },
+            { isActive: false },
+            { new: true }
         );
     }
 

@@ -31,7 +31,7 @@ function HomePage() {
     const [selectedTime, setSelectedTime] = useState("");
 
     useEffect(() => {
-        getSportFields()
+        getSportFields({ isActive: true })
             .then(data => {
                 console.log("SPORTFIELDS:", data);
                 setSportFields(data);

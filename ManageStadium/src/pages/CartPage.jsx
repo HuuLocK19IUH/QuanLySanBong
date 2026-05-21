@@ -5,6 +5,7 @@ import Footer from "../components/Footer";
 import { getOrdersByUser } from "../api/ordersApi/getOrdersByUser";
 import { useUser } from "../hooks/context/UserContext";
 import { useNavigate } from "react-router-dom";
+import NoticeModal from "../components/NoticeModal";
 import "../styles/cartHistoryPages.css";
 import reload from "../assets/Refresh_2.png";
 function CartPage() {
@@ -12,6 +13,8 @@ function CartPage() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
+  const [showNoticeModal, setShowNoticeModal] = useState(false);
+  const [noticeContent, setNoticeContent] = useState("");
   const { user } = useUser();
   const navigate = useNavigate();
 
@@ -106,6 +109,12 @@ function CartPage() {
                     onPay={() => {
                       if (isExpired) return;
 
+                      if (order.state === "pending") {
+                        setNoticeContent("Đơn hàng đang trong trạng thái chờ duyệt thanh toán");
+                        setShowNoticeModal(true);
+                        return;
+                      }
+
                       // Tính thời gian còn lại (15 phút = 900 giây)
                       const createdAt = new Date(order.date_created).getTime();
                       const now = new Date().getTime();
@@ -152,6 +161,12 @@ function CartPage() {
       </div>
 
       <Footer />
+      {showNoticeModal && (
+        <NoticeModal 
+          handleCloseModal={() => setShowNoticeModal(false)} 
+          text={noticeContent} 
+        />
+      )}
     </div>
   );
 }
