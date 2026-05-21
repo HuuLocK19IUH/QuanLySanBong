@@ -143,7 +143,16 @@ function ReviewTab({ reviews = [], avgRating = 0, totalRating = 0, onSubmitRevie
         {filteredReviews.length > 0 ? (
           filteredReviews.map((review) => (
             <div key={review._id || review.rating_id} className="review-card">
-              <div className="reviewer-avatar" />
+              <div className="reviewer-avatar" style={{ padding: review.user_avatar ? 0 : undefined, overflow: 'hidden' }}>
+                {review.user_avatar ? (
+                  <img src={review.user_avatar} alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%' }} />
+                ) : (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                  </svg>
+                )}
+              </div>
               <div className="review-info">
                 <div className="review-header">
                   <h4 className="reviewer-name">{review.user_name || review.user_name || 'Người dùng'}</h4>

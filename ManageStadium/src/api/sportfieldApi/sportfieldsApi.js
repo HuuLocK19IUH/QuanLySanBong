@@ -5,9 +5,9 @@ const SPORTFIELDS_URL = `${API_BASE}/sportfields`;
 const RATINGS_URL = `${API_BASE}/ratings`;
 const SERVICES_URL = `${API_BASE}/services`;
 
-export const getSportFields = async () => {
+export const getSportFields = async (params = {}) => {
   try {
-    const res = await axios.get(SPORTFIELDS_URL);
+    const res = await axios.get(SPORTFIELDS_URL, { params });
     return res.data;
   } catch (err) {
     console.error("Lỗi khi gọi API sportfields:", err.response?.data || err.message);

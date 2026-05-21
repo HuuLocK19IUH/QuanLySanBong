@@ -43,7 +43,11 @@ const SportFieldSchema = new Schema({
         endTime: Number,
         price: Number,
         days: [String]
-    }]
+    }],
+    isActive: {
+        type: Boolean,
+        default: true
+    }
 }, {
     timestamps: true
 });

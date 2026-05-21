@@ -17,9 +17,15 @@ function CalendarBooking() {
         location.state?.id || null
     );
 
-    const [selectedDate, setSelectedDate] = useState(
-        new Date().toISOString().split("T")[0]
-    );
+    const getLocalDateStr = () => {
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, '0');
+        const day = String(today.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    };
+
+    const [selectedDate, setSelectedDate] = useState(getLocalDateStr());
 
     const timeSlots = [
         "05:00", "05:30", "06:00", "06:30", "07:00", "07:30",
@@ -97,7 +103,9 @@ function CalendarBooking() {
                 const sf = await getSportFieldBySF_Id(idSportfield);
                 setSportfield(sf);
 
-                const data = await getBookedSlotsAPI(sf.sportfield_id, selectedDate);
+                const sfIdToUse = sf.sportfield_id || sf._id;
+                const data = await getBookedSlotsAPI(sfIdToUse, selectedDate);
+                console.log("Fetched booked slots:", data);
                 setSportfieldcalendar(prev => [...prev, ...data]);
 
             } catch (error) {
@@ -106,7 +114,7 @@ function CalendarBooking() {
         };
 
         if (selectedDate) fetchData();
-    }, [selectedDate]);
+    }, [selectedDate, idSportfield]);
 
     useEffect(() => {
         if (!selectedTime?.start || !selectedTime?.end || !sportfield?.pricing) return;
@@ -131,7 +139,7 @@ function CalendarBooking() {
             const startTime = toHour(start);
             const endTime = toHour(end);
 
-            return time >= startTime && time <= endTime;
+            return time >= startTime && time < endTime;
         })
             ? "booked"
             : "empty";
@@ -180,7 +188,7 @@ function CalendarBooking() {
                         <input
                             type="date"
                             value={selectedDate}
-                            min={new Date().toISOString().split("T")[0]}
+                            min={getLocalDateStr()}
                             onChange={(e) => {
                                 setSelectedDate(e.target.value);
                                 setSelectedIndex(null);
@@ -216,7 +224,7 @@ function CalendarBooking() {
 
                                     if (clickStep === 0) {
                                         // Ràng buộc thời gian: không đặt giờ trong quá khứ nếu là hôm nay
-                                        const todayStr = new Date().toISOString().split("T")[0];
+                                        const todayStr = getLocalDateStr();
                                         if (selectedDate === todayStr) {
                                             const now = new Date();
                                             const currentHour = now.getHours() + now.getMinutes() / 60;
@@ -258,7 +266,7 @@ function CalendarBooking() {
                                             return;
                                         }
 
-                                        for (let i = startIndex; i <= endIndex; i++) {
+                                        for (let i = startIndex; i < endIndex; i++) {
                                             if (getSlotStatus(i) !== "empty") {
                                                 setContentNotice("Khoảng thời gian đã có người đặt");
                                                 setNotice(true);

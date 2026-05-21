@@ -15,7 +15,11 @@ import {
  */
 export const getSportFields = async (req, res) => {
     try {
-        const data = await getSportFieldsService();
+        const filter = {};
+        if (req.query.isActive !== undefined) {
+            filter.isActive = req.query.isActive === 'true';
+        }
+        const data = await getSportFieldsService(filter);
         res.json(data);
     } catch (err) {
         res.status(500).json({ message: err.message });

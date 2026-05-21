@@ -33,6 +33,10 @@ function AdminTaskbar({ searchTerm, setSearchTerm }) {
                     <img src={CheckIcon} alt="" />
                     <a>Thêm sân mới</a>
                 </div>
+                <div className={`nav-item ${window.location.pathname === '/admin/sportfields' ? 'active' : ''}`} onClick={() => navigate("/admin/sportfields")}>
+                    <img src={CheckIcon} alt="" />
+                    <a>Danh sách sân</a>
+                </div>
             </div>
             {
                 user ? (
